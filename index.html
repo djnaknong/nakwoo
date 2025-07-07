@@ -138,6 +138,19 @@ table td {
   text-align: center;
   vertical-align: middle;
 }
+
+/* 내용 없는 셀을 포함한 행은 최소 높이 적용 */
+td:empty, td a:empty {
+  min-height: 10px;
+  padding: 2px;
+}
+
+/* event1, event2, event3 간격 최소화 */
+.event1, .event2, .event3 {
+  margin: 0;
+  padding: 2px;
+  min-height: 40px;
+}
 </style>
 </head>
 <body><div class="calendar-wrapper"></div>
