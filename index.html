@@ -145,18 +145,33 @@ td:empty, td a:empty {
   padding: 2px;
 }
 
-    .event1, .event2, .event3 {
-        padding: 1px !important;
-        margin-top: 1px !important;
-        min-height: auto !important;
-        font-size: 12px !important;
-        line-height: 1.2 !important;
-    }
-    td {
-        padding: 3px !important;
-        height: auto !important;
-    }
-    </style>
+/* 날짜 셀 배경 보호 */
+.date-num {
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  margin-bottom: 6px;
+  background-color: white;
+  position: relative;
+  z-index: 2;
+  padding-right: 2px;
+}
+
+/* 상세 일정표 셀 너비 자동 조절 */
+table.detail-schedule {
+  table-layout: auto;
+  width: auto;
+  max-width: 100%;
+  margin-top: 40px;
+}
+
+table.detail-schedule th,
+table.detail-schedule td {
+  white-space: nowrap;
+  padding: 8px 10px;
+  font-size: 15px;
+}
+</style>
 </head>
 <body><div class="calendar-wrapper"></div>
 <h2>2025년 7월 낙우회 일정</h2>
@@ -184,7 +199,7 @@ function scrollToDetail() {
 }
 </script><section id="detail-section" style="margin-top:50px;"><body>
 <h2>2025년 7월 낙우회 상세 일정표</h2>
-<table>
+<table class="detail-schedule">
 <thead>
 <tr>
 <th>일자</th>
