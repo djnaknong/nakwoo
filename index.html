@@ -35,26 +35,19 @@
       font-size: 13px;
       margin-bottom: 2px;
     }
-    .event1, .event2, .event3 {
+    .event1, .event2 {
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 11.5px;
       border-radius: 4px;
       margin: 1px 0;
-      padding: 2px 3px;
+      padding: 1px 3px;
       cursor: pointer;
+      min-height: 14px;
     }
     .event1 { background-color: #eaf4ff; }
     .event2 { background-color: #ffe7d6; }
-    .event3 {
-      background-color: #f4f4f4;
-      height: 14px;
-      padding: 0 2px;
-      font-size: 11px;
-      line-height: 1;
-      opacity: 0.7;
-    }
 
     #detail-section {
       margin-top: 30px;
@@ -77,7 +70,7 @@
     }
     @media screen and (max-width: 768px) {
       h2 { font-size: 18px; }
-      .event1, .event2, .event3 { font-size: 11px; }
+      .event1, .event2 { font-size: 10px; }
       #detail-section table { font-size: 11px; }
     }
   </style>
@@ -89,33 +82,58 @@
   <tr>
     <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
   </tr>
+  <!-- Week 1 -->
   <tr>
-    <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
+    <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+    <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
   </tr>
+  <!-- Week 2 -->
   <tr>
-    <td>7</td>
-    <td>8<div class="event1" onclick="scrollToDetail('대호낙우회')">대호낙우회</div>
-           <div class="event2" onclick="scrollToDetail('잔다리낙우회')">잔다리낙우회</div></td>
-    <td>9<div class="event1" onclick="scrollToDetail('면천낙우회')">면천낙우회</div></td>
-    <td>10<div class="event1" onclick="scrollToDetail('순성낙우회')">순성낙우회</div></td>
-    <td>11</td><td>12</td><td>13</td>
+    <td><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">8</div><div class="event1">대호낙우회(12시)&nbsp;&nbsp;</div><div class="event2">잔다리낙우회(12시)&nbsp;</div></td>
+    <td><div class="date-num">9</div><div class="event1">면천낙우회(12시)&nbsp;</div><div class="event2"></div></td>
+    <td><div class="date-num">10</div><div class="event1">대호낙우회(9시50분) (야유회)&nbsp;&nbsp;</div><div class="event2"></div></td>
+    <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
   </tr>
+  <!-- Week 3 -->
   <tr>
-    <td>14</td><td>15<div class="event1" onclick="scrollToDetail('아산낙우회')">아산낙우회</div></td>
-    <td>16<div class="event1" onclick="scrollToDetail('삼괴낙우회(진흥회)')">삼괴낙우회</div></td>
-    <td>17<div class="event1" onclick="scrollToDetail('청어람')">청어람</div>
-            <div class="event2" onclick="scrollToDetail('송악송산낙우회')">송악송산낙우회</div></td>
-    <td>18</td><td>19</td><td>20</td>
+    <td><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">15</div><div class="event1">아산낙우회(12시)&nbsp;&nbsp;</div><div class="event2"></div></td>
+    <td><div class="date-num">16</div><div class="event1">삼괴낙우회((진흥회)(9시30분) (야유회)&nbsp;</div><div class="event2"></div></td>
+    <td><div class="date-num">17</div><div class="event1">청어람(11시30분)</div><div class="event2">송악송산낙우회(12시)</div></td>
+    <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+  </tr>
+  <!-- Week 4 -->
+  <tr>
+    <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+  </tr>
+  <!-- Week 5 -->
+  <tr>
+    <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+    <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+    <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+    <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
   </tr>
 </table>
 
-<!-- 추가된 주 -->
-<tr>
-  <td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td>26</td><td>27</td>
-</tr>
-<tr>
-  <td>28</td><td>29</td><td>30</td><td>31</td><td></td><td></td><td></td>
-</tr>
 
 <div id="detail-section">
   <h2>2025년 7월 낙우회 상세 일정표</h2>
@@ -129,14 +147,15 @@
       <tr id="대호낙우회"><td>7월 8일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>동이네식당포차</td><td>충남 당진시 천변1길 160</td></tr>
       <tr id="잔다리낙우회"><td>7월 8일</td><td>12시</td><td>잔다리낙우회</td><td>낙우회</td><td>장어가</td><td>충남 천안시 동남구 풍세면 영성2길 3</td></tr>
       <tr id="면천낙우회"><td>7월 9일</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>암소고개가든</td><td>충남 당진시 면천면 오봉대길 171</td></tr>
-      <tr id="순성낙우회"><td>7월 10일</td><td>12시</td><td>순성낙우회</td><td>야유회</td><td>안면도</td><td>(순성낙우회 사무실 출발)</td></tr>
+      <tr id="순성낙우회"><td>7월 10일</td><td>9시 50분</td><td>순성낙우회</td><td>야유회</td><td>안면도</td><td>(순성낙우회 사무실 출발)</td></tr>
       <tr id="아산낙우회"><td>7월 15일</td><td>12시</td><td>아산낙우회</td><td>낙우회</td><td>별장가든</td><td>충남 예산군 예산읍 벚꽃로 182번길 55</td></tr>
-      <tr id="삼괴낙우회(진흥회)"><td>7월 16일</td><td>9시30분</td><td>삼괴낙우회(진흥회)</td><td>야유회</td><td>용현자연휴양림(서산)</td><td>(쌍봉산 근린공원 출발)</td></tr>
-      <tr id="청어람"><td>7월 17일</td><td>11시30분</td><td>청어람</td><td>낙우회</td><td>나능이 능이버섯백숙 당진점</td><td>충남 당진시 아미로 786</td></tr>
+      <tr id="삼괴낙우회(진흥회)"><td>7월 16일</td><td>9시 30분</td><td>삼괴낙우회(진흥회)</td><td>야유회</td><td>용현자연휴양림(서산)</td><td>(쌍봉산 근린공원 출발)</td></tr>
+      <tr id="청어람"><td>7월 17일</td><td>11시 30분</td><td>청어람</td><td>낙우회</td><td>나능이 능이버섯백숙 당진점</td><td>충남 당진시 아미로 786</td></tr>
       <tr id="송악송산낙우회"><td>7월 17일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td><td>충남 당진시 원당골길 8</td></tr>
     </tbody>
   </table>
 </div>
+
 
 <script>
 function scrollToDetail(id) {
