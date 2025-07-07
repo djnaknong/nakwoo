@@ -78,28 +78,69 @@ iframe {
   width: 100%;
 }
 
-/* 달력 전체 영역 반응형 */
-@media screen and (max-width: 768px) {
-  .calendar-container {
-    transform: scale(0.9);
-    transform-origin: top center;
-  }
+/* 전체 달력 반응형 */
+.calendar-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+.calendar-wrapper > div {
+  min-width: 650px;
+}
 
-  iframe {
-    height: 400px !important;
-  }
-
+/* 상세일정 반응형 */
+#detail-section table {
+  width: 100%;
+  font-size: 14px;
+  word-break: keep-all;
+}
+@media (max-width: 768px) {
   #detail-section table {
-    font-size: 13px;
+    font-size: 12px;
   }
-
-  #detail-section th, #detail-section td {
+  #detail-section th,
+  #detail-section td {
     padding: 6px;
   }
 }
+
+/* 요일 및 날짜 셀 크기 균등 분배 */
+table {
+  table-layout: fixed;
+}
+table th,
+table td {
+  width: 14.28%; /* 100% ÷ 7일 */
+  word-wrap: break-word;
+}
+
+/* 상세 일정표 가운데 정렬 */
+#detail-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#detail-section table {
+  margin: 0 auto;
+}
+
+/* 셀 안의 빈칸도 크기 유지 및 중앙 정렬 */
+.event1, .event2, .event3 {
+  min-height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* 상세 일정표 셀 가운데 정렬 */
+#detail-section th, #detail-section td {
+  text-align: center;
+  vertical-align: middle;
+}
 </style>
 </head>
-<body>
+<body><div class="calendar-wrapper"></div>
 <h2>2025년 7월 낙우회 일정</h2>
 <table>
 <thead>
@@ -114,9 +155,9 @@ iframe {
 </tr>
 </thead>
 <tbody>
-<tr><td></td><td></td><td><div class="date-num">1</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">2</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">3</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">4</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">5</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td></tr><tr><td><div class="date-num">6</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">7</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">8</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">대호낙우회(12시)</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()">잔다리낙우회(12시)</a></div><div class="event event3"> </div></td><td><div class="date-num">9</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">면천낙우회(12시)</a></div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">10</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">순성낙우회(9시50분) 야유회</a></div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">11</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">12</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td></tr><tr><td><div class="date-num">13</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">14</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">15</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">아산낙우회(12시)</a></div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">16</div><div class="event event1"> 삼괴낙우회(9시30분) 야유회</div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">17</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">청어람(11시30분)</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()">송악송산낙우회(12시)</a></div><div class="event event3"> </div></td><td><div class="date-num">18</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">19</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td></tr><tr><td><div class="date-num">20</div><div class="event event1"> </div>
-<div class="event event2"> </div>
-<div class="event event3"> </div></td><td><div class="date-num">21</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">22</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">23</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">24</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">25</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">26</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td></tr><tr><td><div class="date-num">27</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">28</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">29</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">30</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td><div class="date-num">31</div><div class="event event1"> </div><div class="event event2"> </div><div class="event event3"> </div></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td></td><td></td><td><div class="date-num">1</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">2</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">3</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">4</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">5</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td></tr><tr><td><div class="date-num">6</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">7</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">8</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">대호낙우회(12시)</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()">잔다리낙우회(12시)</a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">9</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">면천낙우회(12시)</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">10</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">순성낙우회(9시50분) 야유회</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">11</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">12</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td></tr><tr><td><div class="date-num">13</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">14</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">15</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">아산낙우회(12시)</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">16</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">삼괴낙우회(9시30분) 야유회</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">17</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()">청어람(11시30분)</a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()">송악송산낙우회(12시)</a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">18</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">19</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td></tr><tr><td><div class="date-num">20</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div>
+<div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div>
+<div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">21</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">22</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">23</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">24</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">25</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">26</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td></tr><tr><td><div class="date-num">27</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">28</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">29</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">30</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td><div class="date-num">31</div><div class="event event1"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event2"><a href="#detail-section" onclick="scrollToDetail()"> </a></div><div class="event event3"><a href="#detail-section" onclick="scrollToDetail()"> </a></div></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
 </tbody>
 </table>
 <script>
