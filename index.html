@@ -145,13 +145,18 @@ td:empty, td a:empty {
   padding: 2px;
 }
 
-/* event1, event2, event3 간격 최소화 */
-.event1, .event2, .event3 {
-  margin: 0;
-  padding: 2px;
-  min-height: 40px;
-}
-</style>
+    .event1, .event2, .event3 {
+        padding: 1px !important;
+        margin-top: 1px !important;
+        min-height: auto !important;
+        font-size: 12px !important;
+        line-height: 1.2 !important;
+    }
+    td {
+        padding: 3px !important;
+        height: auto !important;
+    }
+    </style>
 </head>
 <body><div class="calendar-wrapper"></div>
 <h2>2025년 7월 낙우회 일정</h2>
