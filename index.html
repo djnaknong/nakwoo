@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2025년 7월 낙우회 일정</title>
   <style>
     body {
@@ -51,23 +51,25 @@
 
     #detail-section {
       margin-top: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
       overflow-x: auto;
+      width: 100%;
     }
+
     #detail-section table {
       border-collapse: collapse;
+      width: 100%;
       min-width: 600px;
     }
+
     #detail-section th, #detail-section td {
       border: 1px solid #999;
       padding: 6px 8px;
       font-size: 13px;
       text-align: center;
-      white-space: nowrap;
+      white-space: normal;
+      word-break: break-word;
     }
+
     @media screen and (max-width: 768px) {
       h2 { font-size: 18px; }
       .event1, .event2 { font-size: 10px; }
@@ -82,7 +84,6 @@
   <tr>
     <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
   </tr>
-  <!-- Week 1 -->
   <tr>
     <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
     <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
@@ -92,27 +93,42 @@
     <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
   </tr>
-  <!-- Week 2 -->
   <tr>
     <td><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">8</div><div class="event1">대호낙우회(12시)&nbsp;&nbsp;</div><div class="event2">잔다리낙우회(12시)&nbsp;</div></td>
-    <td><div class="date-num">9</div><div class="event1">면천낙우회(12시)&nbsp;</div><div class="event2"></div></td>
-    <td><div class="date-num">10</div><div class="event1">대호낙우회(9시50분) (야유회)&nbsp;&nbsp;</div><div class="event2"></div></td>
+    <td><div class="date-num">8</div>
+      <div class="event1" onclick="scrollToDetail('대호낙우회')">대호낙우회(12시)</div>
+      <div class="event2" onclick="scrollToDetail('잔다리낙우회')">잔다리낙우회(12시)</div>
+    </td>
+    <td><div class="date-num">9</div>
+      <div class="event1" onclick="scrollToDetail('면천낙우회')">면천낙우회(12시)</div>
+      <div class="event2"></div>
+    </td>
+    <td><div class="date-num">10</div>
+      <div class="event1" onclick="scrollToDetail('순성낙우회')">대호낙우회(9시50분) (야유회)</div>
+      <div class="event2"></div>
+    </td>
     <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
   </tr>
-  <!-- Week 3 -->
   <tr>
     <td><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">15</div><div class="event1">아산낙우회(12시)&nbsp;&nbsp;</div><div class="event2"></div></td>
-    <td><div class="date-num">16</div><div class="event1">삼괴낙우회((진흥회)(9시30분) (야유회)&nbsp;</div><div class="event2"></div></td>
-    <td><div class="date-num">17</div><div class="event1">청어람(11시30분)</div><div class="event2">송악송산낙우회(12시)</div></td>
+    <td><div class="date-num">15</div>
+      <div class="event1" onclick="scrollToDetail('아산낙우회')">아산낙우회(12시)</div>
+      <div class="event2"></div>
+    </td>
+    <td><div class="date-num">16</div>
+      <div class="event1" onclick="scrollToDetail('삼괴낙우회(진흥회)')">삼괴낙우회((진흥회)(9시30분) (야유회)</div>
+      <div class="event2"></div>
+    </td>
+    <td><div class="date-num">17</div>
+      <div class="event1" onclick="scrollToDetail('청어람')">청어람(11시30분)</div>
+      <div class="event2" onclick="scrollToDetail('송악송산낙우회')">송악송산낙우회(12시)</div>
+    </td>
     <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
   </tr>
-  <!-- Week 4 -->
   <tr>
     <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
@@ -122,7 +138,6 @@
     <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
   </tr>
-  <!-- Week 5 -->
   <tr>
     <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
     <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
@@ -133,7 +148,6 @@
     <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
   </tr>
 </table>
-
 
 <div id="detail-section">
   <h2>2025년 7월 낙우회 상세 일정표</h2>
@@ -155,7 +169,6 @@
     </tbody>
   </table>
 </div>
-
 
 <script>
 function scrollToDetail(id) {
