@@ -10,7 +10,7 @@
       background: linear-gradient(to bottom, #ffffff, #f0f4f8);
       color: #333;
       margin: 0;
-      padding: 20px;
+      padding: 5px;
     }
     h2 {
       text-align: center;
@@ -22,56 +22,62 @@
       width: 100%;
       border-collapse: collapse;
       margin-bottom: 40px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       background-color: white;
       border-radius: 8px;
       overflow: hidden;
       table-layout: fixed;
+      box-shadow: 0 10px 8px rgba(0,0,0,0.1);
     }
     th, td {
       border: 1px solid #dfe6e9;
-      padding: 10px;
+      padding: 2px;
       vertical-align: middle;
       width: 14.28%;
       height: 80px;
-    }
-    th {
-      background-color: #74b9ff;
-      color: white;
-      font-weight: 600;
       text-align: center;
     }
-    .date-num {
-      text-align: right;
-      font-weight: bold;
-      font-size: 13px;
-      margin-bottom: 4px;
+    th {
+      background-color: #8FAE99;
+      color: white;
+      font-weight: 600;
     }
+    #detail-section th {
+      background-color: #436A72;
+    }
+    #member-section th {
+      background-color: #638D87;
+    }
+    .date-num {
+    text-align: right;
+    padding-right: 5px;
+    font-weight: bold;
+  }
     .event1, .event2 {
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 4px;
-      margin: 2px 0;
-      padding: 3px 6px;
-      min-height: 18px;
-      background-color: #f1f1f1;
-      transition: background-color 0.3s;
-      cursor: pointer;
+      border-radius: 2px;
+      margin: 1px 0;
+      padding: 5px 6px;
+      min-height: 20px;
       font-size: clamp(9px, 1.5vw, 11.5px);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      background-color: #f1f1f1;
+      cursor: pointer;
     }
     .event1 { background-color: #eaf4ff; }
     .event2 { background-color: #ffe7d6; }
-    .event1:hover, .event2:hover {
-      background-color: #dfe6e9;
+
+    .event1.has-member {
+      background-color: #fab1a0 !important;
+      font-weight: bold;
+      color: #2d3436;
     }
 
     .clicked-row {
       background-color: #dff9fb !important;
-      transition: background-color 0.3s ease;
     }
 
     #detail-section {
@@ -81,19 +87,7 @@
     }
 
     #detail-section table {
-      border-collapse: collapse;
-      width: 100%;
       min-width: 700px;
-    }
-
-    #detail-section th, #detail-section td {
-      border: 1px solid #999;
-      padding: 10px 12px;
-      font-size: 14px;
-      text-align: center;
-      vertical-align: middle;
-      white-space: normal;
-      word-break: keep-all;
     }
 
     #detail-section td:nth-child(6) {
@@ -110,11 +104,10 @@
       border-collapse: collapse;
     }
 
-    #member-section th, #member-section td {
+    #member-section td {
       border: 1px solid #ccc;
       padding: 8px;
       font-size: 14px;
-      text-align: center;
     }
 
     @media screen and (max-width: 768px) {
@@ -130,7 +123,7 @@
   <h2>2025년 7월 낙우회 일정표 달력</h2>
   <table>
     <tr>
-      <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+      <th><font color ="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color ="#0066ff">토</font> </th>
     </tr>
     <tr>
       <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
@@ -271,69 +264,50 @@
 	]
     };
 
-    function scrollToDetail(id) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        el.style.transition = 'background-color 0.6s';
-        el.style.backgroundColor = '#fffbcc';
-        setTimeout(() => el.style.backgroundColor = '', 1500);
-      }
-    }
-
     function showMemberList(groupName) {
-      const section = document.getElementById("member-section");
-      const tbody = document.getElementById("member-table").querySelector("tbody");
-      const title = section.querySelector("h3");
-		
-	tbody.innerHTML = "";
+    const section = document.getElementById("member-section");
+    const tbody = document.getElementById("member-table").querySelector("tbody");
+    const title = section.querySelector("h3");
 
-      const members = memberData[groupName];
-      if (!members) {
-        section.style.display = "none";
-        return;
-      }
+    tbody.innerHTML = "";
+    const members = memberData[groupName];
+    if (!members) return section.style.display = "none";
 
-	title.textContent = `${groupName} 회원명단`;
-		
-      members.forEach(row => {
-        const tr = document.createElement("tr");
-        ["순번", "목장명", "대표자", "직책"].forEach(key => {
-          const td = document.createElement("td");
-          td.textContent = row[key];
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
+    title.textContent = `${groupName} 회원명단`;
+
+    members.forEach(row => {
+      const tr = document.createElement("tr");
+      ["순번", "목장명", "대표자", "직책"].forEach(key => {
+        const td = document.createElement("td");
+        td.textContent = row[key];
+        tr.appendChild(td);
       });
+      tbody.appendChild(tr);
+    });
 
-      section.style.display = "block";
-    }
+    section.style.display = "block";
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const rows = document.querySelectorAll("#detail-section tbody tr");
-
-      rows.forEach(row => {
-        row.addEventListener("click", () => {
-          // 기존 강조 제거
-          rows.forEach(r => r.classList.remove("clicked-row"));
-          // 현재 강조
-          row.classList.add("clicked-row");
-
-          const groupName = row.children[2]?.textContent?.trim();
-          if (groupName) showMemberList(groupName);
-        });
-      });
-
-      document.querySelectorAll('.event1, .event2').forEach(el => {
-        el.addEventListener('click', () => {
-          const text = el.textContent.trim();
-          if (!text) return;
-          const match = text.match(/^([^\s(]+)/);
-          const id = match ? match[1] : text;
-          if (document.getElementById(id)) scrollToDetail(id);
-        });
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll("#detail-section tbody tr").forEach(row => {
+      row.addEventListener("click", () => {
+        document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
+        row.classList.add("clicked-row");
+        const groupName = row.children[2]?.textContent?.trim();
+        if (groupName) showMemberList(groupName);
       });
     });
-  </script>
+
+    document.querySelectorAll('.event1, .event2').forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.textContent.trim();
+        const row = document.getElementById(id);
+        if (row) row.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  });
+</script>
 </body>
 </html>
+
