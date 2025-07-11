@@ -51,7 +51,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 11.5px;
       border-radius: 4px;
       margin: 2px 0;
       padding: 3px 6px;
@@ -59,6 +58,12 @@
       background-color: #f1f1f1;
       transition: background-color 0.3s;
       cursor: pointer;
+
+      /* ✅ 반응형 글자 크기 및 오버플로우 대응 */
+      font-size: clamp(9px, 1.5vw, 11.5px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .event1 { background-color: #eaf4ff; }
     .event2 { background-color: #ffe7d6; }
@@ -94,11 +99,12 @@
 
     @media screen and (max-width: 768px) {
       h2 { font-size: 20px; }
-      .event1, .event2 { font-size: 10px; padding: 2px 4px; }
       #detail-section table { font-size: 12px; }
     }
   </style>
 </head>
+
+
 <body> 
   <h2>2025년 7월 낙우회 일정표 달력</h2>
   <table>
@@ -215,10 +221,8 @@
         el.addEventListener('click', () => {
           const text = el.textContent.trim();
           if (!text) return;
-
           const match = text.match(/^([^\s(]+)/);
           const id = match ? match[1] : text;
-
           if (document.getElementById(id)) {
             scrollToDetail(id);
           }
