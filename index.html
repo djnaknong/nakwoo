@@ -33,6 +33,7 @@
       padding: 10px;
       vertical-align: middle;
       width: 14.28%;
+      height: 80px;
     }
     th {
       background-color: #74b9ff;
@@ -54,11 +55,16 @@
       border-radius: 4px;
       margin: 2px 0;
       padding: 3px 6px;
-      cursor: pointer;
       min-height: 18px;
+      background-color: #f1f1f1;
+      transition: background-color 0.3s;
+      cursor: pointer;
     }
     .event1 { background-color: #eaf4ff; }
     .event2 { background-color: #ffe7d6; }
+    .event1:hover, .event2:hover {
+      background-color: #dfe6e9;
+    }
 
     #detail-section {
       margin-top: 40px;
@@ -77,13 +83,13 @@
       padding: 10px 12px;
       font-size: 14px;
       text-align: center;
+      vertical-align: middle;
       white-space: normal;
-      word-break: break-word;
+      word-break: keep-all;
     }
 
-    #detail-section td:nth-child(1),
-    #detail-section td:nth-child(2) {
-      white-space: nowrap;
+    #detail-section td:nth-child(6) {
+      text-align: left;
     }
 
     @media screen and (max-width: 768px) {
@@ -95,78 +101,58 @@
 </head>
 <body> 
   <h2>2025년 7월 낙우회 일정표 달력</h2>
-<table>
-  <tr>
-    <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-  </tr>
-  <tr>
-    <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
-    <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
-  </tr>
-  <tr>
-    <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">7</div>
-      <div class="event1" onclick="scrollToDetail('대호')">&nbsp;</div>
-      <div class="event2" onclick="scrollToDetail('잔다리')">&nbsp;</div>
-    </td>
-    <td><div class="date-num">8</div>
-      <div class="event1" onclick="scrollToDetail('대호')">대호(12시)&nbsp;</div>
-      <div class="event2">잔다리(12시)</div>
-    </td>
-    <td><div class="date-num">9</div>
-      <div class="event1" onclick="scrollToDetail('면천')">&nbsp;면천(12시)</div>
-      <div class="event2"></div>
-    </td>
-    <td><div class="date-num">10</div><div class="event1">순성(9시50분)(야유회)</div><div class="event2"></div></td>
-    <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
-  </tr>
-  <tr>
-    <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">14</div>
-      <div class="event1" onclick="scrollToDetail('아산낙우회')">&nbsp;</div>
-      <div class="event2"></div>
-    </td>
-    <td><div class="date-num">15</div>
-      <div class="event1" onclick="scrollToDetail('아산낙우회')">아산(12시)&nbsp;</div>
-      <div class="event2"></div>
-    </td>
-    <td><div class="date-num">16</div>
-      <div class="event1" onclick="scrollToDetail('삼괴')">삼괴(진흥회)(9시30분) (야유회)</div>
-      <div class="event2" onclick="scrollToDetail('송악송산낙우회')">&nbsp;</div>
-    </td>
-    <td><div class="date-num">17</div><div class="event1">청어람(11시30분)</div><div class="event2">송악송산(12시)</div></td>
-    <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
-  </tr>
-  <tr>
-    <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
-  </tr>
-  <tr>
-    <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">29&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
-    <td><div class="date-num">31&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
-    <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
-    <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
-  </tr>
-</table>
+  <table>
+    <tr>
+      <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+    </tr>
+    <tr>
+      <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">7</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+      <td><div class="date-num">8</div><div class="event1">대호</div><div class="event2">잔다리</div></td>
+      <td><div class="date-num">9</div><div class="event1">면천</div><div class="event2"></div></td>
+      <td><div class="date-num">10</div><div class="event1">순성</div><div class="event2"></div></td>
+      <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">14</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+      <td><div class="date-num">15</div><div class="event1">아산</div><div class="event2"></div></td>
+      <td><div class="date-num">16</div><div class="event1">삼괴(진흥회)</div><div class="event2">송악송산</div></td>
+      <td><div class="date-num">17</div><div class="event1">청어람</div><div class="event2">송악송산</div></td>
+      <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+  </table>
 
-
-
-<div id="detail-section">
+  <div id="detail-section">
     <h2>2025년 7월 낙우회 상세 일정표</h2>
     <table>
       <thead>
@@ -175,15 +161,40 @@
         </tr>
       </thead>
       <tbody>
-        <tr id="대호"><td>7월 8일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>동이네식당포차</td><td>충남 당진시 천변1길 160</td></tr>
-        <tr id="잔다리"><td>7월 8일</td><td>12시</td><td>잔다리낙우회</td><td>낙우회</td><td>장어가</td><td>충남 천안시 동남구 풍세면 영성2길 3</td></tr>
-        <tr id="면천"><td>7월 9일</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>암소고개가든</td><td>충남 당진시 면천면 오봉대길 171</td></tr>
-        <tr id="순성"><td>7월 10일</td><td>9시 50분</td><td>순성낙우회</td><td>야유회</td><td>안면도</td><td>(순성낙우회 사무실 출발)</td></tr>
-        <tr id="아산"><td>7월 15일</td><td>12시</td><td>아산낙우회</td><td>낙우회</td><td>별장가든</td><td>충남 예산군 예산읍 벚꽃로 182번길 55</td></tr>
-        <tr id="삼괴"><td>7월 16일</td><td>9시 30분</td><td>삼괴낙우회(진흥회)</td><td>야유회</td><td>용현자연휴양림(서산)</td><td>(쌍봉산 근린공원 출발)</td></tr>
-        <tr id="청어람"><td>7월 17일</td><td>11시 30분</td><td>청어람</td><td>낙우회</td><td>나능이 능이버섯백숙 당진점</td><td>충남 당진시 아미로 786</td></tr>
-        <tr id="송악송산"><td>7월 17일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td><td>충남 당진시 원당골길 8</td></tr>
-      </tbody>
+  <tr id="대호">
+    <td>7월 8일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>동이네식당포차</td>
+    <td><a href="충남 당진시 천변1길 160">충남 당진시 천변1길 160</a></td>
+  </tr>
+  <tr id="잔다리">
+    <td>7월 8일</td><td>12시</td><td>잔다리낙우회</td><td>낙우회</td><td>장어가</td>
+    <td><a href="충남 천안시 동남구 풍세면 영성2길 3">충남 천안시 동남구 풍세면 영성2길 3</a></td>
+  </tr>
+  <tr id="면천">
+    <td>7월 9일</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>암소고개가든</td>
+    <td><a href="충남 당진시 면천면 오봉대길 171">충남 당진시 면천면 오봉대길 171</a></td>
+  </tr>
+  <tr id="순성">
+    <td>7월 10일</td><td>9시 50분</td><td>순성낙우회</td><td>야유회</td><td>안면도</td>
+    <td>(순성낙우회 사무실 출발)</td>
+  </tr>
+  <tr id="아산">
+    <td>7월 15일</td><td>12시</td><td>아산낙우회</td><td>낙우회</td><td>별장가든</td>
+    <td><a href="충남 예산군 예산읍 벚꽃로 182번길 55">충남 예산군 예산읍 벚꽃로 182번길 55</a></td>
+  </tr>
+  <tr id="삼괴">
+    <td>7월 16일</td><td>9시 30분</td><td>삼괴낙우회(진흥회)</td><td>야유회</td><td>용현자연휴양림(서산)</td>
+    <td>(쌍봉산 근린공원 출발)</td>
+  </tr>
+  <tr id="청어람">
+    <td>7월 17일</td><td>11시 30분</td><td>청어람</td><td>낙우회</td><td>나능이 능이버섯백숙 당진점</td>
+    <td><a href="충남 당진시 아미로 786">충남 당진시 아미로 786</a></td>
+  </tr>
+  <tr id="송악송산">
+    <td>7월 17일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td>
+    <td><a href="충남 당진시 원당골길 8">충남 당진시 원당골길 8</a></td>
+  </tr>
+</tbody>
+
     </table>
   </div>
 
@@ -192,8 +203,9 @@
       const el = document.getElementById(id);
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.style.transition = 'background-color 0.6s';
         el.style.backgroundColor = '#fffbcc';
-        setTimeout(() => el.style.backgroundColor = '', 1000);
+        setTimeout(() => el.style.backgroundColor = '', 1500);
       }
     }
 
@@ -202,9 +214,11 @@
         el.addEventListener('click', () => {
           const text = el.textContent.trim();
           if (!text) return;
+
           const match = text.match(/^([^\s(]+)/);
-          if (match) {
-            const id = match[1];
+          const id = match ? match[1] : text;
+
+          if (document.getElementById(id)) {
             scrollToDetail(id);
           }
         });
