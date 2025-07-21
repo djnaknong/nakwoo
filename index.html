@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2025년 7월 낙우회 일정</title>
+  <style>
+    body {
+      font-family: '맑은 고딕', sans-serif;
+      background: linear-gradient(to bottom, #ffffff, #f0f4f8);
+      color: #333;
+      margin: 0;
+      padding: 5px;
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 24px;
+      margin: 30px 0 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 40px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      table-layout: fixed;
+      box-shadow: 0 10px 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #dfe6e9;
+      padding: 2px;
+      vertical-align: middle;
+      width: 14.28%;
+      height: 60px;
+      text-align: center;
+    }
+    th {
+      background-color: #CEB5A7;
+      color: white;
+      font-weight: 600;
+    }
+    #detail-section th {
+      background-color: #92828d;
+	  font-size: clamp(14px, 1vw, 18px); 
+      padding: 1px 2px;
+    }
+    #member-section th {
+      background-color: #ADAABF;
+	  font-size: clamp(14px, 1vw, 18px); 
+      padding: 1px 2px;
+    }
+.date-num {
+    text-align: right;
+    padding-right: 5px;
+    font-weight: bold;
+  }
+    .event1, .event2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 2px;
+      margin: 1px 0;
+      padding: 5px 6px;
+      min-height: 20px;
+      font-size: clamp(12px, 1.5vw, 15px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
+    .event1 { background-color: #eaf7cf; }
+    .event2 { background-color: #ffe7d6; }
+
+    .event1.has-member {
+      background-color: #fab1a0 !important;
+      font-weight: bold;
+      color: #2d3436;
+    }
+
+    .clicked-row {
+      background-color: #dff9fb !important;
+    }
+
+    #detail-section {
+      margin-top: 40px;
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    #detail-section table {
+      min-width: 700px;
+	  width: 100%;
+	  table-layout: fixed;
+    }
+
+    #detail-section td:nth-child(6) {
+      text-align: left;
+    }
+
+    #member-section {
+      display: none;
+      margin-top: 30px;
+    }
+
+    #member-section table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #member-section td {
+      border: 1px solid #ccc;
+      padding: 1px;
+      font-size: clamp(14px, 2vw, 20px);
+    }
+
+    @media screen and (max-width: 768px) {
+      h2 { font-size: 20px; }
+      #detail-section table, #member-section table { font-size: 12px; }
+    }
+	  tr.has-address {
+  background-color: #fff6c5 !important;
+  font-weight: bold;
+}
+  </style>
+</head>
+
+
+
+<body> 
+  <h2>2025년 7월 낙우회 일정표 달력</h2>
+  <table>
+    <tr>
+      <th><font color ="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color ="#0066ff">토</font> </th>
+    </tr>
+    <tr>
+      <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">7</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+      <td><div class="date-num">8</div><div class="event1">대호</div><div class="event2">잔다리</div></td>
+      <td><div class="date-num">9</div><div class="event1">면천</div><div class="event2"></div></td>
+      <td><div class="date-num">10</div><div class="event1">순성</div><div class="event2"></div></td>
+      <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">14</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+      <td><div class="date-num">15</div><div class="event1">아산</div><div class="event2"></div></td>
+      <td><div class="date-num">16</div><div class="event1">삼괴</div><div class="event2"></div></td>
+      <td><div class="date-num">17</div><div class="event1"><s>청어람</s></div><div class="event2"><s>송악송산</s></div></td>
+      <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2">신평</div></td>
+      <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+  </table>
+
+  <div id="detail-section">
+    <h2>2025년 7월 낙우회 상세 일정표</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>일자</th><th>시간</th><th>낙우회</th><th>낙우회 구분</th><th>장소</th><th>주소 (출발지)</th>
+        </tr>
+      </thead>
+      <tbody>
+  <tr id="대호">
+    <td>7월 8일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>동이네식당포차</td>
+    <td><a href="tmap://search?name=충남 당진시 천변1길 160">충남 당진시 천변1길 160</a></td>
+  </tr>
+  <tr id="잔다리">
+    <td>7월 8일</td><td>12시</td><td>잔다리낙우회</td><td>낙우회</td><td>장어가</td>
+    <td><a href="tmap://search?name=충남 천안시 동남구 풍세면 영성2길 3">충남 천안시 동남구 풍세면 영성2길 3</a></td>
+  </tr>
+  <tr id="면천">
+    <td>7월 9일</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>암소고개가든</td>
+    <td><a href="tmap://search?name=충남 당진시 면천면 오봉대길 171">충남 당진시 면천면 오봉대길 171</a></td>
+  </tr>
+  <tr id="순성">
+    <td>7월 10일</td><td>9시 50분</td><td>순성낙우회</td><td>야유회</td><td>안면도</td>
+    <td>(순성낙우회 사무실 출발)</td>
+  </tr>
+  <tr id="아산">
+    <td>7월 15일</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>별장가든</td>
+    <td><a href="tmap://search?name=충남 예산군 예산읍 벚꽃로 182번길 55">충남 예산군 예산읍 벚꽃로 182번길 55</a></td>
+  </tr>
+  <tr id="삼괴">
+    <td>7월 16일</td><td>9시 30분</td><td>삼괴낙우회(진흥회)</td><td>야유회</td><td><p>용현자연휴양림(서산)</p>
+      <p>서울가든&nbsp;</p></td>
+    <td><p>(쌍봉산 근린공원 출발)</p>
+      <p><a href="tmap://search?name=충남 서산시 운산면 마애삼존불길 115-3">충남 서산시 운산면 마애삼존불길 115-3</a></p></td>
+  </tr>
+  <tr id="청어람">
+    <td>7월 17일</td><td>11시 30분</td><td>청어람</td><td>낙우회</td><td>나능이 능이버섯백숙 당진점</td>
+    <td><a href="tmap://search?name=충남 당진시 아미로 786">충남 당진시 아미로 786</a></td>
+  </tr>
+  <tr id="송악송산">
+    <td>7월 17일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td>
+    <td><a href="tmap://search?name=충남 당진시 원당골길 8">충남 당진시 원당골길 8</a></td>
+  </tr>
+  <tr id="합덕">
+    <td>7월 24일</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+    <td><a href="tmap://search?name=충남 당진시 합덕읍 버그내1길 89">충남 당진시 합덕읍 버그내1길 89&nbsp;</a></td>
+  </tr>
+  <tr id="신평">
+	<td>7월 24일</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>약산도 신평점</td>
+    <td><a href="tmap://search?name=충남 당진시 신평면 거산3거리길 97">충남 당진시 신평면 거산3거리길 97&nbsp;</a></td>
+</tbody>
+
+
+    </table>
+  </div>
+
+  <div id="member-section">
+    <h3>회원 명단</h3>
+    <table id="member-table">
+      <thead>
+        <tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const memberData = {
+      "대호낙우회": [
+        { 순번: 1, 목장명: "두현목장", 대표자: "남도성", 직책: "회장" },
+        { 순번: 2, 목장명: "한솔목장", 대표자: "김기호", 직책: "총무" },
+        { 순번: 3, 목장명: "예진목장", 대표자: "전석호", 직책: "회원" },
+        { 순번: 4, 목장명: "송전목장", 대표자: "송문섭", 직책: "회원" },
+        { 순번: 5, 목장명: "율당목장", 대표자: "남윤호", 직책: "회원" },
+        { 순번: 6, 목장명: "수종목장", 대표자: "안종수", 직책: "회원" },
+        { 순번: 7, 목장명: "청호목장", 대표자: "김기선", 직책: "회원" },
+        { 순번: 8, 목장명: "성안목장", 대표자: "성부용", 직책: "회원" },
+        { 순번: 9, 목장명: "덕원목장", 대표자: "채수길", 직책: "회원" },
+        { 순번: 10, 목장명: "정윤목장", 대표자: "최승기", 직책: "회원" },	  
+      ],
+		  "아산낙우회": [
+		{ 순번: 1, 목장명: "신풍목장", 대표자: "이한남", 직책: "회장" },
+        { 순번: 2, 목장명: "칠복목장", 대표자: "이주영", 직책: "총무" },
+        { 순번: 3, 목장명: "백두목장", 대표자: "정준모", 직책: "회원" },
+		{ 순번: 4, 목장명: "송림목장", 대표자: "최돈자", 직책: "회원" },
+		{ 순번: 5, 목장명: "남주목장", 대표자: "고덕주", 직책: "회원" },
+        { 순번: 6, 목장명: "우희목장", 대표자: "안병호", 직책: "회원" },
+        { 순번: 7, 목장명: "한수목장", 대표자: "한기수", 직책: "회원" },
+		{ 순번: 8, 목장명: "꿀벌목장", 대표자: "남상필", 직책: "회원" },
+		{ 순번: 9, 목장명: "제아목장", 대표자: "박용면", 직책: "회원" },
+        { 순번: 10, 목장명: "대유목장", 대표자: "윤철희", 직책: "회원" },
+        { 순번: 11, 목장명: "양지목장", 대표자: "지덕영", 직책: "회원" },
+		{ 순번: 12, 목장명: "현대목장", 대표자: "조성준", 직책: "회원" },
+		{ 순번: 13, 목장명: "우천목장", 대표자: "정낙준", 직책: "회원" },
+        { 순번: 14, 목장명: "희목장", 대표자: "박종숙", 직책: "회원" },
+		{ 순번: 15, 목장명: "인호목장", 대표자: "김영종", 직책: "회원" },
+		{ 순번: 16, 목장명: "자연목장", 대표자: "김범수", 직책: "회원" },
+		{ 순번: 17, 목장명: "정훈목장", 대표자: "이정훈", 직책: "회원" },
+		{ 순번: 18, 목장명: "초정목장", 대표자: "박점백", 직책: "회원" },
+		{ 순번: 19, 목장명: "정화목장", 대표자: "정종현", 직책: "회원" },
+		{ 순번: 20, 목장명: "태고목장", 대표자: "이복규", 직책: "회원" },
+		{ 순번: 21, 목장명: "숙이목장", 대표자: "김종옥", 직책: "회원" },
+		{ 순번: 22, 목장명: "정성목장", 대표자: "임동운", 직책: "회원" },			  
+	],	
+		"삼괴낙우회(진흥회)": [
+		{ 순번: 1, 목장명: "준화선목장", 대표자: "송준영", 직책: "회장" },
+        { 순번: 2, 목장명: "현대목장", 대표자: "김종국(비조합원)", 직책: "총무" },
+        { 순번: 3, 목장명: "호일목장", 대표자: "김현중", 직책: "회원" },
+		{ 순번: 4, 목장명: "인경목장", 대표자: "박인호", 직책: "회원" },
+		{ 순번: 5, 목장명: "오월목장", 대표자: "김진용", 직책: "회원" },
+        { 순번: 6, 목장명: "선일목장", 대표자: "변명래", 직책: "회원" },
+        { 순번: 7, 목장명: "현준목장", 대표자: "안유환", 직책: "회원" },
+		{ 순번: 8, 목장명: "유나목장", 대표자: "우양식", 직책: "회원" },
+		{ 순번: 9, 목장명: "대흥목장", 대표자: "이수명", 직책: "회원" },
+        { 순번: 10, 목장명: "불로목장", 대표자: "김종오", 직책: "회원" },
+        { 순번: 11, 목장명: "혜림목장", 대표자: "김종원", 직책: "회원" },
+		{ 순번: 12, 목장명: "난초목장", 대표자: "최중규", 직책: "회원" },
+		{ 순번: 13, 목장명: "성현목장", 대표자: "이인석", 직책: "회원" },
+        { 순번: 14, 목장명: "새영근목장", 대표자: "우영근", 직책: "회원" },
+		{ 순번: 15, 목장명: "학현목장", 대표자: "김병식", 직책: "회원" },
+	],
+	  "합덕낙우회": [
+		{ 순번: 1, 목장명: "중앙목장", 대표자: "윤장현", 직책: "회장" },
+        { 순번: 2, 목장명: "정현목장", 대표자: "양정규", 직책: "총무" },
+        { 순번: 3, 목장명: "화곡목장", 대표자: "김영조", 직책: "회원" },
+		{ 순번: 4, 목장명: "창연목장", 대표자: "김영욱", 직책: "회원" },
+		{ 순번: 5, 목장명: "성효목장", 대표자: "이은돈", 직책: "회원" },
+        { 순번: 6, 목장명: "운암목장", 대표자: "홍봉진", 직책: "회원" },
+        { 순번: 7, 목장명: "성우목장", 대표자: "복권순", 직책: "회원" },
+		{ 순번: 8, 목장명: "우리목장", 대표자: "이은호", 직책: "회원" },
+		{ 순번: 9, 목장명: "두섭목장", 대표자: "이수호", 직책: "회원" },
+        { 순번: 10, 목장명: "남리목장", 대표자: "윤재춘", 직책: "회원" },
+        { 순번: 11, 목장명: "대성목장", 대표자: "윤재헌", 직책: "회원" },
+		{ 순번: 12, 목장명: "청수목장", 대표자: "조석형", 직책: "회원" },
+		{ 순번: 13, 목장명: "은혜목장", 대표자: "윤재각", 직책: "회원" },
+        { 순번: 14, 목장명: "춘우목장", 대표자: "이종호", 직책: "회원" },
+		{ 순번: 15, 목장명: "도립목장", 대표자: "김진필", 직책: "회원" },
+		{ 순번: 16, 목장명: "성현목장", 대표자: "박욱진", 직책: "회원" },
+	],
+	 "신평낙우회": [
+		{ 순번: 1, 목장명: "매산목장", 대표자: "최왕재", 직책: "회장" },
+        { 순번: 2, 목장명: "선의목장", 대표자: "박중선", 직책: "총무" },
+        { 순번: 3, 목장명: "희경목장", 대표자: "양영희", 직책: "회원" },
+		{ 순번: 4, 목장명: "현대목장", 대표자: "김영한", 직책: "회원" },
+		{ 순번: 5, 목장명: "신흥목장", 대표자: "이석정", 직책: "회원" },
+        { 순번: 6, 목장명: "남산목장", 대표자: "허윤회", 직책: "회원" },
+        { 순번: 7, 목장명: "가람목장", 대표자: "서만국", 직책: "회원" },
+		{ 순번: 8, 목장명: "대동목장", 대표자: "신대철", 직책: "회원" },
+		{ 순번: 9, 목장명: "상오목장", 대표자: "조성배", 직책: "회원" },
+        { 순번: 10, 목장명: "홍상목장", 대표자: "윤홍상", 직책: "회원" },
+        { 순번: 11, 목장명: "미순목장", 대표자: "강연승", 직책: "회원" },
+		{ 순번: 12, 목장명: "수지목장", 대표자: "정미화", 직책: "회원" },
+		{ 순번: 13, 목장명: "성은목장", 대표자: "이은호", 직책: "회원" },
+        { 순번: 14, 목장명: "동선목장", 대표자: "신동선", 직책: "회원" },
+		{ 순번: 15, 목장명: "서정규목장", 대표자: "서정규", 직책: "회원" },
+		{ 순번: 16, 목장명: "미영목장", 대표자: "김봉희", 직책: "회원" },
+	]	
+    };
+
+    function showMemberList(groupName) {
+    const section = document.getElementById("member-section");
+    const tbody = document.getElementById("member-table").querySelector("tbody");
+    const title = section.querySelector("h3");
+
+    tbody.innerHTML = "";
+    const members = memberData[groupName];
+    if (!members) return section.style.display = "none";
+
+    title.textContent = `${groupName} 회원명단`;
+
+    members.forEach(row => {
+      const tr = document.createElement("tr");
+      ["순번", "목장명", "대표자", "직책"].forEach(key => {
+        const td = document.createElement("td");
+        td.textContent = row[key];
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+
+    section.style.display = "block";
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll("#detail-section tbody tr").forEach(row => {
+    row.addEventListener("click", () => {
+      document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
+      row.classList.add("clicked-row");
+      const groupName = row.children[2]?.textContent?.trim();
+      if (groupName) showMemberList(groupName);
+    });
+  });
+
+  document.querySelectorAll('.event1, .event2').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.textContent.trim();
+      const row = document.getElementById(id);
+      if (row) {
+        document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
+        row.classList.add("clicked-row");
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
+
