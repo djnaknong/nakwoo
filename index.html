@@ -60,7 +60,7 @@
       margin: 1px 0;
       padding: 5px 6px;
       min-height: 20px;
-      font-size: clamp(12px, 1.5vw, 17px);
+      font-size: clamp(12px, 1.5vw, 15px);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -106,8 +106,8 @@
 
     #member-section td {
       border: 1px solid #ccc;
-      padding: 8px;
-      font-size: 14px;
+      padding: 6px;
+      font-size: clamp(14px, 2vw, 17px);
     }
 
     @media screen and (max-width: 768px) {
@@ -331,7 +331,7 @@
 		{ 순번: 13, 목장명: "성은목장", 대표자: "이은호", 직책: "회원" },
         { 순번: 14, 목장명: "동선목장", 대표자: "신동선", 직책: "회원" },
 		{ 순번: 15, 목장명: "서정규목장", 대표자: "서정규", 직책: "회원" },
-		{ 순번: 16, 목장명: "미영목장", 대표자: "박욱진", 직책: "회원" },
+		{ 순번: 16, 목장명: "미영목장", 대표자: "김봉희", 직책: "회원" },
 	]	
     };
 
@@ -361,23 +361,27 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll("#detail-section tbody tr").forEach(row => {
-      row.addEventListener("click", () => {
-        document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
-        row.classList.add("clicked-row");
-        const groupName = row.children[2]?.textContent?.trim();
-        if (groupName) showMemberList(groupName);
-      });
-    });
-
-    document.querySelectorAll('.event1, .event2').forEach(el => {
-      el.addEventListener('click', () => {
-        const id = el.textContent.trim();
-        const row = document.getElementById(id);
-        if (row) row.scrollIntoView({ behavior: 'smooth' });
-      });
+  document.querySelectorAll("#detail-section tbody tr").forEach(row => {
+    row.addEventListener("click", () => {
+      document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
+      row.classList.add("clicked-row");
+      const groupName = row.children[2]?.textContent?.trim();
+      if (groupName) showMemberList(groupName);
     });
   });
+
+  document.querySelectorAll('.event1, .event2').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.textContent.trim();
+      const row = document.getElementById(id);
+      if (row) {
+        document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
+        row.classList.add("clicked-row");
+        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  });
+});
 </script>
 </body>
 </html>
