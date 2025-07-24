@@ -184,7 +184,7 @@
 
   <div id="detail-section">
     <h2>2025년 7월 낙우회 상세 일정표</h2>
-	  <button onclick="printDetail()" style="margin-bottom: 10px;">🖨️ 상세일정 출력</button>
+	<button class="print-button" onclick="handlePrintOrShare('detail-section')">🖨️ 출력 또는 공유</button>
     <table>
       <thead>
         <tr>
@@ -241,7 +241,7 @@
 
   <div id="member-section">
     <h3>회원 명단</h3>
-	  <button onclick="printMembers()" style="margin-bottom: 10px;">🖨️ 회원명단 출력</button>
+	  <button class="print-button" onclick="handlePrintOrShare('member-section')">🖨️ 출력 또는 공유</button>
     <table id="member-table">
       <thead>
         <tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr>
@@ -251,46 +251,35 @@
   </div>
 
 
-  <script>
-function printDetail() {
-  const content = document.getElementById("detail-section").innerHTML;
-  const printWindow = window.open('', '_blank', 'width=900,height=800');
+ <script>
+    function handlePrintOrShare(sectionId) {
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const section = document.getElementById(sectionId);
 
-  printWindow.document.write(`
-    <html><head>
-      <title>상세 일정표 출력</title>
-      <style>
-        body { font-family: '맑은 고딕', sans-serif; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 12pt; }
-      </style>
-    </head><body onload="window.print();">
-      <h2>2025년 7월 낙우회 상세 일정표</h2>
-      ${content}
-    </body></html>
-  `);
-  printWindow.document.close();
-}
-
-
-  function printMembers() {
-  const content = document.getElementById("member-section").innerHTML;
-  const printWindow = window.open('', '_blank', 'width=900,height=800');
-
-  printWindow.document.write(`
-    <html><head>
-      <title>회원 명단 출력</title>
-      <style>
-        body { font-family: '맑은 고딕', sans-serif; padding: 20px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 12pt; }
-      </style>
-    </head><body onload="window.print();">
-      ${content}
-    </body></html>
-  `);
-  printWindow.document.close();
-}
+      if (isMobile && navigator.share) {
+        navigator.share({
+          title: '낙우회 일정 정보',
+          text: '낙우회 일정표 또는 회원명단을 확인하세요.',
+          url: window.location.href
+        }).catch(err => alert('공유 실패: ' + err));
+      } else {
+        const printContents = section.innerHTML;
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+          <html><head><title>출력</title>
+          <style>
+            body { font-family: '맑은 고딕'; padding: 20px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 14px; }
+            th { background-color: #6c757d; color: white; }
+            @page { size: A4; margin: 20mm; }
+          </style>
+          </head><body>${printContents}</body></html>`);
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+      }
+    }
   </script>
 </body>
 </html>
