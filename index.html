@@ -124,22 +124,7 @@
   background-color: #fff6c5 !important;
   font-weight: bold;
 }
-	  @media print {
-  body {
-    width: 210mm;
-    height: 297mm;
-    margin: 10mm;
-    font-size: 12pt;
-  }
-  .btn, .print-button {
-    display: none !important;
-  }
-  table {
-    page-break-inside: avoid;
-  }
-}
   </style>
-	<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 
 
@@ -199,8 +184,6 @@
 
   <div id="detail-section">
     <h2>2025년 7월 낙우회 상세 일정표</h2>
-	<button class="btn" onclick="shareAsImage('detail-section')">📷 이미지로 공유 (모바일)</button>
-  <button class="btn" onclick="window.print()">🖨️ 출력 (PC)</button>
     <table>
       <thead>
         <tr>
@@ -249,16 +232,14 @@
   <tr id="신평">
 	<td>7월 24일</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>약산도 신평점</td>
     <td><a href="tmap://search?name=충남 당진시 신평면 거산3거리길 97">충남 당진시 신평면 거산3거리길 97&nbsp;</a></td>
-    </tr>
-		</tbody>
-		
+</tbody>
+
 
     </table>
   </div>
 
   <div id="member-section">
     <h3>회원 명단</h3>
-	  <button class="btn" onclick="shareAsImage('member-section')">📷 이미지로 공유 (모바일)</button>
     <table id="member-table">
       <thead>
         <tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr>
@@ -267,10 +248,6 @@
     </table>
   </div>
 
-
- 
-
-	
   <script>
     const memberData = {
       "대호낙우회": [
@@ -388,27 +365,7 @@
     section.style.display = "block";
     section.scrollIntoView({ behavior: 'smooth' });
   }
-function shareAsImage(sectionId) {
-  const section = document.getElementById(sectionId);
-  html2canvas(section).then(canvas => {
-    canvas.toBlob(blob => {
-      const file = new File([blob], `${sectionId}.jpg`, { type: "image/jpeg" });
-      if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-          files: [file],
-          title: "낙우회 일정",
-          text: "일정 공유합니다.",
-        });
-      } else {
-        alert("공유 기능을 지원하지 않는 환경입니다. 이미지를 다운로드해주세요.");
-        const link = document.createElement("a");
-        link.download = `${sectionId}.jpg`;
-        link.href = URL.createObjectURL(blob);
-        link.click();
-      }
-    }, "image/jpeg");
-  });
-}
+
   document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll("#detail-section tbody tr").forEach(row => {
     row.addEventListener("click", () => {
