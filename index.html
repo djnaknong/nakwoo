@@ -184,6 +184,7 @@
 
   <div id="detail-section">
     <h2>2025년 7월 낙우회 상세 일정표</h2>
+	  <button onclick="printDetail()" style="margin-bottom: 10px;">🖨️ 상세일정 출력</button>
     <table>
       <thead>
         <tr>
@@ -240,6 +241,7 @@
 
   <div id="member-section">
     <h3>회원 명단</h3>
+	  <button onclick="printMembers()" style="margin-bottom: 10px;">🖨️ 회원명단 출력</button>
     <table id="member-table">
       <thead>
         <tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr>
@@ -248,6 +250,67 @@
     </table>
   </div>
 
+
+  <script>
+ function printDetail() {
+  const contentElement = document.querySelector("#detail-section");
+  if (!contentElement) {
+    alert("상세일정표를 찾을 수 없습니다.");
+    return;
+  }
+
+  const content = contentElement.innerHTML;
+  const printWindow = window.open('', '_blank', 'width=900,height=800');
+  printWindow.document.write(`
+    <html><head>
+      <title>상세 일정표 출력</title>
+      <style>
+        body { font-family: '맑은 고딕', sans-serif; font-size: 12pt; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 12pt; }
+        h2 { text-align: center; margin-bottom: 20px; }
+      </style>
+    </head><body>
+      ${content}
+    </body></html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+}
+
+
+    function printMembers() {
+  const section = document.getElementById("member-section");
+  if (!section || section.style.display === "none") {
+    alert("회원명단이 없습니다. 상세일정에서 낙우회를 먼저 선택하세요.");
+    return;
+  }
+
+  const content = section.innerHTML;
+  const printWindow = window.open('', '_blank', 'width=900,height=800');
+  printWindow.document.write(`
+    <html><head>
+      <title>회원 명단 출력</title>
+      <style>
+        body { font-family: '맑은 고딕', sans-serif; font-size: 12pt; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 12pt; }
+        h3 { text-align: center; margin-bottom: 20px; }
+      </style>
+    </head><body>
+      ${content}
+    </body></html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  printWindow.print();
+}
+  </script>
+</body>
+</html>
+
+	
   <script>
     const memberData = {
       "대호낙우회": [
