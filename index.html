@@ -252,59 +252,44 @@
 
 
   <script>
- function printDetail() {
-  const contentElement = document.querySelector("#detail-section");
-  if (!contentElement) {
-    alert("상세일정표를 찾을 수 없습니다.");
-    return;
-  }
-
-  const content = contentElement.innerHTML;
+function printDetail() {
+  const content = document.getElementById("detail-section").innerHTML;
   const printWindow = window.open('', '_blank', 'width=900,height=800');
+
   printWindow.document.write(`
     <html><head>
       <title>상세 일정표 출력</title>
       <style>
-        body { font-family: '맑은 고딕', sans-serif; font-size: 12pt; padding: 20px; }
+        body { font-family: '맑은 고딕', sans-serif; padding: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 12pt; }
-        h2 { text-align: center; margin-bottom: 20px; }
       </style>
-    </head><body>
+    </head><body onload="window.print();">
+      <h2>2025년 7월 낙우회 상세 일정표</h2>
       ${content}
     </body></html>
   `);
   printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
 }
 
 
-    function printMembers() {
-  const section = document.getElementById("member-section");
-  if (!section || section.style.display === "none") {
-    alert("회원명단이 없습니다. 상세일정에서 낙우회를 먼저 선택하세요.");
-    return;
-  }
-
-  const content = section.innerHTML;
+  function printMembers() {
+  const content = document.getElementById("member-section").innerHTML;
   const printWindow = window.open('', '_blank', 'width=900,height=800');
+
   printWindow.document.write(`
     <html><head>
       <title>회원 명단 출력</title>
       <style>
-        body { font-family: '맑은 고딕', sans-serif; font-size: 12pt; padding: 20px; }
+        body { font-family: '맑은 고딕', sans-serif; padding: 20px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #aaa; padding: 6px; text-align: center; font-size: 12pt; }
-        h3 { text-align: center; margin-bottom: 20px; }
       </style>
-    </head><body>
+    </head><body onload="window.print();">
       ${content}
     </body></html>
   `);
   printWindow.document.close();
-  printWindow.focus();
-  printWindow.print();
 }
   </script>
 </body>
