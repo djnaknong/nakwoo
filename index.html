@@ -88,6 +88,7 @@
       margin-top: 40px;
       overflow-x: auto;
       width: 100%;
+	 position: relative; /* 오버레이를 위한 부모 컨테이너 relative 처리 */
     }
 
     #detail-section table {
@@ -99,6 +100,25 @@
     #detail-section td:nth-child(6) {
       text-align: left;
     }
+	.scroll-hint {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(146, 130, 141, 0.6); /* 반투명 */
+  color: white;
+  font-size: 24px;
+  padding: 8px 10px;
+  border-radius: 8px 0 0 8px;
+  pointer-events: none;
+  z-index: 10;
+  animation: bounceArrow 1.2s infinite;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-50%) translateX(-5px); }
+}
 
     #member-section {
       display: none;
@@ -133,7 +153,7 @@
 <body> 
 <div style="text-align:left; margin: 20px 0;">
     <a href="2025-07.html" style="background-color:#2c3e50; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;">
-      ← 전월 일정 보기 (7월)
+      ← 7월
     </a>
   </div>
   <h2>2025년 8월 낙우회 일정표 달력</h2>
@@ -199,6 +219,7 @@
 
   <div id="detail-section">
     <h2>2025년 8월 낙우회 상세 일정표</h2>
+	  <div class="scroll-hint">오른쪽으로 스크롤</div>
     <table>
       <thead>
         <tr>
