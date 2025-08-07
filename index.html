@@ -113,6 +113,14 @@
   pointer-events: none;
   z-index: 10;
   animation: bounceArrow 1.2s infinite;
+
+  /*
+    By specifying a transition on the opacity property we enable the hint
+    to fade out smoothly when JavaScript changes its opacity in
+    response to horizontal scrolling. Without this property, the hint
+    would abruptly disappear, which looks jarring.
+  */
+  transition: opacity 0.4s ease-in-out;
 }
 
 @keyframes bounceArrow {
@@ -438,6 +446,31 @@
       }
     });
   });
+
+  // Fade out the horizontal scroll hint as the user scrolls.
+  // When the detail table is scrolled to the right, we want the
+  // arrow and message to gradually become transparent. This
+  // improves the user experience by not showing the hint once
+  // the user has discovered the horizontal scroll capability.
+  const hintEl = document.querySelector('.scroll-hint');
+  const detailContainer = document.getElementById('detail-section');
+  if (hintEl && detailContainer) {
+    // Ensure the hint starts fully visible
+    hintEl.style.opacity = '1';
+    // Add a scroll listener that adjusts opacity based on scrollLeft
+    detailContainer.addEventListener('scroll', () => {
+      // The distance over which the hint fades out (in pixels)
+      const fadeDistance = 100;
+      const scrolled = detailContainer.scrollLeft;
+      // Calculate the new opacity: 1 at 0px, 0 at fadeDistance or beyond
+      const newOpacity = Math.max(0, 1 - scrolled / fadeDistance);
+      hintEl.style.opacity = newOpacity;
+      // Stop the bounce animation once the user scrolls to prevent distraction
+      if (scrolled > 0) {
+        hintEl.style.animation = 'none';
+      }
+    });
+  }
 });
 </script>
 </body>
