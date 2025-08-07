@@ -120,7 +120,12 @@
     response to horizontal scrolling. Without this property, the hint
     would abruptly disappear, which looks jarring.
   */
-  transition: opacity 0.4s ease-in-out;
+  /*
+    Smoothly animate opacity changes. A slightly longer duration and
+    easing function make the fade-out feel more natural when the
+    horizontal scroll occurs.
+  */
+  transition: opacity 0.6s ease-in-out;
 }
 
 @keyframes bounceArrow {
@@ -227,6 +232,7 @@
 
   <div id="detail-section">
     <h2>2025년 8월 낙우회 상세 일정표</h2>
+	  ※ 낙우회명단을 보려면 해당낙우회를 클릭하시면 됩니다.
 	  <div class="scroll-hint">옆으로 스크롤 ⇨</div>
     <table>
       <thead>
@@ -436,16 +442,47 @@
   });
 
   document.querySelectorAll('.event1, .event2').forEach(el => {
-    el.addEventListener('click', () => {
+    el.addEventListener('click', (e) => {
+      // Prevent the click from bubbling up to the calendar table handler
+      e.stopPropagation();
       const id = el.textContent.trim();
       const row = document.getElementById(id);
       if (row) {
+        // Remove previous highlight and highlight the corresponding detail row
         document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
         row.classList.add("clicked-row");
+        // Scroll the detail schedule into view but do not automatically show the member list.
         row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Hide any previously visible member list to avoid confusion.
+        const section = document.getElementById('member-section');
+        if (section) section.style.display = 'none';
+      } else {
+        // If there is no matching detail row, hide any visible member list
+        const section = document.getElementById('member-section');
+        if (section) section.style.display = 'none';
       }
     });
   });
+
+  // Hide the member list when clicking anywhere on the monthly calendar that
+  // isn't an event. This prevents stale member lists from persisting when
+  // selecting empty cells or other dates. By attaching this handler to the
+  // calendar table itself and stopping propagation on event clicks above,
+  // we ensure that only clicks on empty areas will trigger the hide.
+  // Select the first table in the document (the monthly calendar). Using
+  // querySelectorAll avoids issues where "body > table" may not match if
+  // there are intervening text nodes or comments. The first table is the
+  // calendar; the second is the detail schedule.
+  const calendarTable = document.querySelectorAll('table')[0];
+  if (calendarTable) {
+    calendarTable.addEventListener('click', () => {
+      const section = document.getElementById('member-section');
+      if (section) section.style.display = 'none';
+      // Remove any row highlight in the detail section to prevent stale
+      // highlighting when switching back to the calendar view
+      document.querySelectorAll('#detail-section tbody tr').forEach(r => r.classList.remove('clicked-row'));
+    });
+  }
 
   // Fade out the horizontal scroll hint as the user scrolls.
   // When the detail table is scrolled to the right, we want the
@@ -459,11 +496,20 @@
     hintEl.style.opacity = '1';
     // Add a scroll listener that adjusts opacity based on scrollLeft
     detailContainer.addEventListener('scroll', () => {
-      // The distance over which the hint fades out (in pixels)
-      const fadeDistance = 100;
-      const scrolled = detailContainer.scrollLeft;
-      // Calculate the new opacity: 1 at 0px, 0 at fadeDistance or beyond
-      const newOpacity = Math.max(0, 1 - scrolled / fadeDistance);
+      // Define a range for the fade-out effect. The hint remains fully
+      // visible for the first portion of horizontal scroll (fadeStart), then
+      // gradually fades to invisible by fadeEnd. Adjust these values to
+      // control how quickly or slowly the hint disappears.
+      const fadeStart = 30;  // pixels of scroll before fading begins
+      const fadeEnd   = 200; // pixels of scroll by which fading completes
+      const scrolled  = detailContainer.scrollLeft;
+      let newOpacity;
+      if (scrolled <= fadeStart) {
+        newOpacity = 1;
+      } else {
+        const progress = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+        newOpacity = Math.max(0, 1 - progress);
+      }
       hintEl.style.opacity = newOpacity;
       // Stop the bounce animation once the user scrolls to prevent distraction
       if (scrolled > 0) {
