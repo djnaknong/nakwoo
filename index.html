@@ -153,48 +153,6 @@
       h2 { font-size: 20px; }
       #detail-section table, #member-section table { font-size: 12px; }
     }
-
-    /*
-      When viewed on narrow screens (e.g. mobile phones), transform the
-      detail schedule table into a vertical card layout. Each row is
-      displayed as its own block with labels on the left and values on
-      the right. This greatly improves readability on devices where a
-      traditional horizontal table would overflow the viewport.
-    */
-    @media screen and (max-width: 600px) {
-      #detail-section table {
-        border: none;
-      }
-      #detail-section thead {
-        /* Hide the header row to avoid duplication */
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-      #detail-section tr {
-        display: block;
-        margin-bottom: 1.2rem;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        padding: 0.75rem;
-      }
-      #detail-section td {
-        /* Stack each cell and align text to the left */
-        display: block;
-        border: none;
-        padding: 4px 0;
-        font-size: 14px;
-      }
-      #detail-section td:before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: inline-block;
-        width: 40%;
-        margin-right: 8px;
-        color: #555;
-      }
-    }
 	  tr.has-address {
   background-color: #fff6c5 !important;
   font-weight: bold;
@@ -274,7 +232,8 @@
 
   <div id="detail-section">
     <h2>2025년 8월 낙우회 상세 일정표</h2>
-	  <div class="scroll-hint">옆으로 스크롤 ⇨</div>
+    ※ 낙우회명단 확인 시 해당낙우회 클릭
+<div class="scroll-hint">옆으로 스크롤 ⇨</div>
     <table>
       <thead>
         <tr>
@@ -558,26 +517,6 @@
       }
     });
   }
-
-  // Assign data-label attributes to each cell in the detail schedule table
-  // so that the mobile responsive stylesheet can display labels next to
-  // values when the table stacks into a vertical layout. This runs
-  // once after the DOM has loaded and applies to every row in the
-  // detail-section body.
-  const labelTexts = [
-    "일자",
-    "시간",
-    "낙우회",
-    "낙우회 구분",
-    "장소",
-    "주소 (출발지)"
-  ];
-  document.querySelectorAll('#detail-section tbody tr').forEach(tr => {
-    labelTexts.forEach((label, idx) => {
-      const cell = tr.children[idx];
-      if (cell) cell.setAttribute('data-label', label);
-    });
-  });
 });
 </script>
 </body>
