@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2025년 8월 낙우회 일정</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>2025년 8월 낙우회 일정</title>
+<style>
     body {
       font-family: '맑은 고딕', sans-serif;
       background: linear-gradient(to bottom, #ffffff, #f0f4f8);
@@ -157,132 +158,195 @@
   background-color: #fff6c5 !important;
   font-weight: bold;
 }
-  </style>
+  
+.today {
+  background-color: #fffae6 !important; /* 은은한 파스텔 배경 */
+  border: 2px solid #f1c40f !important; /* 노란 테두리 */
+  animation: todayPulse 1.5s infinite ease-in-out;
+}
+
+@keyframes todayPulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(241, 196, 15, 0.8); }
+  50% { box-shadow: 0 0 15px rgba(241, 196, 15, 1); }
+}
+
+.today-label {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 4px;
+  font-size: 0.7em;
+  background-color: #f1c40f;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* 공휴일 표시 스타일 */
+.holiday {
+  background-color: #ffecec !important; /* 은은한 핑크톤 */
+  border: 2px solid #ff6b6b !important;
+}
+.holiday .date-num {
+  color: #e74c3c;
+  font-weight: 800;
+}
+.badge-holiday {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 4px;
+  font-size: 0.65em;
+  background-color: #e74c3c;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* == 주말/휴일 표시 규칙 (요청 반영) == */
+/* 휴일: 테두리 제거, 기존 핑크 배경 유지 */
+.holiday {
+  background-color: #ffecec !important;
+  border: none !important;
+}
+.holiday .date-num {
+  color: #e74c3c;
+  font-weight: 800;
+}
+
+/* 일요일: 휴일과 동일 스타일 */
+.sun {
+  background-color: #ffecec !important;
+}
+.sun .date-num {
+  color: #e74c3c;
+  font-weight: 800;
+}
+
+/* 토요일: 파란색 계열 */
+.sat {
+}
+.sat .date-num {
+  color: #1e6fff;
+  font-weight: 800;
+}</style>
 </head>
-
-	
-
-
-<body> 
+<body>
 <div style="text-align:left; margin: 20px 0;">
-    <a href="../../../AppData/Local/Temp/Adobe/Dreamweaver 2021/2025-07.html" style="background-color:#2c3e50; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;">
+<a href="../../../AppData/Local/Temp/Adobe/Dreamweaver 2021/2025-07.html" style="background-color:#2c3e50; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;">
       ← 7월
     </a>
-  </div>
-  <h2>2025년 8월 낙우회 일정표 달력</h2>
-  <table>
-    <tr>
-      <th><font color ="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color ="#0066ff">토</font> </th>
-    </tr>
-    <tr>
-      <td><div class="date-num">-</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
-    </tr>
-    <tr>
-      <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">4</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
-      <td><div class="date-num">5</div><div class="event1">&nbsp;순성</div><div class="event2">&nbsp;</div></td>
-      <td><div class="date-num">6</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
-      <td><div class="date-num">7</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
-      <td><div class="date-num">8</div><div class="event1">면천&nbsp;</div><div class="event2"></div></td>
-      <td><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td>
-    </tr>
-    <tr>
-      <td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">11</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
-      <td><div class="date-num">12</div><div class="event1">&nbsp;대호</div><div class="event2"></div></td>
-      <td><div class="date-num">13</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
-      <td><div class="date-num">14</div><div class="event1">아산&nbsp;</div><div class="event2"></div></td>
-      <td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
-    </tr>
-    <tr>
-      <td><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">19</div><div class="event1">송악송산</div><div class="event2"></div></td>
-      <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">21</div><div class="event1"></div><div class="event2">&nbsp;</div></td>
-      <td><div class="date-num">22</div><div class="event1">합덕</div><div class="event2"></div></td>
-      <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
-    </tr>
-    <tr>
-      <td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">28</div><div class="event1">신평</div><div class="event2"></div></td>
-      <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
-    </tr>
-	<tr>
-      <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-    </tr>
-  </table>
-
-  <div id="detail-section">
-    <h2>2025년 8월 낙우회 상세 일정표</h2>
+</div>
+<h2>2025년 8월 낙우회 일정표 달력</h2>
+<table>
+<tr>
+<th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+</tr>
+<tr>
+<td><div class="date-num">-</div><div class="event1"> </div><div class="event2"> </div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">4</div><div class="event1"> </div><div class="event2"> </div></td>
+<td><div class="date-num">5</div><div class="event1"> 순성</div><div class="event2"> </div></td>
+<td><div class="date-num">6</div><div class="event1"> </div><div class="event2"></div></td>
+<td><div class="date-num">7</div><div class="event1"> </div><div class="event2"></div></td>
+<td><div class="date-num">8</div><div class="event1">면천 </div><div class="event2"></div></td>
+<td><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">11</div><div class="event1"> </div><div class="event2"></div></td>
+<td><div class="date-num">12</div><div class="event1"> 대호</div><div class="event2"></div></td>
+<td><div class="date-num">13</div><div class="event1"> </div><div class="event2"></div></td>
+<td><div class="date-num">14</div><div class="event1">아산 </div><div class="event2"></div></td>
+<td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">19</div><div class="event1">송악송산</div><div class="event2"></div></td>
+<td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">21</div><div class="event1"></div><div class="event2"> </div></td>
+<td><div class="date-num">22</div><div class="event1">합덕</div><div class="event2"></div></td>
+<td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">28</div><div class="event1">신평</div><div class="event2"></div></td>
+<td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+</table>
+<div id="detail-section">
+<h2>2025년 8월 낙우회 상세 일정표</h2>
     ※ 낙우회명단 확인 시 해당낙우회 클릭
 <div class="scroll-hint">옆으로 스크롤 ⇨</div>
-    <table>
-      <thead>
-        <tr>
-          <th>일자</th><th>시간</th><th>낙우회</th><th>낙우회 구분</th><th>장소</th><th>주소 (출발지)</th>
-        </tr>
-      </thead>
-      <tbody>
-  <tr id="순성">
-    <td>8월 5일</td><td>12시</td><td>순성낙우회</td><td>낙우회</td><td>솔밭가든</td>
-    <td><a href="tmap://search?name=충남 당진시 순성면 순성로 599-5">충남 당진시 순성면 순성로 599-5</a></td>
-  </tr>
-  <tr id="면천">
-    <td>8월 8일</td><td>12시</td><td>면천낙우회</td><td>야유회</td><td>서산농원가든</td>
-    <td><a href="tmap://search?name=충남 서산시 운산면 원평2길 78-16">충남 서산시 운산면 원평2길 78-16</a></td>
-  </tr>
-  <tr id="대호">
-    <td>8월 12일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>한가네</td>
-    <td><a href="tmap://search?name=충남 당진시 역천로 692">충남 당진시 역천로 692</a></td>
-  </tr>
-	<tr id="아산">
-    <td>8월 14일</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>강철골가든</td>
-    <td><a href="tmap://search?name=충남 아산시 염치읍 강청리길 138">충남 아산시 염치읍 강청리길 138</a></td>
-  </tr>
-	<tr id="송악송산">
-	  <td>8월 19일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td>
-		<td><a href="tmap://search?name=충남 당진시 원당골길 8">충남 당진시 원당골길 8</a></td>
-  </tr>
-		  
-  <tr id="합덕">
-	  <td>8월 22일</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>미정&nbsp;</td>
-    <td>미정</td>
-  </tr>
-	<tr id="신평">
-	  <td>8월 28일</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>샤브올데이</td>
-		<td><a href="tmap://search?name=충남 당진시 수청동 1306">충남 당진시 수청동 1306</a></td>
-  </tr>
+<table>
+<thead>
+<tr>
+<th>일자</th><th>시간</th><th>낙우회</th><th>낙우회 구분</th><th>장소</th><th>주소 (출발지)</th>
+</tr>
+</thead>
+<tbody>
+<tr id="순성">
+<td>8월 5일</td><td>12시</td><td>순성낙우회</td><td>낙우회</td><td>솔밭가든</td>
+<td><a href="tmap://search?name=충남 당진시 순성면 순성로 599-5">충남 당진시 순성면 순성로 599-5</a></td>
+</tr>
+<tr id="면천">
+<td>8월 8일</td><td>12시</td><td>면천낙우회</td><td>야유회</td><td>서산농원가든</td>
+<td><a href="tmap://search?name=충남 서산시 운산면 원평2길 78-16">충남 서산시 운산면 원평2길 78-16</a></td>
+</tr>
+<tr id="대호">
+<td>8월 12일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>한가네</td>
+<td><a href="tmap://search?name=충남 당진시 역천로 692">충남 당진시 역천로 692</a></td>
+</tr>
+<tr id="아산">
+<td>8월 14일</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>강철골가든</td>
+<td><a href="tmap://search?name=충남 아산시 염치읍 강청리길 138">충남 아산시 염치읍 강청리길 138</a></td>
+</tr>
+<tr id="송악송산">
+<td>8월 19일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td>
+<td><a href="tmap://search?name=충남 당진시 원당골길 8">충남 당진시 원당골길 8</a></td>
+</tr>
+<tr id="합덕">
+<td>8월 22일</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>미정 </td>
+<td>미정</td>
+</tr>
+<tr id="신평">
+<td>8월 28일</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>샤브올데이</td>
+<td><a href="tmap://search?name=충남 당진시 수청동 1306">충남 당진시 수청동 1306</a></td>
+</tr>
 </tbody>
 </table>
 </div>
-
-  <div id="member-section">
-    <h3>회원 명단</h3>
-    <table id="member-table">
-      <thead>
-        <tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+<div id="member-section">
+<h3>회원 명단</h3>
+<table id="member-table">
+<thead>
+<tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
 <script>
     const memberData = {
       "대호낙우회": [
@@ -522,7 +586,131 @@
     });
   }
 });
-</script>
-</body>
-</html>
 
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date();
+  const todayDate = today.getDate();
+
+  document.querySelectorAll('.date-num').forEach(el => {
+    if (parseInt(el.textContent) === todayDate) {
+      el.parentElement.classList.add('today');
+    }
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const today = new Date();
+  const todayDate = today.getDate();
+
+  document.querySelectorAll('.date-num').forEach(el => {
+    if (parseInt(el.textContent) === todayDate) {
+      el.parentElement.classList.add('today');
+      // 오늘 라벨 추가
+      const label = document.createElement('span');
+      label.className = 'today-label';
+      label.textContent = '오늘';
+      el.appendChild(label);
+    }
+  });
+});
+
+(function(){
+  // ---- 공휴일 표시 ----
+  const SERVICE_KEY_RAW = "jOyUcvOotOrPQe4eIVfetvbOb7Zf4TVWCwS/BGjklWfrngNc3VdOi9a5+Nh5EaYN/BJKgl44D50Qi7fHiijyMg==";
+  const SERVICE_KEY = encodeURIComponent(SERVICE_KEY_RAW);
+  try {
+    const h2 = document.querySelector('h2');
+    if (!h2) return;
+    const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
+    if (!m) return;
+    const solYear = m[1];
+    const solMonth = m[2].padStart(2, '0');
+
+    const url = `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getHoliDeInfo?solYear=${solYear}&solMonth=${solMonth}&ServiceKey=${SERVICE_KEY}&_type=json&numOfRows=100`;
+
+    fetch(url).then(r => r.json()).then(data => {
+      const items = (((data || {}).response || {}).body || {}).items || {};
+      let list = items.item || [];
+      if (!Array.isArray(list)) list = list ? [list] : [];
+      list.forEach(it => {
+        if (String(it.isHoliday).toUpperCase() !== 'Y') return;
+        const loc = String(it.locdate || '');
+        if (loc.length !== 8) return;
+        const day = parseInt(loc.slice(6, 8), 10);
+        document.querySelectorAll('.date-num').forEach(el => {
+          const n = parseInt(el.textContent);
+          if (n === day) {
+            const td = el.parentElement;
+            td.classList.add('holiday');
+            // 라벨(날짜명) 붙이기: 이미 라벨이 있으면 중복 방지
+            const hasBadge = el.querySelector('.badge-holiday');
+            if (!hasBadge) {
+              const span = document.createElement('span');
+              span.className = 'badge-holiday';
+              span.textContent = (it.dateName || '공휴일');
+              el.appendChild(span);
+            }
+          }
+        });
+      });
+    }).catch(e => {
+      // 네트워크/CORS 실패 시 콘솔에만 기록 (화면 메시지는 표시하지 않음)
+      console.warn('공휴일 API 호출 실패:', e);
+    });
+  } catch (err) {
+    console.warn('공휴일 표시 중 오류:', err);
+  }
+})();
+</script>
+<script>
+// ---- 공휴일 오프라인(하드코딩) 표시: 2025년 8월 ----
+document.addEventListener('DOMContentLoaded', () => {
+  const h2 = document.querySelector('h2');
+  if (!h2) return;
+  const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
+  if (!m) return;
+  const year = parseInt(m[1], 10);
+  const month = parseInt(m[2], 10);
+
+  // 2025년 8월: 광복절(15일)만 표시 (대체공휴일 없음)
+  if (year === 2025 && month === 8) {
+    const holidays = [{ day: 15, name: '광복절' }];
+    document.querySelectorAll('.date-num').forEach(el => {
+      const d = parseInt(el.textContent, 10);
+      const h = holidays.find(x => x.day === d);
+      if (h) {
+        const td = el.parentElement;
+        td.classList.add('holiday');
+        if (!el.querySelector('.badge-holiday')) {
+          const badge = document.createElement('span');
+          badge.className = 'badge-holiday';
+          badge.textContent = h.name;
+          el.appendChild(badge);
+        }
+      }
+    });
+  }
+});
+</script><script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 첫 번째 테이블이 월간 달력
+  const calendar = document.querySelectorAll('table')[0];
+  if (!calendar) return;
+
+  const rows = calendar.querySelectorAll('tr');
+  // rows[0] = thead (요일), 이후는 날짜 행
+  rows.forEach((row, idx) => {
+    if (idx === 0) return; // skip header
+    const cells = row.querySelectorAll('td');
+    if (cells.length !== 7) return;
+
+    // 일요일(0번째), 토요일(6번째)에 클래스 부여
+    const sunCell = cells[0];
+    const satCell = cells[6];
+
+    if (sunCell) sunCell.classList.add('sun');
+    if (satCell) satCell.classList.add('sat');
+  });
+});
+</script></body>
+</html>
