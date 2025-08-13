@@ -228,7 +228,19 @@
 .sat .date-num {
   color: #1e6fff;
   font-weight: 800;
-}</style>
+}
+/* 날짜는 오른쪽 정렬, 라벨은 앞쪽 */
+.date-num {
+  display: flex;
+  justify-content: flex-end; /* keep number to the right */
+  align-items: center;
+  gap: 4px;
+}
+.date-num span.today-label,
+.date-num span.badge-holiday {
+  order: -1; /* move labels before the number */
+}
+</style>
 </head>
 <body>
 <div style="text-align:left; margin: 20px 0;">
