@@ -183,7 +183,6 @@
 
 /* 공휴일 표시 스타일 */
 .holiday {
-  background-color: #ffecec !important; /* 은은한 핑크톤 */
   border: 2px solid #ff6b6b !important;
 }
 .holiday .date-num {
@@ -205,7 +204,6 @@
 /* == 주말/휴일 표시 규칙 (요청 반영) == */
 /* 휴일: 테두리 제거, 기존 핑크 배경 유지 */
 .holiday {
-  background-color: #ffecec !important;
   border: none !important;
 }
 .holiday .date-num {
@@ -215,7 +213,6 @@
 
 /* 일요일: 휴일과 동일 스타일 */
 .sun {
-  background-color: #ffecec !important;
 }
 .sun .date-num {
   color: #e74c3c;
@@ -239,8 +236,7 @@
 .date-num span.today-label,
 .date-num span.badge-holiday {
   order: -1; /* move labels before the number */
-}
-</style>
+}</style>
 </head>
 <body>
 <div style="text-align:left; margin: 20px 0;">
