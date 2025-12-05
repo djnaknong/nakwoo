@@ -790,7 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-</script><script>
+<script>
 document.addEventListener('DOMContentLoaded', () => {
   // 첫 번째 테이블이 월간 달력
   const calendar = document.querySelectorAll('table')[0];
@@ -811,9 +811,45 @@ document.addEventListener('DOMContentLoaded', () => {
     if (satCell) satCell.classList.add('sat');
   });
 });
+</script>
 <script>
 // === Embedded KR Holidays (offline) for 2025 ===
-window.KR_HOLIDAYS = {"2025": {"01": [{"day": 1, "name": "신정"}, {"day": 27, "name": "임시공휴일"}, {"day": 28, "name": "설날 연휴"}, {"day": 29, "name": "설날"}, {"day": 30, "name": "설날 연휴"}], "03": [{"day": 1, "name": "삼일절"}, {"day": 3, "name": "대체공휴일(삼일절)"}], "05": [{"day": 5, "name": "어린이날 · 부처님오신날"}, {"day": 6, "name": "대체공휴일(어린이날)"}], "06": [{"day": 6, "name": "현충일"}], "08": [{"day": 15, "name": "광복절"}], "10": [{"day": 3, "name": "개천절"}, {"day": 5, "name": "추석 연휴(전날)"}, {"day": 6, "name": "추석"}, {"day": 7, "name": "추석 연휴(다음날)"}, {"day": 8, "name": "대체공휴일(추석)"}, {"day": 9, "name": "한글날"}], "12": [{"day": 25, "name": "크리스마스"}]}};
+window.KR_HOLIDAYS = {
+  "2025": {
+    "01": [
+      {"day": 1, "name": "신정"},
+      {"day": 27, "name": "임시공휴일"},
+      {"day": 28, "name": "설날 연휴"},
+      {"day": 29, "name": "설날"},
+      {"day": 30, "name": "설날 연휴"}
+    ],
+    "03": [
+      {"day": 1, "name": "삼일절"},
+      {"day": 3, "name": "대체공휴일(삼일절)"}
+    ],
+    "05": [
+      {"day": 5, "name": "어린이날 · 부처님오신날"},
+      {"day": 6, "name": "대체공휴일(어린이날)"}
+    ],
+    "06": [
+      {"day": 6, "name": "현충일"}
+    ],
+    "08": [
+      {"day": 15, "name": "광복절"}
+    ],
+    "10": [
+      {"day": 3, "name": "개천절"},
+      {"day": 5, "name": "추석 연휴(전날)"},
+      {"day": 6, "name": "추석"},
+      {"day": 7, "name": "추석 연휴(다음날)"},
+      {"day": 8, "name": "대체공휴일(추석)"},
+      {"day": 9, "name": "한글날"}
+    ],
+    "12": [
+      {"day": 25, "name": "크리스마스"}
+    ]
+  }
+};
 
 (function() {
   function markToday() {
@@ -846,7 +882,7 @@ window.KR_HOLIDAYS = {"2025": {"01": [{"day": 1, "name": "신정"}, {"day": 27, 
           const badge = document.createElement('span');
           badge.className = 'badge-holiday';
           badge.textContent = map.get(n);
-          el.prepend(badge);
+          el.prepend(badge);   // 날짜 왼쪽에 라벨
         }
       }
     });
@@ -854,10 +890,14 @@ window.KR_HOLIDAYS = {"2025": {"01": [{"day": 1, "name": "신정"}, {"day": 27, 
 
   document.addEventListener('DOMContentLoaded', function() {
     const h2 = document.querySelector("h2");
-    let year="2025", month2="12";
+    let year = "2025", month2 = "12"; // 기본값
+
     try {
-      const m=h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
-      if(m){ year=m[1]; month2=m[2].padStart(2,"0"); }
+      const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
+      if (m) {
+        year = m[1];
+        month2 = m[2].padStart(2, "0");
+      }
     } catch(e) {}
 
     markToday();
