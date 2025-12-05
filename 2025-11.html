@@ -1,9 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>2025년 12월 낙우회 일정</title>
+<title>2025년 11월 낙우회 일정</title>
 <style>
     body {
       font-family: '맑은 고딕', sans-serif;
@@ -88,7 +89,7 @@
       margin-top: 40px;
       overflow-x: auto;
       width: 100%;
-	  position: relative; /* 오버레이를 위한 부모 컨테이너 relative 처리 */
+	 position: relative; /* 오버레이를 위한 부모 컨테이너 relative 처리 */
     }
 
     #detail-section table {
@@ -113,6 +114,18 @@
   pointer-events: none;
   z-index: 10;
   animation: bounceArrow 1.2s infinite;
+
+  /*
+    By specifying a transition on the opacity property we enable the hint
+    to fade out smoothly when JavaScript changes its opacity in
+    response to horizontal scrolling. Without this property, the hint
+    would abruptly disappear, which looks jarring.
+  */
+  /*
+    Smoothly animate opacity changes. A slightly longer duration and
+    easing function make the fade-out feel more natural when the
+    horizontal scroll occurs.
+  */
   transition: opacity 0.6s ease-in-out;
 }
 
@@ -137,7 +150,7 @@
       font-size: clamp(14px, 2vw, 20px);
     }
 
-    @media screen (max-width: 768px) {
+    @media screen and (max-width: 768px) {
       h2 { font-size: 20px; }
       #detail-section table, #member-section table { font-size: 12px; }
     }
@@ -173,7 +186,6 @@
   border: 2px solid #ff6b6b !important;
 }
 .holiday .date-num {
-
   color: #e74c3c;
   font-weight: 800;
 }
@@ -189,7 +201,8 @@
   white-space: nowrap;
 }
 
-/* == 주말/휴일 표시 규칙 == */
+/* == 주말/휴일 표시 규칙 (요청 반영) == */
+/* 휴일: 테두리 제거, 기존 핑크 배경 유지 */
 .holiday {
   border: none !important;
 }
@@ -197,12 +210,16 @@
   color: #e74c3c;
   font-weight: 800;
 }
+
+/* 일요일: 휴일과 동일 스타일 */
 .sun {
 }
 .sun .date-num {
   color: #e74c3c;
   font-weight: 800;
 }
+
+/* 토요일: 파란색 계열 */
 .sat {
 }
 .sat .date-num {
@@ -212,14 +229,15 @@
 /* 날짜는 오른쪽 정렬, 라벨은 앞쪽 */
 .date-num {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; /* keep number to the right */
   align-items: center;
   gap: 4px;
 }
 .date-num span.today-label,
 .date-num span.badge-holiday {
-  order: -1;
+  order: -1; /* move labels before the number */
 }
+/* === Offline holiday/today labels === */
 .badge-holiday {
   display: inline-block;
   margin-right: 4px;
@@ -252,73 +270,28 @@
 </head>
 <body>
 <div style="display:flex; justify-content:space-between; align-items:center; margin:20px 0;">
-<a href="2025-11.html" style="background-color:#2c3e50; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;">      ← 11월
-   
+<a href="2025-10.html" style="background-color:#2c3e50; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;">      ← 10월
+    </a>
+	
+<a href="index.html" 
+     style="background-color:#2c3e50; color:white; padding:10px 20px; border-radius:8px; text-decoration:none; font-weight:bold;">           
+  12월 ➡
 </a>
 </div>
-<h2>2025년 12월 낙우회 및 조합원 행사 일정표</h2>
-<p>일정추가예정 낙우회 : 순성(9일예정), 신평, 합덕(24일예정), 대한, 연세, 삼괴, 고덕(빙그레), 아산, 서산</p>
+<h2>2025년 11월 낙우회 및 조합원 행사 일정표</h2>
 <table>
 <tr>
 <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
 </tr>
-<tr>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
-</tr>
-<tr>
-  <td class=""><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">9</div><div class="event1">면천</div><div class="event2">남양</div></td>
-  <td class=""><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">12</div><div class="event1">대호</div><div class="event2">청어람</div></td>
-  <td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
-</tr>
-<tr>
-  <td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">15</div><div class="event1">고덕</div><div class="event2">잔다리</div></td>
-  <td class=""><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">18</div><div class="event1">송악송산</div><div class="event2"></div></td>
-  <td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
-</tr>
-<tr>
-  <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
-</tr>
-<tr>
-  <td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-</tr>
-<tr>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
-</tr>
+<tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">7</div><div class="event1">대호</div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">14</div><div class="event1">아산</div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1">아산 양지 자혼&nbsp;&nbsp;</div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">16</div><div class="event1">이천 월산 여혼</div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">21</div><div class="event1">산악회</div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">24</div><div class="event1">합덕&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">27</div><div class="event1">신평</div><div class="event2"></div></td><td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1">예산 영신 자혼</div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr>
 </table>
 <div id="detail-section">
-<h2>2025년 12월 낙우회 상세 일정표</h2>
+<h2>2025년 11월 낙우회 상세 일정표</h2>
     ※ 낙우회명단 확인 시 해당낙우회 클릭
 <div class="scroll-hint">옆으로 스크롤 ⇨</div>
 <table>
@@ -328,39 +301,39 @@
 </tr>
 </thead>
 <tbody>
-<!-- 기존 11월 상세 일정은 그대로 두었습니다.
-     12월 일정으로 바꾸실 때 이 부분만 수정하시면 됩니다. -->
-<tr id="면천">
-<td>12월 9일(화)</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>갈비명가</td>
-<td><a href="tmap://search?name=충남 당진시 면천면 성하로 271">충남 당진시 면천면 성하로 271</a></td>
-</tr>
-<tr id="남양">
-<td>12월 9일(화)</td><td>18시30분</td><td>남양낙우회</td><td>낙우회</td><td>갯마을횟집</td>
-<td><a href="tmap://search?name=충남 당진시 합덕읍 합덕교동1길 8">충남 당진시 합덕읍 합덕교동1길 8</a></td>
-</tr>
 <tr id="대호">
-	<td>12월 12일(금)</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>원당풍천장어</td>
-<td><a href="tmap://search?name=충청남도 당진시 고실1길 41-10">충청남도 당진시 고실1길 41-10</a></td>
+<td>11월 7일(금)</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>왕산포횟집</td>
+<td><a href="tmap://search?name=충남 서산시 지곡면 중왕뱃마을길 20">충남 서산시 지곡면 중왕뱃마을길 20</a></td>
 </tr>
-<tr id="청어람">
-<td>12월 12일(금)</td><td>19시</td><td>청어람</td><td>낙우회</td><td>성진한우마을</td>
-<td><a href="tmap://search?name=충남 당진시 합덕읍 버그내2길 128-25">충남 당진시 합덕읍 버그내2길 128-25</a></td>
+<tr id="아산">
+<td>11월 14일(금)</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>마포숯불갈비</td>
+<td><a href="tmap://search?name=충남 아산시 신창면 온천대로 896-17">충남 아산시 신창면 온천대로 896-17</a></td>
 </tr>
-<tr id="고덕">
-<td>12월 15일(월)</td><td>12시</td><td>고덕낙우회</td><td>낙우회</td><td>수목가든</td>
-<td><a href="tmap://search?name=충청남도 예산군 고덕면 황금뜰로 187">충청남도 예산군 고덕면 황금뜰로 187</a></td>
+<tr id="아산 양지 자혼">
+	<td>11월 15일(토)</td><td>13시 00분&nbsp;</td><td><p>아산 양지(지덕영) 자혼<br>마음전하실 곳 : </br><br>
+	  농협 174253-52-068987</br></p></td><td>결혼식</td><td>그랜드하우스(인천) 7층</td>
+<td><a href="tmap://search?name=인천 미추홀구 주안로 103-18">인천 미추홀구 주안로 103-18</a></td>
 </tr>
-<tr id="잔다리">
-<td>12월 15일(월)</td><td>12시</td><td>잔다리낙우회</td><td>낙우회</td><td>미정</td>
-<td><a href="tmap://search?name=">미정</a></td>
+<tr id="이천 월산 여혼">
+<td>11월 16일(일)</td><td>11시 00분&nbsp;</td><td>이천 월산(장석중) 여혼<br>마음전하실 곳 : </br><br>농협 233082-52-016387</br></td><td>결혼식</td><td>더베일리하우스 삼성</td>
+<td><a href="tmap://search?name=서울특별시 강남구 영동대로 506">서울특별시 강남구 영동대로 506</a></td>
 </tr>
-<tr id="송악송산">
-<td>12월 18일(목)</td><td>11시30분</td><td>송악송산낙우회</td><td>낙우회</td><td>만석식당</td>
-<td><a href="tmap://search?name=충청남도 서산시 대산읍 삼길포1로 61">충청남도 서산시 대산읍 삼길포1로 61</a></td>
+<tr id="산악회">
+<td>11월 21일(금)</td><td>8시 30분&nbsp;</td><td>조합원산악회</td><td>신악회</td><td>논산탑정호둘레길&nbsp;</td>
+<td><a href="tmap://search?name=충남 당진시 합덕읍 남부로 1377">합덕가공공장출발</a></td>
 </tr>
-<tr id="미정">
-<td></td><td></td><td></td><td></td><td>&nbsp;</td>
-<td><a href="tmap://search?name=충남 당진시 신평면 거산3거리길 67">&nbsp;</a></td>
+<tr id="합덕">
+<td>11월 24일(월)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+<td><a href="tmap://search?name=충남 당진시 합덕읍 버그내1길 89">충남 당진시 합덕읍 버그내1길 89</a></td>
+</tr>
+<tr id="신평">
+<td>11월 27일(목)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>칠복칼국수</td>
+<td><a href="tmap://search?name=충남 당진시 신평면 거산3거리길 67">충남 당진시 신평면 거산3거리길 67</a></td>
+</tr>
+<tr id="예산 영신 자혼">
+	<td>11월 29일(토)</td><td>15시 00분&nbsp;</td><td><p>예산 영신(이구선) 자혼<br>마음전하실 곳 : </br><br>
+	  농협 475103-52-094053</br></p></td><td>결혼식</td><td>CA웨딩컨벤션</td>
+<td><a href="tmap://search?name=충남 아산시 배방읍 희망로 100">충남 아산시 배방읍 희망로 100 KTX천안아산역 역사내 2층</a></td>
 </tr>
 
 </tbody>
@@ -389,31 +362,30 @@
         { 순번: 9, 목장명: "덕원목장", 대표자: "채수길", 직책: "회원" },
         { 순번: 10, 목장명: "정윤목장", 대표자: "최승기", 직책: "회원" },	  
       ],
-      /* 이하 memberData 객체는 원본 그대로 유지 */
-      "아산낙우회": [
-        { 순번: 1, 목장명: "신풍목장", 대표자: "이한남", 직책: "회장" },
+		  "아산낙우회": [
+		{ 순번: 1, 목장명: "신풍목장", 대표자: "이한남", 직책: "회장" },
         { 순번: 2, 목장명: "칠복목장", 대표자: "이주영", 직책: "총무" },
         { 순번: 3, 목장명: "백두목장", 대표자: "정준모", 직책: "회원" },
-        { 순번: 4, 목장명: "송림목장", 대표자: "최돈자", 직책: "회원" },
-        { 순번: 5, 목장명: "남주목장", 대표자: "고덕주", 직책: "회원" },
+		{ 순번: 4, 목장명: "송림목장", 대표자: "최돈자", 직책: "회원" },
+		{ 순번: 5, 목장명: "남주목장", 대표자: "고덕주", 직책: "회원" },
         { 순번: 6, 목장명: "우희목장", 대표자: "안병호", 직책: "회원" },
         { 순번: 7, 목장명: "한수목장", 대표자: "한기수", 직책: "회원" },
-        { 순번: 8, 목장명: "꿀벌목장", 대표자: "남상필", 직책: "회원" },
-        { 순번: 9, 목장명: "제아목장", 대표자: "박용면", 직책: "회원" },
+		{ 순번: 8, 목장명: "꿀벌목장", 대표자: "남상필", 직책: "회원" },
+		{ 순번: 9, 목장명: "제아목장", 대표자: "박용면", 직책: "회원" },
         { 순번: 10, 목장명: "대유목장", 대표자: "윤철희", 직책: "회원" },
         { 순번: 11, 목장명: "양지목장", 대표자: "지덕영", 직책: "회원" },
-        { 순번: 12, 목장명: "현대목장", 대표자: "조성준", 직책: "회원" },
-        { 순번: 13, 목장명: "우천목장", 대표자: "정낙준", 직책: "회원" },
+		{ 순번: 12, 목장명: "현대목장", 대표자: "조성준", 직책: "회원" },
+		{ 순번: 13, 목장명: "우천목장", 대표자: "정낙준", 직책: "회원" },
         { 순번: 14, 목장명: "희목장", 대표자: "박종숙", 직책: "회원" },
-        { 순번: 15, 목장명: "인호목장", 대표자: "김영종", 직책: "회원" },
-        { 순번: 16, 목장명: "자연목장", 대표자: "김범수", 직책: "회원" },
-        { 순번: 17, 목장명: "정훈목장", 대표자: "이정훈", 직책: "회원" },
-        { 순번: 18, 목장명: "초정목장", 대표자: "박점백", 직책: "회원" },
-        { 순번: 19, 목장명: "정화목장", 대표자: "정종현", 직책: "회원" },
-        { 순번: 20, 목장명: "태고목장", 대표자: "이복규", 직책: "회원" },
-        { 순번: 21, 목장명: "숙이목장", 대표자: "김종옥", 직책: "회원" },
-        { 순번: 22, 목장명: "정성목장", 대표자: "임동운", 직책: "회원" }			  
-      ],
+		{ 순번: 15, 목장명: "인호목장", 대표자: "김영종", 직책: "회원" },
+		{ 순번: 16, 목장명: "자연목장", 대표자: "김범수", 직책: "회원" },
+		{ 순번: 17, 목장명: "정훈목장", 대표자: "이정훈", 직책: "회원" },
+		{ 순번: 18, 목장명: "초정목장", 대표자: "박점백", 직책: "회원" },
+		{ 순번: 19, 목장명: "정화목장", 대표자: "정종현", 직책: "회원" },
+		{ 순번: 20, 목장명: "태고목장", 대표자: "이복규", 직책: "회원" },
+		{ 순번: 21, 목장명: "숙이목장", 대표자: "김종옥", 직책: "회원" },
+		{ 순번: 22, 목장명: "정성목장", 대표자: "임동운", 직책: "회원" },			  
+	],	
 		"삼괴낙우회(진흥회)": [
 		{ 순번: 1, 목장명: "준화선목장", 대표자: "송준영", 직책: "회장" },
         { 순번: 2, 목장명: "현대목장", 대표자: "김종국(비조합원)", 직책: "총무" },
@@ -500,77 +472,7 @@
 		{ 순번: 4, 목장명: "백주목장", 대표자: "이경용", 직책: "회원" },
 		{ 순번: 5, 목장명: "동곡목장", 대표자: "이상복", 직책: "회원" },
         { 순번: 6, 목장명: "유천목장", 대표자: "허영", 직책: "회원" },
-	],
-	 "남양낙우회": [
-		{ 순번: 1, 목장명: "도립목장", 대표자: "김진필", 직책: "회장" },
-        { 순번: 2, 목장명: "대성목장", 대표자: "윤재헌", 직책: "총무" },
-        { 순번: 3, 목장명: "성은목장", 대표자: "이은호", 직책: "회원" },
-		{ 순번: 4, 목장명: "홍상목장", 대표자: "윤홍상", 직책: "회원" },
-		{ 순번: 5, 목장명: "오구목장", 대표자: "이승주", 직책: "회원" },
-        { 순번: 6, 목장명: "작골목장", 대표자: "정락범", 직책: "회원" },
-        { 순번: 7, 목장명: "홍제목장", 대표자: "최원준", 직책: "회원" },
-		{ 순번: 8, 목장명: "세성목장", 대표자: "오세성", 직책: "회원" },
-		{ 순번: 9, 목장명: "은혜목장", 대표자: "윤재각", 직책: "회원" },
-        { 순번: 10, 목장명: "우연목장", 대표자: "이성우", 직책: "회원" },
-        { 순번: 11, 목장명: "보림목장", 대표자: "이진수", 직책: "회원" },
-	],
-	 "고덕낙우회": [
-		{ 순번: 1, 목장명: "유신목장", 대표자: "이유구", 직책: "회장" },
-        { 순번: 2, 목장명: "유성목장", 대표자: "김영태", 직책: "총무" },
-        { 순번: 3, 목장명: "임마누엘목장", 대표자: "곽선용", 직책: "회원" },
-		{ 순번: 4, 목장명: "진성목장", 대표자: "김정환", 직책: "회원" },
-		{ 순번: 5, 목장명: "미성목장", 대표자: "이구용", 직책: "회원" },
-	],
-	 "잔다리낙우회": [
-		{ 순번: 1, 목장명: "신성목장", 대표자: "전상학", 직책: "회장" },
-        { 순번: 2, 목장명: "개구리목장", 대표자: "전의규", 직책: "총무" },
-        { 순번: 3, 목장명: "관우목장", 대표자: "이우관", 직책: "회원" },
-	],
-	 "청어람": [
-		{ 순번: 1, 목장명: "청수목장", 대표자: "조성민", 직책: "회장" },
-        { 순번: 2, 목장명: "성현목장", 대표자: "박욱진", 직책: "부회장" },
-        { 순번: 3, 목장명: "오구목장", 대표자: "이도훈", 직책: "총무" },
-		{ 순번: 4, 목장명: "가람목장", 대표자: "서정규", 직책: "회원" },
-		{ 순번: 5, 목장명: "경원목장", 대표자: "구본관", 직책: "회원" },
-        { 순번: 6, 목장명: "남리목장", 대표자: "윤창현", 직책: "회원" },
-        { 순번: 7, 목장명: "남산목장", 대표자: "허윤회", 직책: "회원" },
-		{ 순번: 8, 목장명: "대연목장", 대표자: "원대연", 직책: "회원" },
-		{ 순번: 9, 목장명: "덕곡목장", 대표자: "한지훈", 직책: "회원" },
-        { 순번: 10, 목장명: "도립목장", 대표자: "김대연", 직책: "회원" },
-        { 순번: 11, 목장명: "도형목장", 대표자: "조성일", 직책: "회원" },
-		{ 순번: 12, 목장명: "동선목장", 대표자: "신동선", 직책: "회원" },
-		{ 순번: 13, 목장명: "두석목장", 대표자: "장두석", 직책: "회원" },
-        { 순번: 14, 목장명: "두섭목장", 대표자: "이한두", 직책: "회원" },
-		{ 순번: 15, 목장명: "병정목장", 대표자: "이병정", 직책: "회원" },
-		{ 순번: 16, 목장명: "서인목장", 대표자: "김철상", 직책: "회원" },
-        { 순번: 17, 목장명: "선의목장", 대표자: "박중선", 직책: "회원" },
-		{ 순번: 18, 목장명: "성우목장", 대표자: "복영훈", 직책: "회원" },
-		{ 순번: 19, 목장명: "성은목장", 대표자: "이은호", 직책: "회원" },
-        { 순번: 20, 목장명: "성효목장", 대표자: "이성주", 직책: "회원" },
-        { 순번: 21, 목장명: "세성목장", 대표자: "오세성", 직책: "회원" },
-		{ 순번: 22, 목장명: "송죽목장", 대표자: "이정모", 직책: "회원" },
-		{ 순번: 23, 목장명: "우리목장", 대표자: "이원주", 직책: "회원" },
-        { 순번: 24, 목장명: "원혁목장", 대표자: "장원혁", 직책: "회원" },
-		{ 순번: 25, 목장명: "율당목장", 대표자: "남윤호", 직책: "회원" },
-		{ 순번: 26, 목장명: "이화목장", 대표자: "이덕용", 직책: "회원" },
-        { 순번: 27, 목장명: "일흥목장", 대표자: "서정민", 직책: "회원" },
-		{ 순번: 28, 목장명: "작골목장", 대표자: "정락범", 직책: "회원" },
-		{ 순번: 29, 목장명: "정현목장", 대표자: "양정규", 직책: "회원" },
-        { 순번: 30, 목장명: "증산목장", 대표자: "라종균", 직책: "회원" },
-        { 순번: 31, 목장명: "지희목장", 대표자: "오기욱", 직책: "회원" },
-		{ 순번: 32, 목장명: "춘우목장", 대표자: "이춘우", 직책: "회원" },
-		{ 순번: 33, 목장명: "푸른목장", 대표자: "한현택", 직책: "회원" },
-        { 순번: 34, 목장명: "홍상목장", 대표자: "윤홍상", 직책: "회원" },
-		{ 순번: 35, 목장명: "홍제목장", 대표자: "최원준", 직책: "회원" },
-		{ 순번: 36, 목장명: "화곡목장", 대표자: "김영조", 직책: "회원" },
-        { 순번: 37, 목장명: "신흥목장", 대표자: "이태영", 직책: "회원" },
-		{ 순번: 38, 목장명: "태화목장", 대표자: "김희남", 직책: "회원" },
-		{ 순번: 39, 목장명: "동근목장", 대표자: "최성우", 직책: "회원" },
-        { 순번: 40, 목장명: "태광목장", 대표자: "이주호", 직책: "회원" },
-        { 순번: 41, 목장명: "현대목장", 대표자: "정현민", 직책: "회원" },
-		{ 순번: 42, 목장명: "형성목장", 대표자: "조성호", 직책: "회원" },
-		{ 순번: 43, 목장명: "양지목장", 대표자: "이병학", 직책: "회원" },
-	]
+	]	
     };
 
     function showMemberList(groupName) {
@@ -811,7 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (satCell) satCell.classList.add('sat');
   });
 });
-<script>
+</script><script>
 // === Embedded KR Holidays (offline) for 2025 ===
 window.KR_HOLIDAYS = {"2025": {"01": [{"day": 1, "name": "신정"}, {"day": 27, "name": "임시공휴일"}, {"day": 28, "name": "설날 연휴"}, {"day": 29, "name": "설날"}, {"day": 30, "name": "설날 연휴"}], "03": [{"day": 1, "name": "삼일절"}, {"day": 3, "name": "대체공휴일(삼일절)"}], "05": [{"day": 5, "name": "어린이날 · 부처님오신날"}, {"day": 6, "name": "대체공휴일(어린이날)"}], "06": [{"day": 6, "name": "현충일"}], "08": [{"day": 15, "name": "광복절"}], "10": [{"day": 3, "name": "개천절"}, {"day": 5, "name": "추석 연휴(전날)"}, {"day": 6, "name": "추석"}, {"day": 7, "name": "추석 연휴(다음날)"}, {"day": 8, "name": "대체공휴일(추석)"}, {"day": 9, "name": "한글날"}], "12": [{"day": 25, "name": "크리스마스"}]}};
 
@@ -854,16 +756,15 @@ window.KR_HOLIDAYS = {"2025": {"01": [{"day": 1, "name": "신정"}, {"day": 27, 
 
   document.addEventListener('DOMContentLoaded', function() {
     const h2 = document.querySelector("h2");
-    let year="2025", month2="12";
-    try {
-      const m=h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
-      if(m){ year=m[1]; month2=m[2].padStart(2,"0"); }
-    } catch(e) {}
+let year="2025", month2="11";
+try {
+  const m=h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
+  if(m){ year=m[1]; month2=m[2].padStart(2,"0"); }
+} catch(e) {}
 
     markToday();
     applyHolidays(year, month2);
   });
 })();
-</script>
-</body>
+</script></body>
 </html>
