@@ -257,7 +257,7 @@
 </a>
 </div>
 <h2>2025년 12월 낙우회 및 조합원 행사 일정표</h2>
-<p>일정추가예정 낙우회 : 순성(9일예정), 신평, 합덕(24일예정), 대한, 연세, 삼괴, 고덕(빙그레), 아산, 서산</p>
+<p>일정추가예정 낙우회 : 순성(9일예정), 신평,  대한, 연세, 삼괴, 고덕(빙그레), 아산, 서산</p>
 <table>
 <tr>
 <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
@@ -291,7 +291,7 @@
 </tr>
 <tr>
   <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">22</div><div class="event1">합덕&nbsp;</div><div class="event2"></div></td>
   <td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
@@ -358,9 +358,9 @@
 <td>12월 18일(목)</td><td>11시30분</td><td>송악송산낙우회</td><td>낙우회</td><td>만석식당</td>
 <td><a href="tmap://search?name=충청남도 서산시 대산읍 삼길포1로 61">충청남도 서산시 대산읍 삼길포1로 61</a></td>
 </tr>
-<tr id="미정">
-<td></td><td></td><td></td><td></td><td>&nbsp;</td>
-<td><a href="tmap://search?name=충남 당진시 신평면 거산3거리길 67">&nbsp;</a></td>
+<tr id="합덕">
+<td>12월 22일(월)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+<td><a href="tmap://search?name=충남 당진시 합덕읍 버그내1길 89">충남 당진시 합덕읍 버그내1길 89</a></td>
 </tr>
 
 </tbody>
@@ -790,6 +790,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   // 첫 번째 테이블이 월간 달력
@@ -812,9 +813,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
 <script>
 // === Embedded KR Holidays (offline) for 2025 ===
-window.KR_HOLIDAYS = {
+	window.KR_HOLIDAYS = {
   "2025": {
     "01": [
       {"day": 1, "name": "신정"},
@@ -849,44 +851,29 @@ window.KR_HOLIDAYS = {
       {"day": 25, "name": "크리스마스"}
     ]
   }
+
 };
 
 (function() {
-  function markToday() {
-    const today = new Date();
-    const d = today.getDate();
-    document.querySelectorAll('.date-num').forEach(el => {
-      const n = parseInt(el.textContent, 10);
-      if (n === d) {
-        if (!el.querySelector('.today-label')) {
-          const label = document.createElement('span');
-          label.className = 'today-label';
-          label.textContent = '오늘';
-          el.prepend(label);
-        }
-      }
-    });
-  }
+  function markToday() { ... }
+  function applyHolidays(year, month2) { ... }
 
-  function applyHolidays(year, month2) {
-    const months = (window.KR_HOLIDAYS || {})[year] || {};
-    const list = months[month2] || [];
-    if (!list.length) return;
-    const map = new Map(list.map(x => [x.day, x.name]));
-    document.querySelectorAll('.date-num').forEach(el => {
-      const n = parseInt(el.textContent, 10);
-      if (!isNaN(n) && map.has(n)) {
-        const td = el.parentElement;
-        td.classList.add('holiday');
-        if (!el.querySelector('.badge-holiday')) {
-          const badge = document.createElement('span');
-          badge.className = 'badge-holiday';
-          badge.textContent = map.get(n);
-          el.prepend(badge);   // 날짜 왼쪽에 라벨
-        }
+  document.addEventListener('DOMContentLoaded', function() {
+    const h2 = document.querySelector("h2");
+    let year="2025", month2="12"; // 12월 달력이라면 기본값 12
+
+    try {
+      const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
+      if (m) {
+        year  = m[1];
+        month2 = m[2].padStart(2, "0");
       }
-    });
-  }
+    } catch(e) {}
+
+    markToday();
+    applyHolidays(year, month2);
+  });
+})();
 
   document.addEventListener('DOMContentLoaded', function() {
     const h2 = document.querySelector("h2");
@@ -904,6 +891,7 @@ window.KR_HOLIDAYS = {
     applyHolidays(year, month2);
   });
 })();
-</script>
+	</script>
+
 </body>
 </html>
