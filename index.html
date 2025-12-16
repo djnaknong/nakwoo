@@ -169,9 +169,6 @@
 }
 
 /* 공휴일 표시 스타일 */
-.holiday {
-  border: 2px solid #ff6b6b !important;
-}
 .holiday .date-num {
 
   color: #e74c3c;
@@ -612,224 +609,105 @@
 		{ 순번: 43, 목장명: "양지목장", 대표자: "이병학", 직책: "회원" },
 	]
     };
-
     function showMemberList(groupName) {
-    const section = document.getElementById("member-section");
-    const tbody = document.getElementById("member-table").querySelector("tbody");
-    const title = section.querySelector("h3");
+      const section = document.getElementById("member-section");
+      const tbody = document.getElementById("member-table")?.querySelector("tbody");
+      const title = section?.querySelector("h3");
 
-    tbody.innerHTML = "";
-    const members = memberData[groupName];
-    if (!members) return section.style.display = "none";
+      if (!section || !tbody || !title) return;
 
-    title.textContent = `${groupName} 회원명단`;
+      tbody.innerHTML = "";
+      const members = memberData[groupName];
 
-    members.forEach(row => {
-      const tr = document.createElement("tr");
-      ["순번", "목장명", "대표자", "직책"].forEach(key => {
-        const td = document.createElement("td");
-        td.textContent = row[key];
-        tr.appendChild(td);
+      if (!members) {
+        section.style.display = "none";
+        return;
+      }
+
+      title.textContent = `${groupName} 회원명단`;
+
+      members.forEach(row => {
+        const tr = document.createElement("tr");
+        ["순번", "목장명", "대표자", "직책"].forEach(key => {
+          const td = document.createElement("td");
+          td.textContent = row[key] ?? "";
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
       });
-      tbody.appendChild(tr);
-    });
 
-    section.style.display = "block";
-    section.scrollIntoView({ behavior: 'smooth' });
-  }
+      section.style.display = "block";
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
 
-  document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll("#detail-section tbody tr").forEach(row => {
-    row.addEventListener("click", () => {
+    function highlightDetailRow(row) {
       document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
-      row.classList.add("clicked-row");
-      const groupName = row.children[2]?.textContent?.trim();
-      if (groupName) showMemberList(groupName);
-    });
-  });
-
-  document.querySelectorAll('.event1, .event2').forEach(el => {
-    el.addEventListener('click', (e) => {
-      // Prevent the click from bubbling up to the calendar table handler
-      e.stopPropagation();
-      const id = el.textContent.trim();
-      const row = document.getElementById(id);
-      if (row) {
-        // Remove previous highlight and highlight the corresponding detail row
-        document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
-        row.classList.add("clicked-row");
-        // Scroll the detail schedule into view but do not automatically show the member list.
-        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Hide any previously visible member list to avoid confusion.
-        const section = document.getElementById('member-section');
-        if (section) section.style.display = 'none';
-      } else {
-        // If there is no matching detail row, hide any visible member list
-        const section = document.getElementById('member-section');
-        if (section) section.style.display = 'none';
-      }
-    });
-  });
-
-  // Hide the member list when clicking anywhere on the monthly calendar that
-  // isn't an event. This prevents stale member lists from persisting when
-  // selecting empty cells or other dates. By attaching this handler to the
-  // calendar table itself and stopping propagation on event clicks above,
-  // we ensure that only clicks on empty areas will trigger the hide.
-  // Select the first table in the document (the monthly calendar). Using
-  // querySelectorAll avoids issues where "body > table" may not match if
-  // there are intervening text nodes or comments. The first table is the
-  // calendar; the second is the detail schedule.
-  const calendarTable = document.querySelectorAll('table')[0];
-  if (calendarTable) {
-    calendarTable.addEventListener('click', () => {
-      const section = document.getElementById('member-section');
-      if (section) section.style.display = 'none';
-      // Remove any row highlight in the detail section to prevent stale
-      // highlighting when switching back to the calendar view
-      document.querySelectorAll('#detail-section tbody tr').forEach(r => r.classList.remove('clicked-row'));
-    });
-  }
-
-  // Fade out the horizontal scroll hint as the user scrolls.
-  // When the detail table is scrolled to the right, we want the
-  // arrow and message to gradually become transparent. This
-  // improves the user experience by not showing the hint once
-  // the user has discovered the horizontal scroll capability.
-  const hintEl = document.querySelector('.scroll-hint');
-  const detailContainer = document.getElementById('detail-section');
-  if (hintEl && detailContainer) {
-    // Ensure the hint starts fully visible
-    hintEl.style.opacity = '1';
-    // Add a scroll listener that adjusts opacity based on scrollLeft
-    detailContainer.addEventListener('scroll', () => {
-      // Define a range for the fade-out effect. The hint remains fully
-      // visible for the first portion of horizontal scroll (fadeStart), then
-      // gradually fades to invisible by fadeEnd. Adjust these values to
-      // control how quickly or slowly the hint disappears.
-      const fadeStart = 30;  // pixels of scroll before fading begins
-      const fadeEnd   = 200; // pixels of scroll by which fading completes
-      const scrolled  = detailContainer.scrollLeft;
-      let newOpacity;
-      if (scrolled <= fadeStart) {
-        newOpacity = 1;
-      } else {
-        const progress = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-        newOpacity = Math.max(0, 1 - progress);
-      }
-      hintEl.style.opacity = newOpacity;
-      // Stop the bounce animation once the user scrolls to prevent distraction
-      if (scrolled > 0) {
-        hintEl.style.animation = 'none';
-      }
-    });
-  }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date();
-  const todayDate = today.getDate();
-
-  document.querySelectorAll('.date-num').forEach(el => {
-    if (parseInt(el.textContent) === todayDate) {
-      el.parentElement.classList.add('today');
+      if (row) row.classList.add("clicked-row");
     }
-  });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date();
-  const todayDate = today.getDate();
-
-  document.querySelectorAll('.date-num').forEach(el => {
-    if (parseInt(el.textContent) === todayDate) {
-      el.parentElement.classList.add('today');
-      // 오늘 라벨 추가
-      const label = document.createElement('span');
-      label.className = 'today-label';
-      label.textContent = '오늘';
-      el.appendChild(label);
+    function hideMemberSection() {
+      const section = document.getElementById("member-section");
+      if (section) section.style.display = "none";
     }
-  });
-});
 
-(function(){
-  // ---- 공휴일 표시 ----
-  const SERVICE_KEY_RAW = "jOyUcvOotOrPQe4eIVfetvbOb7Zf4TVWCwS/BGjklWfrngNc3VdOi9a5+Nh5EaYN/BJKgl44D50Qi7fHiijyMg==";
-  const SERVICE_KEY = encodeURIComponent(SERVICE_KEY_RAW);
-  try {
-    const h2 = document.querySelector('h2');
-    if (!h2) return;
-    const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
-    if (!m) return;
-    const solYear = m[1];
-    const solMonth = m[2].padStart(2, '0');
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1) 상세일정표: 행(낙우회) 클릭 시 회원명단 표시
+      document.querySelectorAll("#detail-section tbody tr").forEach(row => {
+        row.addEventListener("click", () => {
+          highlightDetailRow(row);
+          const groupName = row.children[2]?.textContent?.trim(); // 3번째 컬럼: 낙우회 및 행사
+          if (groupName) showMemberList(groupName);
+        });
+      });
 
-    const url = `https://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getHoliDeInfo?solYear=${solYear}&solMonth=${solMonth}&ServiceKey=${SERVICE_KEY}&_type=json&numOfRows=100`;
+      // 2) 월간 달력: 일정(셀 안의 event1/event2) 클릭 시 상세일정표로 스크롤 + 강조
+      document.querySelectorAll(".event1, .event2").forEach(el => {
+        el.addEventListener("click", (e) => {
+          e.stopPropagation(); // 달력 빈 영역 클릭 처리와 분리
+          const id = el.textContent.trim();
+          if (!id) return;
 
-    fetch(url).then(r => r.json()).then(data => {
-      const items = (((data || {}).response || {}).body || {}).items || {};
-      let list = items.item || [];
-      if (!Array.isArray(list)) list = list ? [list] : [];
-      list.forEach(it => {
-        if (String(it.isHoliday).toUpperCase() !== 'Y') return;
-        const loc = String(it.locdate || '');
-        if (loc.length !== 8) return;
-        const day = parseInt(loc.slice(6, 8), 10);
-        document.querySelectorAll('.date-num').forEach(el => {
-          const n = parseInt(el.textContent);
-          if (n === day) {
-            const td = el.parentElement;
-            td.classList.add('holiday');
-            // 라벨(날짜명) 붙이기: 이미 라벨이 있으면 중복 방지
-            const hasBadge = el.querySelector('.badge-holiday');
-            if (!hasBadge) {
-              const span = document.createElement('span');
-              span.className = 'badge-holiday';
-              span.textContent = (it.dateName || '공휴일');
-              el.appendChild(span);
-            }
+          const row = document.getElementById(id);
+          if (row) {
+            hideMemberSection(); // 달력 클릭은 회원명단 자동표시하지 않음(기존 동작 유지)
+            highlightDetailRow(row);
+            row.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else {
+            // 상세행이 없는 경우(텍스트 불일치 등)에는 회원명단 숨김만
+            hideMemberSection();
           }
         });
       });
-    }).catch(e => {
-      // 네트워크/CORS 실패 시 콘솔에만 기록 (화면 메시지는 표시하지 않음)
-      console.warn('공휴일 API 호출 실패:', e);
-    });
-  } catch (err) {
-    console.warn('공휴일 표시 중 오류:', err);
-  }
-})();
-</script>
-<script>
-// ---- 공휴일 오프라인(하드코딩) 표시: 2025년 8월 ----
-document.addEventListener('DOMContentLoaded', () => {
-  const h2 = document.querySelector('h2');
-  if (!h2) return;
-  const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
-  if (!m) return;
-  const year = parseInt(m[1], 10);
-  const month = parseInt(m[2], 10);
 
-  // 2025년 8월: 광복절(15일)만 표시 (대체공휴일 없음)
-  if (year === 2025 && month === 8) {
-    const holidays = [{ day: 15, name: '광복절' }];
-    document.querySelectorAll('.date-num').forEach(el => {
-      const d = parseInt(el.textContent, 10);
-      const h = holidays.find(x => x.day === d);
-      if (h) {
-        const td = el.parentElement;
-        td.classList.add('holiday');
-        if (!el.querySelector('.badge-holiday')) {
-          const badge = document.createElement('span');
-          badge.className = 'badge-holiday';
-          badge.textContent = h.name;
-          el.appendChild(badge);
-        }
+      // 3) 달력의 빈 영역 클릭 시: 회원명단/강조 해제(기존 UX 유지)
+      const calendarTable = document.querySelectorAll("table")[0]; // 첫 번째 테이블=월간 달력
+      if (calendarTable) {
+        calendarTable.addEventListener("click", () => {
+          hideMemberSection();
+          highlightDetailRow(null);
+        });
+      }
+
+      // 4) 상세일정표 스크롤 힌트: 가로 스크롤 시 서서히 숨김
+      const hintEl = document.querySelector(".scroll-hint");
+      const detailContainer = document.getElementById("detail-section");
+      if (hintEl && detailContainer) {
+        hintEl.style.opacity = "1";
+        detailContainer.addEventListener("scroll", () => {
+          const fadeStart = 30;
+          const fadeEnd = 200;
+          const scrolled = detailContainer.scrollLeft;
+          let newOpacity = 1;
+          if (scrolled > fadeStart) {
+            const progress = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+            newOpacity = Math.max(0, 1 - progress);
+          }
+          hintEl.style.opacity = String(newOpacity);
+          if (scrolled > 0) hintEl.style.animation = "none";
+        });
       }
     });
-  }
-});
+
 </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -854,9 +732,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+
 <script>
-// === Embedded KR Holidays (offline) for 2025 ===
-	window.KR_HOLIDAYS = {
+// === 오프라인 공휴일 데이터 (KR_HOLIDAYS) ===
+// * 온라인 API 호출 없이 동작하도록 "하드코딩"된 공휴일만 사용합니다.
+// * 필요 시 연도/월 데이터를 추가해서 확장하세요.
+window.KR_HOLIDAYS = {
   "2025": {
     "01": [
       {"day": 1, "name": "신정"},
@@ -891,47 +772,84 @@ document.addEventListener('DOMContentLoaded', () => {
       {"day": 25, "name": "크리스마스"}
     ]
   }
-
 };
 
-(function() {
-  function markToday() { ... }
-  function applyHolidays(year, month2) { ... }
-
-  document.addEventListener('DOMContentLoaded', function() {
+(function () {
+  function getYearMonthFromTitle() {
     const h2 = document.querySelector("h2");
-    let year="2025", month2="12"; // 12월 달력이라면 기본값 12
+    // 기본값(파일명/제목이 바뀌어도 최소 동작)
+    let year = "2025";
+    let month2 = "12";
+    if (!h2) return { year, month2 };
 
-    try {
-      const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
-      if (m) {
-        year  = m[1];
-        month2 = m[2].padStart(2, "0");
+    const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
+    if (m) {
+      year = m[1];
+      month2 = String(m[2]).padStart(2, "0");
+    }
+    return { year, month2 };
+  }
+
+  function markToday() {
+    const today = new Date();
+    const todayDate = today.getDate();
+
+    document.querySelectorAll(".date-num").forEach(el => {
+      const d = parseInt(el.textContent, 10);
+      if (!Number.isFinite(d)) return; // "-" 같은 셀 제외
+      if (d === todayDate) {
+        const td = el.parentElement;
+        td.classList.add("today");
+
+        // 중복 라벨 방지
+        if (!el.querySelector(".today-label")) {
+          const label = document.createElement("span");
+          label.className = "today-label";
+          label.textContent = "오늘";
+          el.appendChild(label);
+        }
       }
-    } catch(e) {}
+    });
+  }
 
+  function applyHolidays(year, month2) {
+    const yearData = (window.KR_HOLIDAYS || {})[year];
+    if (!yearData) return;
+
+    const list = yearData[month2];
+    if (!Array.isArray(list) || list.length === 0) return;
+
+    // 날짜 셀을 빠르게 찾기 위해 day -> element 매핑
+    const dayElMap = new Map();
+    document.querySelectorAll(".date-num").forEach(el => {
+      const d = parseInt(el.textContent, 10);
+      if (Number.isFinite(d)) dayElMap.set(d, el);
+    });
+
+    list.forEach(h => {
+      const el = dayElMap.get(h.day);
+      if (!el) return;
+
+      const td = el.parentElement;
+      td.classList.add("holiday");
+
+      // 공휴일 라벨(뱃지) 중복 방지
+      if (!el.querySelector(".badge-holiday")) {
+        const badge = document.createElement("span");
+        badge.className = "badge-holiday";
+        badge.textContent = h.name || "공휴일";
+        el.appendChild(badge);
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const { year, month2 } = getYearMonthFromTitle();
     markToday();
     applyHolidays(year, month2);
   });
 })();
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const h2 = document.querySelector("h2");
-    let year = "2025", month2 = "12"; // 기본값
-
-    try {
-      const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
-      if (m) {
-        year = m[1];
-        month2 = m[2].padStart(2, "0");
-      }
-    } catch(e) {}
-
-    markToday();
-    applyHolidays(year, month2);
-  });
-})();
-	</script>
+</script>
 
 </body>
 </html>
