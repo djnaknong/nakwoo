@@ -463,14 +463,105 @@ body.is-scrolling .event2{
     0 6px 14px rgba(2,6,23,.10) !important;
 }
 
+
+/* 🎄 Santa sleigh – very slow, subtle motion */
+.santa-header{
+  max-width: 1100px;
+  margin: 6px auto 2px;
+  text-align: right;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.santa-header img{
+  width: 140px;
+  max-width: 38vw;
+  height: auto;
+  opacity: .35;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+  animation: santa-drift 7s ease-in-out infinite alternate;
+}
+
+@keyframes santa-drift{
+  from{ transform: translateX(-12px); }
+  to  { transform: translateX(12px); }
+}
+
+@media (max-width: 768px){
+  .santa-header img{
+    width: 100px;
+    opacity: .28;
+    animation-duration: 6s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .santa-header img{
+    animation: none;
+  }
+}
+
+
+/* === Santa overlap override (title 바로 위에 살짝 겹치기) === */
+.main-title{
+  position: relative;
+  z-index: 3; /* 제목이 위 */
+}
+
+.santa-header{
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 0;               /* 공간 차지 X */
+  z-index: 2;              /* 제목 아래 */
+  pointer-events: none;
+  overflow: visible;       /* 겹침 보이게 */
+  text-align: right;
+}
+
+.santa-header img{
+  position: absolute;
+  right: 0;
+  top: -26px;              /* 제목과 살짝 겹치게 */
+  width: 150px;
+  max-width: 38vw;
+  height: auto;
+  opacity: .32;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+  animation: santa-drift 7s ease-in-out infinite alternate;
+}
+
+@keyframes santa-drift{
+  from{ transform: translateX(-10px); }
+  to  { transform: translateX(10px); }
+}
+
+@media (max-width: 768px){
+  .santa-header img{
+    width: 110px;
+    top: -18px;
+    opacity: .26;
+    animation-duration: 6s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .santa-header img{ animation: none; }
+}
+
 </style>
 </head>
 <body>
 <canvas id="snow-canvas" aria-hidden="true"></canvas>
 <div class="topbar">
-  <a href="2025-11.html" class="navbtn">← 11월</a>
+  <a href="../../../../Downloads/2025-11.html" class="navbtn">← 11월</a>
 </div>
-<h2>2025년 12월 낙우회 및 조합원 행사 일정표</h2>
+
+<!-- 🎅 Santa Sleigh Header (subtle motion) -->
+<div class="santa-header" aria-hidden="true">
+  <img src="../../../../Downloads/santa_sleigh_true_transparent.png" alt="Santa sleigh">
+</div>
+<h2 class="main-title">2025년 12월 낙우회 및 조합원 행사 일정표</h2>
 <p>일정추가예정 낙우회 :  삼괴 - 2026년 1월로 연기 , 고덕(빙그레) -&nbsp; 미정,  서산 - 2026년 1월로 연기</p>
 <table>
 <tr>
