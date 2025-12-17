@@ -1088,19 +1088,20 @@ window.KR_HOLIDAYS = {
   const ctx = canvas.getContext('2d', { alpha: true });
 let W=0,H=0,dpr=1;
   function resize(){
-    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
     W = Math.floor(window.innerWidth);
     H = Math.floor(window.innerHeight);
-    canvas.width = Math.floor(W * dpr);
+    canvas.width  = Math.floor(W * dpr);
     canvas.height = Math.floor(H * dpr);
-    canvas.style.width = W + 'px';
+    canvas.style.width  = W + 'px';
     canvas.style.height = H + 'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   window.addEventListener('resize', resize, { passive:true });
   resize();
 
-  // Snow particles
+  const isMobile = window.innerWidth < 768;
+// Snow particles
   const COUNT = Math.round(Math.min(140, Math.max(70, W / 10)));
   const flakes = [];
   function rand(a,b){ return a + Math.random()*(b-a); }
@@ -1108,12 +1109,12 @@ let W=0,H=0,dpr=1;
   function resetFlake(f, init=false){
     f.x = rand(0, W);
     f.y = init ? rand(0, H) : rand(-H*0.1, -20);
-    f.r = rand(1.4, 3.2);                 // radius (bigger, calmer)
+        f.r = isMobile ? rand(2.4, 4.2) : rand(1.6, 3.2);      // radius
     f.vy = rand(0.35, 0.9) * (f.r/2);     // fall speed (slower)
     f.vx = rand(-0.18, 0.18);             // drift (calmer)
     f.w = rand(0.002, 0.01);              // wobble
     f.p = rand(0, Math.PI*2);             // phase
-    f.a = rand(0.35, 0.85);               // alpha
+        f.a = isMobile ? rand(0.55, 0.95) : rand(0.35, 0.85);  // alpha
   }
 
   for(let i=0;i<COUNT;i++){
@@ -1142,12 +1143,12 @@ let W=0,H=0,dpr=1;
       if(f.y > H + 10 || f.x < -20 || f.x > W + 20) resetFlake(f, false);
 
       // Soft snow look
-      const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r*2.8);
+      const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r*3.2);
       g.addColorStop(0, `rgba(255,255,255,${f.a})`);
       g.addColorStop(1, 'rgba(255,255,255,0)');
       ctx.fillStyle = g;
       ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r*2.2, 0, Math.PI*2);
+      ctx.arc(f.x, f.y, f.r*3.0, 0, Math.PI*2);
       ctx.fill();
     }
 
