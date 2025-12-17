@@ -523,7 +523,7 @@ body.is-scrolling .event2{
   position: absolute;
   left: 50%;                         /* 가운데 기준 */
   transform: translateX(-50%);       /* 정확히 중앙 */
-top: -86px;              /* 제목과 살짝 겹치게 */
+top: -26px;              /* 제목과 살짝 겹치게 */
   width: 150px;
   max-width: 38vw;
   height: auto;
@@ -550,6 +550,18 @@ top: -86px;              /* 제목과 살짝 겹치게 */
   .santa-header img{ animation: none; }
 }
 
+
+/* === Header composition tuning (match sample layout) === */
+.main-title{
+  padding-top: 68px;   /* 제목 위 여백 확보 */
+  margin-top: 0;
+}
+
+.santa-header img{
+  top: -6px;           /* 제목 영역 안으로 살짝 내려옴 */
+  opacity: .30;        /* 스샷처럼 더 은은하게 */
+}
+
 </style>
 </head>
 <body>
@@ -560,7 +572,7 @@ top: -86px;              /* 제목과 살짝 겹치게 */
 
 <!-- 🎅 Santa Sleigh Header (subtle motion) -->
 <div class="santa-header" aria-hidden="true">
-  <img src="santa_sleigh_true_transparent.png" alt="Santa sleigh">
+  <img src="./santa_sleigh_true_transparent.png" alt="Santa sleigh">
 </div>
 <h2 class="main-title">2025년 12월 낙우회 및 조합원 행사 일정표</h2>
 <p>일정추가예정 낙우회 :  삼괴 - 2026년 1월로 연기 , 고덕(빙그레) -&nbsp; 미정,  서산 - 2026년 1월로 연기</p>
