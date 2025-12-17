@@ -427,22 +427,6 @@ th{
 }
 
 
-/* ===== Winter Background Image (offline) ===== */
-#winter-bg{
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 46vh;                 /* lower portion only */
-  pointer-events: none;
-  z-index: 0;                   /* behind snow */
-  background-repeat: no-repeat;
-  background-position: right 2% bottom;  /* tuck into corner */
-  background-size: auto 92%;    /* keep full image visible (no crop) */
-  opacity: .42;                 /* subtle */
-  filter: blur(.25px) saturate(.95);
-}
-
 /* ===== Winter Snow Background (more visible) ===== */
 #snow-canvas{
   position: fixed;
@@ -455,29 +439,27 @@ th{
 }
 
 /* Ensure page content stays above winter layers */
-body > *:not(#winter-bg):not(#snow-canvas){
+body > *:not(#snow-canvas){
   position: relative;
   z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce){
-  #winter-bg, #snow-canvas{ display:none; }
+  #snow-canvas{ display:none; }
 }
 @media print{
-  #winter-bg, #snow-canvas{display:none !important;}
+  #snow-canvas{display:none !important;}
 }
 
 </style>
 </head>
 <body>
 <canvas id="snow-canvas" aria-hidden="true"></canvas>
-<div id="winter-bg" aria-hidden="true"></div>
-
 <div class="topbar">
   <a href="2025-11.html" class="navbtn">← 11월</a>
 </div>
 <h2>2025년 12월 낙우회 및 조합원 행사 일정표</h2>
-<p>일정추가예정 낙우회 :  삼괴, 고덕(빙그레) 27일~28일 예정 ,  서산</p>
+<p>일정추가예정 낙우회 :  삼괴 - 2026년 1월로 연기 , 고덕(빙그레) -&nbsp; 미정,  서산 - 2026년 1월로 연기</p>
 <table>
 <tr>
 <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
