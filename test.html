@@ -463,6 +463,92 @@ body.is-scrolling .event2{
     0 6px 14px rgba(2,6,23,.10) !important;
 }
 
+
+/* 🎄 Santa sleigh – very slow, subtle motion */
+.santa-header{
+  max-width: 1100px;
+  margin: 6px auto 2px;
+  text-align: right;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.santa-header img{
+  width: 140px;
+  max-width: 38vw;
+  height: auto;
+  opacity: .35;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+  animation: santa-drift 7s ease-in-out infinite alternate;
+}
+
+@keyframes santa-drift{
+  from{ transform: translateX(-12px); }
+  to  { transform: translateX(12px); }
+}
+
+@media (max-width: 768px){
+  .santa-header img{
+    width: 100px;
+    opacity: .28;
+    animation-duration: 6s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .santa-header img{
+    animation: none;
+  }
+}
+
+
+/* === Santa overlap override (title 바로 위에 살짝 겹치기) === */
+.main-title{
+  position: relative;
+  z-index: 3; /* 제목이 위 */
+}
+
+.santa-header{
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 0;               /* 공간 차지 X */
+  z-index: 2;              /* 제목 아래 */
+  pointer-events: none;
+  overflow: visible;       /* 겹침 보이게 */
+  text-align: right;
+}
+
+.santa-header img{
+  position: absolute;
+  right: 0;
+  top: -26px;              /* 제목과 살짝 겹치게 */
+  width: 150px;
+  max-width: 38vw;
+  height: auto;
+  opacity: .32;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.12));
+  animation: santa-drift 7s ease-in-out infinite alternate;
+}
+
+@keyframes santa-drift{
+  from{ transform: translateX(-10px); }
+  to  { transform: translateX(10px); }
+}
+
+@media (max-width: 768px){
+  .santa-header img{
+    width: 110px;
+    top: -18px;
+    opacity: .26;
+    animation-duration: 6s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .santa-header img{ animation: none; }
+}
+
 </style>
 </head>
 <body>
@@ -470,7 +556,12 @@ body.is-scrolling .event2{
 <div class="topbar">
   <a href="2025-11.html" class="navbtn">← 11월</a>
 </div>
-<h2>2025년 12월 낙우회 및 조합원 행사 일정표</h2>
+
+<!-- 🎅 Santa Sleigh Header (subtle motion) -->
+<div class="santa-header" aria-hidden="true">
+  <img src="santa_sleigh_true_transparent.png" alt="Santa sleigh">
+</div>
+<h2 class="main-title">2025년 12월 낙우회 및 조합원 행사 일정표</h2>
 <p>일정추가예정 낙우회 :  삼괴 - 2026년 1월로 연기 , 고덕(빙그레) -&nbsp; 미정,  서산 - 2026년 1월로 연기</p>
 <table>
 <tr>
@@ -506,7 +597,7 @@ body.is-scrolling .event2{
 <tr>
   <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">22</div><div class="event1">합덕</div><div class="event2"></div></td>
-  <td class=""><div class="date-num">23</div><div class="event1">대한</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">24</div><div class="event1">신평</div><div class="event2"></div></td>
   <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
@@ -514,7 +605,7 @@ body.is-scrolling .event2{
 </tr>
 <tr>
   <td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">29</div><div class="event1">대한</div><div class="event2"></div></td>
   <td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
@@ -586,13 +677,13 @@ body.is-scrolling .event2{
 <td>12월 22일(월)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
 <td><a href="tmap://search?name=충남 당진시 합덕읍 버그내1길 89">충남 당진시 합덕읍 버그내1길 89</a></td>
 </tr>
-<tr id="대한">
-<td>12월 23일(화)</td><td>12시</td><td>대한낙우회</td><td>낙우회</td><td>미정</td>
-<td><a href="tmap://search?name=미정">미정</a></td>
-</tr>
 <tr id="신평">
 <td>12월 24일(수)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>터주생태우렁이전문</td>
 <td><a href="tmap://search?name=충남 당진시 신평면 서해로 7459">충남 당진시 신평면 서해로 7459</a></td>
+</tr>
+<tr id="대한">
+<td>12월 29일(월)</td><td>12시</td><td>대한낙우회</td><td>낙우회</td><td>전망대종합어시장</td>
+<td><a href="tmap://search?name=충청남도 당진시 신평면 삽교천3길 93">충청남도 당진시 신평면 삽교천3길 93</a></td>
 </tr>
 </tbody>
 </table>
