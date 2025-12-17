@@ -228,8 +228,8 @@ th{
       rgba(255,255,255,.42),
       rgba(255,255,255,.22)
     );
-  backdrop-filter: blur(16px) saturate(1.15);
-  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
 
   border: 1px solid rgba(255,255,255,.55);
   box-shadow:
@@ -1086,9 +1086,30 @@ window.KR_HOLIDAYS = {
   if(reduceMotion){ canvas.style.display = 'none'; return; }
 
   const ctx = canvas.getContext('2d', { alpha: true });
+
+  // ===== Performance: cached snow sprites (avoid per-frame gradients) =====
+  const spriteCache = new Map();
+  function getSprite(r, a){
+    const key = r.toFixed(1) + '|' + a.toFixed(2);
+    if(spriteCache.has(key)) return spriteCache.get(key);
+    const s = document.createElement('canvas');
+    const pad = 2;
+    const size = Math.ceil((r*6) + pad*2);
+    s.width = size; s.height = size;
+    const c = s.getContext('2d');
+    const cx = size/2, cy = size/2;
+    const g = c.createRadialGradient(cx, cy, 0, cx, cy, r*3);
+    g.addColorStop(0, `rgba(255,255,255,${a})`);
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = g;
+    c.beginPath(); c.arc(cx, cy, r*3, 0, Math.PI*2); c.fill();
+    spriteCache.set(key, s);
+    return s;
+  }
+
 let W=0,H=0,dpr=1;
   function resize(){
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const dpr = Math.max(1, Math.min(1.5, window.devicePixelRatio || 1));
     W = Math.floor(window.innerWidth);
     H = Math.floor(window.innerHeight);
     canvas.width  = Math.floor(W * dpr);
@@ -1124,13 +1145,17 @@ let W=0,H=0,dpr=1;
   }
 
   let running = true;
+  let __lastFrame = 0;
+
   document.addEventListener('visibilitychange', ()=>{
     running = !document.hidden;
     if(running) requestAnimationFrame(tick);
   });
 
-  function tick(){
+  function tick(ts){
     if(!running) return;
+    if(ts - __lastFrame < 33){ requestAnimationFrame(tick); return; }
+    __lastFrame = ts;
   if(document.body.classList.contains('is-scrolling')){ requestAnimationFrame(tick); return; }
     ctx.clearRect(0,0,W,H);
 
@@ -1142,15 +1167,10 @@ let W=0,H=0,dpr=1;
 
       if(f.y > H + 10 || f.x < -20 || f.x > W + 20) resetFlake(f, false);
 
-      // Soft snow look
-      const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r*3.2);
-      g.addColorStop(0, `rgba(255,255,255,${f.a})`);
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r*3.0, 0, Math.PI*2);
-      ctx.fill();
-    }
+      // Draw using cached sprite (fast)
+      const spr = getSprite(f.r, f.a);
+      ctx.drawImage(spr, f.x - spr.width/2, f.y - spr.height/2);
+}
 
     requestAnimationFrame(tick);
   }
