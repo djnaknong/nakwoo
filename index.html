@@ -228,8 +228,8 @@ th{
       rgba(255,255,255,.42),
       rgba(255,255,255,.22)
     );
-  backdrop-filter: blur(16px) saturate(1.15);
-  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
 
   border: 1px solid rgba(255,255,255,.55);
   box-shadow:
@@ -449,6 +449,18 @@ body > *:not(#snow-canvas){
 }
 @media print{
   #snow-canvas{display:none !important;}
+}
+
+html{ scroll-behavior: smooth; }
+
+/* Performance: reduce heavy effects while scrolling */
+body.is-scrolling .event1,
+body.is-scrolling .event2{
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,.08),
+    0 6px 14px rgba(2,6,23,.10) !important;
 }
 
 </style>
@@ -842,7 +854,7 @@ body > *:not(#snow-canvas){
       });
 
       section.style.display = "block";
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      section.scrollIntoView({ block: "start" });
     }
 
     function highlightDetailRow(row) {
@@ -876,7 +888,7 @@ body > *:not(#snow-canvas){
           if (row) {
             hideMemberSection(); // 달력 클릭은 회원명단 자동표시하지 않음(기존 동작 유지)
             highlightDetailRow(row);
-            row.scrollIntoView({ behavior: "smooth", block: "center" });
+            row.scrollIntoView({ block: "center" });
           } else {
             // 상세행이 없는 경우(텍스트 불일치 등)에는 회원명단 숨김만
             hideMemberSection();
@@ -1074,21 +1086,43 @@ window.KR_HOLIDAYS = {
   if(reduceMotion){ canvas.style.display = 'none'; return; }
 
   const ctx = canvas.getContext('2d', { alpha: true });
+
+  // ===== Performance: cached snow sprites (avoid per-frame gradients) =====
+  const spriteCache = new Map();
+  function getSprite(r, a){
+    const key = r.toFixed(1) + '|' + a.toFixed(2);
+    if(spriteCache.has(key)) return spriteCache.get(key);
+    const s = document.createElement('canvas');
+    const pad = 2;
+    const size = Math.ceil((r*6) + pad*2);
+    s.width = size; s.height = size;
+    const c = s.getContext('2d');
+    const cx = size/2, cy = size/2;
+    const g = c.createRadialGradient(cx, cy, 0, cx, cy, r*3);
+    g.addColorStop(0, `rgba(255,255,255,${a})`);
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = g;
+    c.beginPath(); c.arc(cx, cy, r*3, 0, Math.PI*2); c.fill();
+    spriteCache.set(key, s);
+    return s;
+  }
+
 let W=0,H=0,dpr=1;
   function resize(){
-    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const dpr = Math.max(1, Math.min(1.5, window.devicePixelRatio || 1));
     W = Math.floor(window.innerWidth);
     H = Math.floor(window.innerHeight);
-    canvas.width = Math.floor(W * dpr);
+    canvas.width  = Math.floor(W * dpr);
     canvas.height = Math.floor(H * dpr);
-    canvas.style.width = W + 'px';
+    canvas.style.width  = W + 'px';
     canvas.style.height = H + 'px';
     ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   window.addEventListener('resize', resize, { passive:true });
   resize();
 
-  // Snow particles
+  const isMobile = window.innerWidth < 768;
+// Snow particles
   const COUNT = Math.round(Math.min(140, Math.max(70, W / 10)));
   const flakes = [];
   function rand(a,b){ return a + Math.random()*(b-a); }
@@ -1096,12 +1130,12 @@ let W=0,H=0,dpr=1;
   function resetFlake(f, init=false){
     f.x = rand(0, W);
     f.y = init ? rand(0, H) : rand(-H*0.1, -20);
-    f.r = rand(1.4, 3.2);                 // radius (bigger, calmer)
+        f.r = isMobile ? rand(2.4, 4.2) : rand(1.6, 3.2);      // radius
     f.vy = rand(0.35, 0.9) * (f.r/2);     // fall speed (slower)
     f.vx = rand(-0.18, 0.18);             // drift (calmer)
     f.w = rand(0.002, 0.01);              // wobble
     f.p = rand(0, Math.PI*2);             // phase
-    f.a = rand(0.35, 0.85);               // alpha
+        f.a = isMobile ? rand(0.55, 0.95) : rand(0.35, 0.85);  // alpha
   }
 
   for(let i=0;i<COUNT;i++){
@@ -1111,13 +1145,18 @@ let W=0,H=0,dpr=1;
   }
 
   let running = true;
+  let __lastFrame = 0;
+
   document.addEventListener('visibilitychange', ()=>{
     running = !document.hidden;
     if(running) requestAnimationFrame(tick);
   });
 
-  function tick(){
+  function tick(ts){
     if(!running) return;
+    if(ts - __lastFrame < 33){ requestAnimationFrame(tick); return; }
+    __lastFrame = ts;
+  if(document.body.classList.contains('is-scrolling')){ requestAnimationFrame(tick); return; }
     ctx.clearRect(0,0,W,H);
 
     // draw
@@ -1128,15 +1167,10 @@ let W=0,H=0,dpr=1;
 
       if(f.y > H + 10 || f.x < -20 || f.x > W + 20) resetFlake(f, false);
 
-      // Soft snow look
-      const g = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r*2.8);
-      g.addColorStop(0, `rgba(255,255,255,${f.a})`);
-      g.addColorStop(1, 'rgba(255,255,255,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.r*2.2, 0, Math.PI*2);
-      ctx.fill();
-    }
+      // Draw using cached sprite (fast)
+      const spr = getSprite(f.r, f.a);
+      ctx.drawImage(spr, f.x - spr.width/2, f.y - spr.height/2);
+}
 
     requestAnimationFrame(tick);
   }
@@ -1144,5 +1178,21 @@ let W=0,H=0,dpr=1;
 })();
 </script>
 
+<script>
+
+// ===== Performance: detect scrolling (used to pause animations) =====
+let __scrollTimer = null;
+function __setScrolling(active){
+  document.body.classList.toggle('is-scrolling', active);
+  if(active){
+    clearTimeout(__scrollTimer);
+    __scrollTimer = setTimeout(() => {
+      document.body.classList.remove('is-scrolling');
+    }, 220);
+  }
+}
+window.addEventListener('scroll', () => __setScrolling(true), { passive:true });
+
+</script>
 </body>
 </html>
