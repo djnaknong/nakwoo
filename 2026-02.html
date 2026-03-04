@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>2026년 3월 낙우회 일정</title>
+<title>2026년 2월 낙우회 일정</title>
 <style>
 :root{
   --bg0:#0b1020;
@@ -397,26 +397,26 @@ th{
   box-shadow: 0 10px 18px rgba(2,6,23,.12);
 }
 
-/* Spring Leaf Background */
-#leaf-canvas{
+/* Winter Snow Background */
+#snow-canvas{
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   pointer-events: none;
   z-index: 1;
-  opacity: .75;
+  opacity: .88;
 }
-body > *:not(#leaf-canvas){
+body > *:not(#snow-canvas){
   position: relative;
   z-index: 2;
 }
 
 @media (prefers-reduced-motion: reduce){
-  #leaf-canvas{ display:none; }
+  #snow-canvas{ display:none; }
 }
 @media print{
-  #leaf-canvas{display:none !important;}
+  #snow-canvas{display:none !important;}
 }
 
 html{ scroll-behavior: smooth; }
@@ -438,66 +438,71 @@ body.is-scrolling .event2{
 }
 
 /* === February Theme (2026-02) : Green === */
-/* === March Theme (Fresh Spring Green) === */
-body.mar-theme{
-  --accent:#22c55e;
-  --accent2:#86efac;
-  --glow: rgba(34,197,94,.25);
+/* === February Theme (2026-02) : Pastel Yellow + Pastel Green MIX === */
+body.feb-theme{
+  /* 핵심 포인트 컬러(연초록 중심 + 연노랑 보조) */
+  --accent:#16a34a;      /* soft green */
+  --accent2:#facc15;     /* soft yellow */
+  --glow: rgba(34,197,94,.22);
 
-  --header-bg: #ecfdf5;
-  --header-text: #065f46;
-  --header-border: #a7f3d0;
+  /* 표 헤더: 연노랑+연초록 크림톤 */
+  --header-bg: #f7fee7;      /* pale green-cream */
+  --header-text: #14532d;    /* deep green text */
+  --header-border: #fde68a;  /* pale yellow border */
 
-  --pill1: rgba(34,197,94,.18);
-  --pill2: rgba(134,239,172,.18);
+  /* 알약(일정) tint도 파스텔 느낌으로 */
+  --pill1: rgba(34,197,94,.16);
+  --pill2: rgba(250,204,21,.14);
 }
 
-/* Spring background */
-body.mar-theme{
+/* backdrop for February (yellow+green blend) */
+body.feb-theme{
   background:
-    radial-gradient(900px 520px at 18% 6%, rgba(134,239,172,.25) 0%, rgba(134,239,172,0) 60%),
-    radial-gradient(860px 520px at 82% 10%, rgba(34,197,94,.25) 0%, rgba(34,197,94,0) 58%),
-    radial-gradient(900px 620px at 50% 110%, rgba(187,247,208,.22) 0%, rgba(187,247,208,0) 55%),
-    linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 40%, #f0fdf4 100%);
+    radial-gradient(900px 520px at 18% 6%, rgba(250,204,21,.18) 0%, rgba(250,204,21,0) 60%),
+    radial-gradient(860px 520px at 82% 10%, rgba(34,197,94,.20) 0%, rgba(34,197,94,0) 58%),
+    radial-gradient(900px 620px at 50% 110%, rgba(187,247,208,.18) 0%, rgba(187,247,208,0) 55%),
+    linear-gradient(180deg, #fffbeb 0%, #f0fdf4 40%, #fffbeb 100%);
 }
 
-/* buttons / hints spring gradient */
-body.mar-theme .navbtn,
-body.mar-theme .scroll-hint{
-  background: linear-gradient(135deg, rgba(34,197,94,.92), rgba(134,239,172,.90));
+/* 버튼/힌트도 연노랑+연초록 그라데이션 */
+body.feb-theme .navbtn,
+body.feb-theme .scroll-hint{
+  background: linear-gradient(135deg, rgba(34,197,94,.88), rgba(250,204,21,.86));
 }
 
 </style>
 </head>
 
-<body class="mar-theme">
-<canvas id="leaf-canvas" aria-hidden="true"></canvas>
+<body class="feb-theme">
+<canvas id="snow-canvas" aria-hidden="true"></canvas>
 
 <div class="topbar">
-  <a href="2026-02.html" class="navbtn">← 2월</a>
+  <a href="2026-01.html" class="navbtn">← 1월</a>
+	<a href="index.html" class="navbtn">3월 →</a>	
 </div>
 
-<h2 class="main-title">2026년 3월 낙우회 및 조합원 행사 일정표</h2>
-<p>※  2026년 3월 현재 등록된 일정이 없습니다.</p>
+<h2 class="main-title">2026년 2월 낙우회 및 조합원 행사 일정표</h2>
+<p>※  2026년 2월 일정은 수시로 업데이트됩니다.</p>
 
-<!-- ===== Monthly Calendar (2026-03 starts Sunday, 31 days) ===== -->
+<!-- ===== Monthly Calendar (2026-02 starts Sunday, 28 days) ===== -->
 <table>
 <tr>
   <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font></th>
 </tr>
+
 <tr>
   <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">3</div><div class="event1">아산</div><div class="event2"></div></td>
-  <td><div class="date-num">4</div><div class="event1">아산</div><div class="event2">순성</div></td>
-  <td><div class="date-num">5</div><div class="event1">아산</div><div class="event2">순성</div></td>
-  <td><div class="date-num">6</div><div class="event1"></div><div class="event2">순성</div></td>
-  <td><div class="date-num">7</div><div class="event1"></div><div class="event2">순성</div></td>
+  <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 
 <tr>
   <td><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">9</div><div class="event1">송악송산</div><div class="event2">면천</div></td>
   <td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
@@ -518,26 +523,16 @@ body.mar-theme .scroll-hint{
 <tr>
   <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td>
+  <td><div class="date-num">25</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+  <td><div class="date-num">26</div><div class="event1">아산</div><div class="event2">신평</div></td>
   <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
-</tr>
-
-<tr>
-  <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
 </tr>
 </table>
 
 <div id="detail-section">
-  <h2>2026년 3월 낙우회 상세 일정표</h2>
+  <h2>2026년 2월 낙우회 상세 일정표</h2>
   ※ 
   <div class="scroll-hint">옆으로 스크롤 ⇨</div>
 
@@ -548,15 +543,28 @@ body.mar-theme .scroll-hint{
       </tr>
     </thead>
     <tbody>
-<tr id="아산">
-  <td>3월 3일(화)~5일(목)</td><td>-</td><td>아산낙우회</td><td>야유회</td><td>남해</td>
-<td><a href="-">-</a></td>
+<tr id="송악송산">
+  <td>2월 9일(월)</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>굴따리 한우 생삼겹</td>
+<td><a href="tmap://search?name=충남 당진시 송악읍 부동길 6">충남 당진시 송악읍 부동길 6</a></td>
 </tr>
-<tr id="순성">
-  <td>3월 4일(수)~7일(토)</td><td>-</td><td>순성낙우회</td><td>해외</td><td>중국 상해</td>
-<td><a href="-">-</td>
-</tr>		
-</tbody>
+<tr id="면천">
+  <td>2월 9일(월)</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>갈비명가</td>
+<td><a href="tmap://search?name=충남 당진시 면천면 성하로 271">충남 당진시 면천면 성하로 271</a></td>
+</tr>	
+<tr id="합덕">
+  <td>2월 24일(화)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>갯마을횟집</td>
+<td><a href="tmap://search?name=충남 당진시 합덕읍 합덕교동1길 8">충남 당진시 합덕읍 합덕교동1길 8</a></td>
+</tr>
+<tr id="아산">
+  <td>2월 26일(목)</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>바다양푼이동태탕</td>
+<td><a href="tmap://search?name=충남 아산시 신창면 서부북로 740">충남 아산시 신창면 서부북로 740</a></td>
+</tr>
+<tr id="신평">
+  <td>2월 26일(목)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>활어회수산</td>
+<td><a href="tmap://search?name=충남 당진시 신평면 거산3거리길 28">충남 당진시 신평면 거산3거리길 28</a></td>
+</tr>
+		
+    </tbody>
   </table>
 </div>
 
@@ -1014,11 +1022,6 @@ body.mar-theme .scroll-hint{
         {"day": 17, "name": "설날"},
         {"day": 18, "name": "설날 연휴"}
       ]
-    ,
-      "03": [
-        {"day": 1, "name": "삼일절"},
-        {"day": 2, "name": "대체공휴일(삼일절)"}
-      ]
     }
   };
 
@@ -1026,7 +1029,7 @@ body.mar-theme .scroll-hint{
     function getYearMonthFromTitle() {
       const h2 = document.querySelector("h2");
       let year = "2026";
-      let month2 = "03";
+      let month2 = "02";
       if (!h2) return { year, month2 };
 
       const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
@@ -1101,13 +1104,12 @@ body.mar-theme .scroll-hint{
 </script>
 
 <script>
-/* Spring green leaf background - pure JS canvas (offline)
+/* Winter snow background - pure JS canvas (offline)
    - respects prefers-reduced-motion
    - pauses when tab is hidden
-   - light-weight: pauses heavy drawing while scrolling (uses body.is-scrolling)
 */
 (function(){
-  const canvas = document.getElementById('leaf-canvas');
+  const canvas = document.getElementById('snow-canvas');
   if(!canvas) return;
 
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1115,89 +1117,63 @@ body.mar-theme .scroll-hint{
 
   const ctx = canvas.getContext('2d', { alpha: true });
 
-  let W=0, H=0, DPR=1;
+  const spriteCache = new Map();
+  function getSprite(r, a){
+    const key = r.toFixed(1) + '|' + a.toFixed(2);
+    if(spriteCache.has(key)) return spriteCache.get(key);
+    const s = document.createElement('canvas');
+    const pad = 2;
+    const size = Math.ceil((r*6) + pad*2);
+    s.width = size; s.height = size;
+    const c = s.getContext('2d');
+    const cx = size/2, cy = size/2;
+    const g = c.createRadialGradient(cx, cy, 0, cx, cy, r*3);
+    g.addColorStop(0, `rgba(255,255,255,${a})`);
+    g.addColorStop(1, 'rgba(255,255,255,0)');
+    c.fillStyle = g;
+    c.beginPath(); c.arc(cx, cy, r*3, 0, Math.PI*2); c.fill();
+    spriteCache.set(key, s);
+    return s;
+  }
+
+  let W=0,H=0;
   function resize(){
-    DPR = Math.max(1, Math.min(1.6, window.devicePixelRatio || 1));
+    const dpr = Math.max(1, Math.min(1.5, window.devicePixelRatio || 1));
     W = Math.floor(window.innerWidth);
     H = Math.floor(window.innerHeight);
-    canvas.width  = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
+    canvas.width  = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
     canvas.style.width  = W + 'px';
     canvas.style.height = H + 'px';
-    ctx.setTransform(DPR,0,0,DPR,0,0);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
   }
   window.addEventListener('resize', resize, { passive:true });
   resize();
 
   const isMobile = window.innerWidth < 768;
-  const COUNT = Math.round(Math.min(70, Math.max(35, W / 22)));
-  const leaves = [];
-
+  const COUNT = Math.round(Math.min(140, Math.max(70, W / 10)));
+  const flakes = [];
   function rand(a,b){ return a + Math.random()*(b-a); }
 
-  function resetLeaf(L, init=false){
-    L.x = rand(-20, W + 20);
-    L.y = init ? rand(-10, H) : rand(-H*0.2, -40);
-    L.size = isMobile ? rand(10, 18) : rand(12, 22);
-    L.vy = rand(0.55, 1.25);
-    L.vx = rand(-0.25, 0.25);
-    L.swing = rand(0.6, 1.35);   // sideways sway intensity
-    L.freq  = rand(0.008, 0.02); // sway speed
-    L.phase = rand(0, Math.PI*2);
-    L.rot = rand(0, Math.PI*2);
-    L.vrot = rand(-0.018, 0.018);
-    L.alpha = rand(0.55, 0.95);
-    L.hue = rand(110, 145);      // green range
-    L.sat = rand(55, 78);
-    L.light = rand(32, 46);
+  function resetFlake(f, init=false){
+    f.x = rand(0, W);
+    f.y = init ? rand(0, H) : rand(-H*0.1, -20);
+    f.r = isMobile ? rand(2.4, 4.2) : rand(1.6, 3.2);
+    f.vy = rand(0.35, 0.9) * (f.r/2);
+    f.vx = rand(-0.18, 0.18);
+    f.w = rand(0.002, 0.01);
+    f.p = rand(0, Math.PI*2);
+    f.a = isMobile ? rand(0.55, 0.95) : rand(0.35, 0.85);
   }
 
   for(let i=0;i<COUNT;i++){
-    const L = {};
-    resetLeaf(L, true);
-    leaves.push(L);
-  }
-
-  function drawLeaf(x, y, size, rot, fillStyle){
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(rot);
-
-    // Leaf shape (simple bezier) + small stem
-    const w = size * 0.8;
-    const h = size * 1.15;
-
-    ctx.beginPath();
-    ctx.moveTo(0, -h*0.55);
-    ctx.bezierCurveTo( w*0.55, -h*0.35,  w*0.55,  h*0.25, 0,  h*0.55);
-    ctx.bezierCurveTo(-w*0.55,  h*0.25, -w*0.55, -h*0.35, 0, -h*0.55);
-    ctx.closePath();
-    ctx.fillStyle = fillStyle;
-    ctx.fill();
-
-    // vein (subtle)
-    ctx.globalAlpha *= 0.35;
-    ctx.strokeStyle = 'rgba(15, 23, 42, 0.35)';
-    ctx.lineWidth = Math.max(1, size * 0.06);
-    ctx.beginPath();
-    ctx.moveTo(0, -h*0.5);
-    ctx.lineTo(0,  h*0.42);
-    ctx.stroke();
-
-    // stem
-    ctx.globalAlpha *= 0.55;
-    ctx.strokeStyle = 'rgba(21, 128, 61, 0.65)';
-    ctx.lineWidth = Math.max(1, size * 0.08);
-    ctx.beginPath();
-    ctx.moveTo(0,  h*0.55);
-    ctx.lineTo(0,  h*0.78);
-    ctx.stroke();
-
-    ctx.restore();
+    const f={};
+    resetFlake(f, true);
+    flakes.push(f);
   }
 
   let running = true;
-  let last = 0;
+  let __lastFrame = 0;
 
   document.addEventListener('visibilitychange', ()=>{
     running = !document.hidden;
@@ -1206,12 +1182,9 @@ body.mar-theme .scroll-hint{
 
   function tick(ts){
     if(!running) return;
+    if(ts - __lastFrame < 33){ requestAnimationFrame(tick); return; }
+    __lastFrame = ts;
 
-    // cap FPS ~30
-    if(ts - last < 33){ requestAnimationFrame(tick); return; }
-    last = ts;
-
-    // performance: during scroll, keep canvas but stop heavy drawing
     if(document.body.classList.contains('is-scrolling')){
       requestAnimationFrame(tick);
       return;
@@ -1219,18 +1192,15 @@ body.mar-theme .scroll-hint{
 
     ctx.clearRect(0,0,W,H);
 
-    for(const L of leaves){
-      L.phase += L.freq;
-      L.x += L.vx + Math.sin(L.phase) * L.swing * 0.6;
-      L.y += L.vy;
-      L.rot += L.vrot + Math.sin(L.phase) * 0.002;
+    for(const f of flakes){
+      f.p += f.w;
+      f.x += f.vx + Math.sin(f.p) * 0.35;
+      f.y += f.vy;
 
-      if(L.y > H + 40 || L.x < -60 || L.x > W + 60){
-        resetLeaf(L, false);
-      }
+      if(f.y > H + 10 || f.x < -20 || f.x > W + 20) resetFlake(f, false);
 
-      const fill = `hsla(${L.hue}, ${L.sat}%, ${L.light}%, ${L.alpha})`;
-      drawLeaf(L.x, L.y, L.size, L.rot, fill);
+      const spr = getSprite(f.r, f.a);
+      ctx.drawImage(spr, f.x - spr.width/2, f.y - spr.height/2);
     }
 
     requestAnimationFrame(tick);
