@@ -8,7 +8,8 @@
   --text:#0f172a; --muted:#475569; --line: rgba(15,23,42,.10);
   --accent:#0f172a; --accent2:#15803d;
   --sun:#ef4444; --sat:#3b82f6; --holiday:#ef4444;
-  --pill1: rgba(21,128,61,.18); --pill2: rgba(185,28,28,.18);
+  /* 하나의 accent RGB로 event1(강)·event2(약) 모두 표현 */
+  --pill-rgb: 21, 128, 61;
   --radius:18px; --radius2:14px;
   --shadow: 0 18px 40px rgba(2,6,23,.14);
   --shadow2: 0 10px 22px rgba(2,6,23,.10);
@@ -29,14 +30,17 @@ body{
 }
 
 /* 분기별 테마 — body 전역에 적용 */
+/* 각 테마는 단일 accent(--pill-rgb)만 쓰고, event1(filled)·event2(ghost)로 위계 표현 */
 body.q-1{
+  /* 겨울: 차분한 블루 */
   --accent:#2563eb; --accent2:#60a5fa;
-  --pill1: rgba(37,99,235,.14); --pill2: rgba(236,72,153,.14);
+  --pill-rgb: 37, 99, 235;
   --header-bg:#eaf2fb; --header-text:#1f3a5f; --header-border:#c7d9ee;
 }
 body.q-2{
+  /* 봄: 에메랄드 그린 */
   --accent:#22c55e; --accent2:#86efac;
-  --pill1: rgba(34,197,94,.18); --pill2: rgba(134,239,172,.18);
+  --pill-rgb: 22, 163, 74;
   --header-bg:#ecfdf5; --header-text:#065f46; --header-border:#a7f3d0;
   background:
     radial-gradient(900px 520px at 18% 6%, rgba(134,239,172,.28) 0%, rgba(134,239,172,0) 60%),
@@ -46,13 +50,15 @@ body.q-2{
   background-attachment:fixed;
 }
 body.q-3{
-  --accent:#0f766e; --accent2:#f59e0b;
-  --pill1: rgba(15,118,110,.16); --pill2: rgba(245,158,11,.18);
+  /* 여름: 딥 틸 */
+  --accent:#0f766e; --accent2:#14b8a6;
+  --pill-rgb: 15, 118, 110;
   --header-bg:#ecfeff; --header-text:#0f4c5c; --header-border:#a5f3fc;
 }
 body.q-4{
-  --accent:#c2410c; --accent2:#dc2626;
-  --pill1: rgba(194,65,12,.16); --pill2: rgba(220,38,38,.14);
+  /* 가을: 따뜻한 오렌지 */
+  --accent:#c2410c; --accent2:#ea580c;
+  --pill-rgb: 194, 65, 12;
   --header-bg:#fff7ed; --header-text:#7c2d12; --header-border:#fed7aa;
 }
 
@@ -152,7 +158,7 @@ body.q-4{
 .date-num{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:900;letter-spacing:-.2px;}
 .date-num > span.today-label,.date-num > span.badge-holiday{order:-1}
 
-/* ─── Pills (빈 것도 표시되게 :empty 숨김 제거) ─── */
+/* ─── Pills (event1 = primary filled, event2 = ghost) ─── */
 .event1,.event2{
   position:relative;isolation:isolate;
   display:flex;align-items:center;justify-content:center;
@@ -160,24 +166,52 @@ body.q-4{
   min-height:30px;border-radius:999px;
   font-size:clamp(12px,1.4vw,15px);font-weight:800;
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;
-  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.22));
   backdrop-filter:blur(12px) saturate(1.15);-webkit-backdrop-filter:blur(12px) saturate(1.15);
-  border:1px solid rgba(255,255,255,.55);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 22px rgba(2,6,23,.12);
   color:#1f2937;
   text-shadow:0 1px 0 rgba(255,255,255,.6),0 -1px 0 rgba(0,0,0,.06),0 3px 8px rgba(2,6,23,.16);
-  transition:transform .16s,box-shadow .16s;
+  transition:transform .16s, box-shadow .16s, border-color .16s;
 }
-.event1{box-shadow:inset 0 0 0 1px rgba(34,139,34,.18),inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 22px rgba(2,6,23,.12);}
-.event2{box-shadow:inset 0 0 0 1px rgba(178,34,34,.18),inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 22px rgba(2,6,23,.12);}
-.event1::before,.event2::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--tint);opacity:.78;z-index:-1;}
-.event1{--tint:var(--pill1);}
-.event2{--tint:var(--pill2);}
+.event1::before,.event2::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;
+}
+
+/* event1 — 주행사: 진한 fill + 굵은 테두리 */
+.event1{
+  background: linear-gradient(180deg, rgba(255,255,255,.45), rgba(255,255,255,.22));
+  border: 1.5px solid rgba(var(--pill-rgb), .55);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.85),
+    inset 0 -1px 0 rgba(255,255,255,.2),
+    0 10px 22px rgba(2,6,23,.12);
+}
+.event1::before{ background: rgba(var(--pill-rgb), .22); }
+
+/* event2 — 보조행사: 옅은 fill + 얇은 테두리 (같은 색 계열, 위계 표현) */
+.event2{
+  background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.55));
+  border: 1px solid rgba(var(--pill-rgb), .32);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.85),
+    0 6px 14px rgba(2,6,23,.07);
+}
+.event2::before{ background: rgba(var(--pill-rgb), .06); }
+
 .event1:hover:not(:empty),.event2:hover:not(:empty){
   transform:translateY(-1.5px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(255,255,255,.25),0 16px 30px rgba(2,6,23,.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    inset 0 -1px 0 rgba(255,255,255,.25),
+    0 16px 30px rgba(2,6,23,.16);
+  border-color: rgba(var(--pill-rgb), .7);
 }
-.event1.has-member{--tint:rgba(245,158,11,.22);border-color:rgba(245,158,11,.35);font-weight:900;}
+
+/* has-member: 명단이 등록된 낙우회 일정은 앰버 강조 */
+.event1.has-member{
+  border-color: rgba(245,158,11,.55);
+}
+.event1.has-member::before{
+  background: rgba(245,158,11,.22);
+}
 
 .clicked-row{background:rgba(99,102,241,.10) !important;outline:2px solid rgba(99,102,241,.25);outline-offset:-2px;}
 .today{background:rgba(245,158,11,.10) !important;box-shadow:inset 0 0 0 2px rgba(245,158,11,.45);}
@@ -214,10 +248,11 @@ body > p,.month-panel > p{display:none !important;}
    ══════════════════════════════════════════════════════════════════ */
 #editorFab{position:fixed;bottom:22px;right:22px;width:48px;height:48px;border-radius:50%;background:#1a1a2e;color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.25);z-index:9998;display:flex;align-items:center;justify-content:center;}
 #editorFab.active{background:#e63946;}
-#memberEditorBtn,#saveHtmlBtn{display:none;position:fixed;border:none;border-radius:99px;font-family:inherit;font-weight:800;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.2);z-index:9998;padding:10px 16px;font-size:13px;color:#fff;}
+#memberEditorBtn,#saveHtmlBtn,#addMonthBtn{display:none;position:fixed;border:none;border-radius:99px;font-family:inherit;font-weight:800;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.2);z-index:9998;padding:10px 16px;font-size:13px;color:#fff;}
 #memberEditorBtn{bottom:130px;left:22px;background:#6b46c1;}
 #saveHtmlBtn{bottom:78px;left:22px;background:#238636;}
-body.edit-mode #memberEditorBtn,body.edit-mode #saveHtmlBtn{display:block !important;}
+#addMonthBtn{bottom:182px;left:22px;background:#0891b2;}
+body.edit-mode #memberEditorBtn,body.edit-mode #saveHtmlBtn,body.edit-mode #addMonthBtn{display:block !important;}
 #editBanner{display:none;position:fixed;top:0;left:0;right:0;background:#e63946;color:#fff;text-align:center;padding:7px 10px;font-size:13px;font-weight:700;z-index:9997;}
 body.edit-mode #editBanner{display:block !important;}
 body.edit-mode{padding-top:44px;}
@@ -228,9 +263,9 @@ body.edit-mode a[href^="tmap://"]{pointer-events:none;}
 body.edit-mode [data-editable-link="true"]{pointer-events:auto !important;}
 body.edit-mode .month-panel.active .detail-section tbody tr{position:relative;}
 body.edit-mode .detail-row-delete-btn{position:absolute;left:-26px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:none;background:#e63946;color:#fff;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2);z-index:10;}
-body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 0;}
-.detail-add-row-wrap{display:none;}
-.detail-add-row-btn{background:#1a1a2e;color:#fff;border:none;border-radius:99px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+body.edit-mode .detail-add-row-wrap{display:block !important;text-align:center;margin:10px 0;}
+#detail-add-row-wrap,.detail-add-row-wrap{display:none !important;}
+#detail-add-row-btn,.detail-add-row-btn{background:#1a1a2e;color:#fff;border:none;border-radius:99px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
 
 /* 비밀번호 모달 */
 #pwModal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:99999;}
@@ -261,6 +296,20 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 #ghUploadBtn{flex:1;padding:11px;background:#238636;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;}
 #ghUploadBtn:disabled{opacity:.5;cursor:not-allowed;}
 #ghCancelBtn{padding:11px 16px;background:#f0f0f0;color:#555;border:none;border-radius:10px;font-size:13px;cursor:pointer;}
+
+/* 새 월 추가 모달 */
+#addMonthModal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:99999;}
+#addMonthModal.show{display:flex;}
+#amBox{background:#fff;border-radius:16px;padding:24px 22px;width:min(360px,90vw);box-shadow:0 12px 40px rgba(0,0,0,.2);}
+#amBox h3{margin:0 0 6px;font-size:17px;}
+#amBox .am-desc{margin:0 0 14px;font-size:13px;color:#666;line-height:1.5;display:block !important;padding:0;background:none;border:0;box-shadow:none;max-width:none;backdrop-filter:none;}
+.am-selects{display:flex;gap:8px;margin-bottom:10px;}
+.am-selects select{flex:1;padding:10px 12px;border:1.5px solid #ddd;border-radius:10px;font-size:14px;outline:none;font-family:inherit;background:#fff;cursor:pointer;}
+.am-selects select:focus{border-color:#0891b2;}
+#amStatus{font-size:12px;min-height:18px;margin:4px 0 10px;text-align:center;color:#e63946;}
+.am-btns{display:flex;gap:8px;}
+#amConfirmBtn{flex:1;padding:11px;background:#0891b2;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+#amCancelBtn{padding:11px 16px;background:#f0f0f0;color:#555;border:none;border-radius:10px;font-size:13px;cursor:pointer;font-family:inherit;}
 
 /* 명단 편집 모달 */
 #meModal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:99999;padding:12px;}
@@ -335,7 +384,7 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
     <div class="picker-year-group">
   <div class="picker-year-label">2026년</div>
   <div class="picker-months">
-    <button class="picker-month-btn" data-month="2026-04" data-today="1" type="button">4월 <span class="picker-today-chip">오늘</span></button><button class="picker-month-btn" data-month="2026-03" type="button">3월</button><button class="picker-month-btn" data-month="2026-02" type="button">2월</button><button class="picker-month-btn" data-month="2026-01" type="button">1월</button>
+    <button class="picker-month-btn" data-month="2026-05" type="button">5월</button><button class="picker-month-btn" data-month="2026-04" data-today="1" type="button">4월 <span class="picker-today-chip">오늘</span></button><button class="picker-month-btn" data-month="2026-03" type="button">3월</button><button class="picker-month-btn" data-month="2026-02" type="button">2월</button><button class="picker-month-btn" data-month="2026-01" type="button">1월</button>
   </div>
 </div>
 <div class="picker-year-group">
@@ -362,37 +411,37 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
       <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sat"><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
     </tr>
     <tr>
-      <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sun"><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">7</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
       <td><div class="date-num">8</div><div class="event1">대호</div><div class="event2">잔다리</div></td>
       <td><div class="date-num">9</div><div class="event1">면천</div><div class="event2"></div></td>
       <td><div class="date-num">10</div><div class="event1">순성</div><div class="event2"></div></td>
       <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sat"><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
     </tr>
     <tr>
-      <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sun"><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">14</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
       <td><div class="date-num">15</div><div class="event1">아산</div><div class="event2"></div></td>
       <td><div class="date-num">16</div><div class="event1">삼괴</div><div class="event2"></div></td>
       <td><div class="date-num">17</div><div class="event1"><s>청어람</s></div><div class="event2"><s>송악송산</s></div></td>
       <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sat"><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
     </tr>
     <tr>
-      <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sun"><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2">신평</div></td>
       <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
-      <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sat"><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
     </tr>
     <tr>
-      <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+      <td class="sun"><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
       <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
@@ -473,46 +522,46 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
-<td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sat"><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-<td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sun"><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">4</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
 <td><div class="date-num">5</div><div class="event1">&nbsp;순성</div><div class="event2">&nbsp;</div></td>
 <td><div class="date-num">6</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
 <td><div class="date-num">7</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
 <td><div class="date-num">8</div><div class="event1">면천&nbsp;</div><div class="event2"></div></td>
-<td><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sat"><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-<td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sun"><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">11</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
 <td><div class="date-num">12</div><div class="event1">&nbsp;대호</div><div class="event2"></div></td>
 <td><div class="date-num">13</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
 <td><div class="date-num">14</div><div class="event1">아산&nbsp;</div><div class="event2"></div></td>
-<td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
-<td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
+<td class="holiday"><div class="date-num">15<span class="badge-holiday">광복절</span></div><div class="event1"></div><div class="event2"></div></td>
+<td class="sat"><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-<td><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sun"><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">19</div><div class="event1">송악송산</div><div class="event2"></div></td>
 <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">21</div><div class="event1"></div><div class="event2">&nbsp;</div></td>
 <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
-<td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sat"><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-<td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sun"><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">25</div><div class="event1">합덕</div><div class="event2"></div></td>
 <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">28</div><div class="event1">신평</div><div class="event2"></div></td>
 <td><div class="date-num">29</div><div class="event1">연세&nbsp;</div><div class="event2"></div></td>
-<td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sat"><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-<td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+<td class="sun"><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
 <td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
@@ -583,7 +632,7 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 
 
 
-<tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">3</div><div class="event1"><s>대호</s></div><div class="event2"></div></td><td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">9</div><div class="event1">순성</div><div class="event2">면천</div></td><td class=""><div class="date-num">10</div><div class="event1">청어람&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1">대호&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td><td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">26</div><div class="event1">연세</div><div class="event2"></div></td><td class="sat"><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr></tbody></table>
+<tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">3</div><div class="event1"><s>대호</s></div><div class="event2"></div></td><td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">9</div><div class="event1">순성</div><div class="event2">면천</div></td><td class=""><div class="date-num">10</div><div class="event1">청어람&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1">대호&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td><td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">26</div><div class="event1">연세</div><div class="event2"></div></td><td class="sat"><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr></tbody></table>
   </div>
 <div class="detail-section">
 <h2>2025년 9월 낙우회 상세 일정표</h2>
@@ -636,7 +685,7 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 <tbody><tr>
 <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
 </tr>
-<tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td><td class="sat holiday"><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun holiday"><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">10</div><div class="event1">&nbsp;</div><div class="event2"></div></td><td class="sat"><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">16</div><div class="event1">면천</div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">23</div><div class="event1">대호</div><div class="event2">신평</div></td><td class=""><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td><td class="sat"><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1">송악송산</div><div class="event2"></div></td><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr></tbody></table>
+<tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">3<span class="badge-holiday">개천절</span></div><div class="event1"></div><div class="event2"></div></td><td class="sat holiday"><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun holiday"><div class="date-num">5<span class="badge-holiday">추석</span></div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">6<span class="badge-holiday">추석</span></div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">7<span class="badge-holiday">추석</span></div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">8<span class="badge-holiday">대체공휴일</span></div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">9<span class="badge-holiday">한글날</span></div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">10</div><div class="event1">&nbsp;</div><div class="event2"></div></td><td class="sat"><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">16</div><div class="event1">면천</div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">23</div><div class="event1">대호</div><div class="event2">신평</div></td><td class=""><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td><td class="sat"><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1">송악송산</div><div class="event2"></div></td><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr></tbody></table>
   </div>
 <div class="detail-section">
 <h2>2025년 10월 낙우회 상세 일정표</h2>
@@ -682,12 +731,12 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 <tbody><tr>
 <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
 </tr>
-<tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td></tr>
-<tr><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">7</div><div class="event1">대호</div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td></tr>
-<tr><td class=""><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">14</div><div class="event1">아산</div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1">아산 양지 자혼&nbsp;&nbsp;</div><div class="event2"></div></td></tr>
-<tr><td class=""><div class="date-num">16</div><div class="event1">이천 월산 여혼</div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">21</div><div class="event1">산악회</div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td></tr>
-<tr><td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">24</div><div class="event1">합덕&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">27</div><div class="event1">신평</div><div class="event2"></div></td><td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1">예산 영신 자혼</div><div class="event2"></div></td></tr>
-<tr><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class="sun"><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">7</div><div class="event1">대호</div><div class="event2"></div></td><td class="sat"><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class="sun"><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">14</div><div class="event1">아산</div><div class="event2"></div></td><td class="sat"><div class="date-num">15</div><div class="event1">아산 양지 자혼&nbsp;&nbsp;</div><div class="event2"></div></td></tr>
+<tr><td class="sun"><div class="date-num">16</div><div class="event1">이천 월산 여혼</div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">21</div><div class="event1">산악회</div><div class="event2"></div></td><td class="sat"><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class="sun"><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">24</div><div class="event1">합덕&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">27</div><div class="event1">신평</div><div class="event2"></div></td><td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">29</div><div class="event1">예산 영신 자혼</div><div class="event2"></div></td></tr>
+<tr><td class="sun"><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr>
 </tbody></table>
   </div>
 <div class="detail-section">
@@ -755,37 +804,37 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
   <td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">9</div><div class="event1">면천</div><div class="event2">남양</div></td>
   <td class=""><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">12</div><div class="event1">대호</div><div class="event2">청어람</div></td>
-  <td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">15</div><div class="event1">잔다리</div><div class="event2">&nbsp;</div></td>
   <td class=""><div class="date-num">16</div><div class="event1">고덕</div><div class="event2"></div></td>
   <td class=""><div class="date-num">17</div><div class="event1">순성</div><div class="event2"></div></td>
   <td class=""><div class="date-num">18</div><div class="event1">송악송산</div><div class="event2"></div></td>
   <td class=""><div class="date-num">19</div><div class="event1">아산</div><div class="event2">연세</div></td>
-  <td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">22</div><div class="event1">합덕</div><div class="event2">고덕(빙그레)</div></td>
   <td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">24</div><div class="event1">신평</div><div class="event2"></div></td>
-  <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">25<span class="badge-holiday">성탄절</span></div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">26</div><div class="event1">예산2세</div><div class="event2"></div></td>
-  <td class=""><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">29</div><div class="event1">대한</div><div class="event2"></div></td>
   <td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
@@ -895,43 +944,43 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
   <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
   <td class="holiday"><div class="date-num">1<span class="badge-holiday">신정</span></div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">6</div><div class="event1">서산</div><div class="event2"></div></td>
   <td class=""><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">9</div><div class="event1">면천</div><div class="event2">&nbsp;</div></td>
-  <td class=""><div class="date-num">10</div><div class="event1">순성</div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">10</div><div class="event1">순성</div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">15</div><div class="event1">아산</div><div class="event2"></div></td>
   <td class=""><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">19</div><div class="event1">삼괴</div><div class="event2"></div></td>
   <td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">22</div><div class="event1">신평</div><div class="event2"></div></td>
   <td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">27</div><div class="event1">고덕(남양)</div><div class="event2">대호</div></td>
   <td class=""><div class="date-num">28</div><div class="event1">합덕</div><div class="event2"></div></td>
   <td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
   <td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
   <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
@@ -1005,43 +1054,43 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 </tr>
 
 <tr>
-  <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 
 <tr>
-  <td><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">9</div><div class="event1">송악송산</div><div class="event2">면천</div></td>
   <td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 
 <tr>
-  <td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">16<span class="badge-holiday">설날연휴</span></div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">17<span class="badge-holiday">설날</span></div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">18<span class="badge-holiday">설날연휴</span></div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 
 <tr>
-  <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td>
   <td><div class="date-num">25</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
   <td><div class="date-num">26</div><div class="event1">아산</div><div class="event2">신평</div></td>
   <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 </tbody></table>
   </div>
@@ -1091,47 +1140,47 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
   <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font></th>
 </tr>
 <tr>
-  <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun holiday"><div class="date-num">1<span class="badge-holiday">삼일절</span></div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">2<span class="badge-holiday">대체공휴일</span></div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">3</div><div class="event1">아산</div><div class="event2"></div></td>
   <td><div class="date-num">4</div><div class="event1">아산</div><div class="event2">순성</div></td>
   <td><div class="date-num">5</div><div class="event1">아산</div><div class="event2">순성</div></td>
   <td><div class="date-num">6</div><div class="event1"></div><div class="event2">순성</div></td>
-  <td><div class="date-num">7</div><div class="event1">아산인호</div><div class="event2">순성</div></td>
+  <td class="sat"><div class="date-num">7</div><div class="event1">아산인호</div><div class="event2">순성</div></td>
 </tr>
 
 <tr>
-  <td><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">9</div><div class="event1">면천</div><div class="event2"></div></td>
   <td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">13</div><div class="event1">대호</div><div class="event2"></div></td>
-  <td><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 
 <tr>
-  <td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">17</div><div class="event1">아산</div><div class="event2"></div></td>
   <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 
 <tr>
-  <td><div class="date-num">22</div><div class="event1">수종</div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">22</div><div class="event1">수종</div><div class="event2"></div></td>
   <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td>
   <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">26</div><div class="event1">신평</div><div class="event2"></div></td>
   <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 
 <tr>
-  <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
   <td></td>
@@ -1208,37 +1257,37 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
   <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">9</div><div class="event1">순성</div><div class="event2"></div></td>
   <td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">13</div><div class="event1">면천</div><div class="event2">대호</div></td>
   <td><div class="date-num">14</div><div class="event1">삼괴</div><div class="event2"></div></td>
   <td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
-  <td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2">송악송산</div></td>
-  <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
-  <td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sun"><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
@@ -1276,9 +1325,88 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
   <td>4월 14일(화)</td><td>8시30분(출발:쌍봉산근린공원)</td><td>삼괴낙우회</td><td>야유회</td><td>소금산출렁다리</td>
 <td><a href="tmap://search?name=%EA%B0%95%EC%9B%90%20%EC%9B%90%EC%A3%BC%EC%8B%9C%20%EC%A7%80%EC%A0%95%EB%A9%B4%20%EC%86%8C%EA%B8%88%EC%82%B0%EA%B8%B8%20100">강원 원주시 지정면 소금산길 100</a></td>
 </tr>
-<tr style="position: relative;"><td>4월 24일(금)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>석천가</td><td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%ED%95%A9%EB%8D%95%EB%8C%80%EB%8D%95%EB%A1%9C%20333-53"><span style="color: rgb(0, 0, 0); font-family: -apple-system, BlinkMacSystemFont, helvetica, &quot;Apple SD Gothic Neo&quot;, sans-serif; font-size: 16px; letter-spacing: -0.3px; white-space: pre; background-color: rgb(240, 240, 240);">충남 당진시 합덕읍 합덕대덕로 333-53</span></a></td></tr><tr style="position: relative;"><td>4월 24일(금)</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>빅쭌부대찌</td><td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%B0%98%EC%B4%8C%EB%A1%9C%205-11"><span style="color: rgb(0, 0, 0); font-family: -apple-system, BlinkMacSystemFont, helvetica, &quot;Apple SD Gothic Neo&quot;, sans-serif; font-size: 16px; letter-spacing: -0.3px; white-space: pre; background-color: rgb(240, 240, 240);">충남 당진시 반촌로 5-11</span></a></td></tr></tbody>
+<tr style="position: relative;"><td>4월 24일(금)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>석천가</td><td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%ED%95%A9%EB%8D%95%EB%8C%80%EB%8D%95%EB%A1%9C%20333-53"><span style="color: rgb(0, 0, 0); font-family: -apple-system, BlinkMacSystemFont, helvetica, &quot;Apple SD Gothic Neo&quot;, sans-serif; font-size: 16px; letter-spacing: -0.3px; white-space: pre; background-color: rgb(240, 240, 240);">충남 당진시 합덕읍 합덕대덕로 333-53</span></a></td></tr><tr style="position: relative;"><td>4월 24일(금)</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>빅쭌부대찌개</td><td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%B0%98%EC%B4%8C%EB%A1%9C%205-11"><span style="color: rgb(0, 0, 0); font-family: -apple-system, BlinkMacSystemFont, helvetica, &quot;Apple SD Gothic Neo&quot;, sans-serif; font-size: 16px; letter-spacing: -0.3px; white-space: pre; background-color: rgb(240, 240, 240);">충남 당진시 반촌로 5-11</span></a></td></tr></tbody>
   </table>
-<div id="detail-add-row-wrap"><button id="detail-add-row-btn" type="button">＋ 상세 일정 행 추가</button></div></div>
+</div>
+</section>
+
+<section class="month-panel" data-month="2026-05" data-quarter="2">
+  <h2 class="main-title">2026년 5월 낙우회 및 조합원 행사 일정표</h2>
+  <div class="cal-wrap">
+<table>
+<tbody>
+<tr>
+  <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+</tr>
+<tr>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class="sun"><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">5<span class="badge-holiday">어린이날</span></div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class="sun"><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class="sun"><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class="sun holiday"><div class="date-num">24<span class="badge-holiday">부처님오신날</span></div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">25<span class="badge-holiday">대체공휴일</span></div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="sat"><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class="sun"><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+</tbody>
+</table>
+  </div>
+<div class="detail-section">
+  <h2>2026년 5월 낙우회 상세 일정표</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>일자</th><th>시간</th><th>낙우회 및 행사</th><th>구분</th><th>장소</th><th>주소</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
 </section>
 </main>
 
@@ -1294,14 +1422,31 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 <!-- 편집 UI -->
 <div id="editBanner">✏ 편집 모드 — 셀 클릭 편집 · 👥 명단 편집 · ☁ GitHub 저장</div>
 <button id="editorFab" title="편집 모드" type="button" class="">✏</button>
+<button id="addMonthBtn" type="button">＋ 새 월</button>
 <button id="memberEditorBtn" type="button">👥 명단 편집</button>
 <button id="saveHtmlBtn" type="button">☁ GitHub 저장</button>
+
+<div id="addMonthModal">
+  <div id="amBox">
+    <h3>＋ 새 월 추가</h3>
+    <div class="am-desc">비어있는 달력이 생성됩니다. 생성 후 편집 모드에서 일정을 입력하고 <b>☁ GitHub 저장</b>으로 반영하세요.</div>
+    <div class="am-selects">
+      <select id="amYearSel" aria-label="연도"><option value="2024">2024년</option><option value="2025">2025년</option><option value="2026">2026년</option><option value="2027">2027년</option><option value="2028">2028년</option><option value="2029">2029년</option></select>
+      <select id="amMonthSel" aria-label="월"><option value="1">1월</option><option value="2">2월</option><option value="3">3월</option><option value="4">4월</option><option value="5">5월</option><option value="6">6월</option><option value="7">7월</option><option value="8">8월</option><option value="9">9월</option><option value="10">10월</option><option value="11">11월</option><option value="12">12월</option></select>
+    </div>
+    <div id="amStatus"></div>
+    <div class="am-btns">
+      <button id="amConfirmBtn" type="button">추가</button>
+      <button id="amCancelBtn" type="button">취소</button>
+    </div>
+  </div>
+</div>
 
 <div id="pwModal" class="">
   <div id="pwBox">
     <h3>편집 모드</h3>
     <p>비밀번호를 입력해주세요</p>
-    <input id="pwInput" type="password" placeholder="••••••" maxlength="20" autocomplete="off">
+    <input id="pwInput" type="password" placeholder="••••••" maxlength="20" autocomplete="off" class="">
     <div id="pwError"></div>
     <button id="pwConfirm" type="button">확인</button>
     <button id="pwCancel" type="button">취소</button>
@@ -1370,6 +1515,119 @@ body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 
 <script id="app-script">
 (function(){
 'use strict';
+
+/* ═════════════ 방어적 초기화: 오래된 저장본에 남아있을 수 있는 편집 UI 흔적 제거 ═════════════ */
+/* class 형과 id 형 모두 제거 (원본 HTML에 id="detail-add-row-wrap"로 박혀있던 것 포함) */
+document.querySelectorAll('.detail-add-row-wrap, .detail-row-delete-btn, #detail-add-row-wrap, #detail-add-row-btn').forEach(function(b){b.remove();});
+document.querySelectorAll('[data-editable="true"], [data-editable-link="true"]').forEach(function(el){
+  el.removeAttribute('contenteditable');
+  el.removeAttribute('data-editable');
+  el.removeAttribute('data-editable-link');
+});
+document.body.classList.remove('edit-mode');
+
+/* ═════════════ 한국 공휴일 (2025-07 ~ 2027-12) ═════════════ */
+var HOLIDAYS = {
+  /* 2025 */
+  '2025-08-15': '광복절',
+  '2025-10-03': '개천절',
+  '2025-10-05': '추석',
+  '2025-10-06': '추석',
+  '2025-10-07': '추석',
+  '2025-10-08': '대체공휴일',
+  '2025-10-09': '한글날',
+  '2025-12-25': '성탄절',
+  /* 2026 */
+  '2026-01-01': '신정',
+  '2026-02-16': '설날연휴',
+  '2026-02-17': '설날',
+  '2026-02-18': '설날연휴',
+  '2026-03-01': '삼일절',
+  '2026-03-02': '대체공휴일',
+  '2026-05-05': '어린이날',
+  '2026-05-24': '부처님오신날',
+  '2026-05-25': '대체공휴일',
+  '2026-06-06': '현충일',
+  '2026-08-15': '광복절',
+  '2026-09-24': '추석연휴',
+  '2026-09-25': '추석',
+  '2026-09-26': '추석연휴',
+  '2026-10-03': '개천절',
+  '2026-10-09': '한글날',
+  '2026-12-25': '성탄절',
+  /* 2027 */
+  '2027-01-01': '신정',
+  '2027-02-08': '설날연휴',
+  '2027-02-09': '설날',
+  '2027-02-10': '설날연휴',
+  '2027-03-01': '삼일절',
+  '2027-05-05': '어린이날',
+  '2027-05-13': '부처님오신날',
+  '2027-06-06': '현충일',
+  '2027-06-07': '대체공휴일',
+  '2027-08-15': '광복절',
+  '2027-08-16': '대체공휴일',
+  '2027-09-14': '추석연휴',
+  '2027-09-15': '추석',
+  '2027-09-16': '추석연휴',
+  '2027-10-03': '개천절',
+  '2027-10-04': '대체공휴일',
+  '2027-10-09': '한글날',
+  '2027-12-25': '성탄절'
+};
+
+/* ═════════════ 요일 색상 + 공휴일 뱃지 자동 마킹 ═════════════ */
+function markWeekendsAndHolidays(){
+  document.querySelectorAll('.month-panel').forEach(function(panel){
+    var monthStr = panel.getAttribute('data-month');
+    if(!monthStr) return;
+    var parts = monthStr.split('-');
+    var year = parseInt(parts[0], 10);
+    var monthNum = parseInt(parts[1], 10);
+
+    panel.querySelectorAll('.cal-wrap table tr').forEach(function(tr){
+      /* 헤더(요일) 행 스킵 */
+      if(tr.querySelector('th')) return;
+      var cells = tr.querySelectorAll('td');
+      cells.forEach(function(td, colIdx){
+        var dateNum = td.querySelector('.date-num');
+        if(!dateNum) return;
+        var dateText = (dateNum.textContent || '').replace(/[^\d]/g, '').trim();
+        var dayNum = parseInt(dateText, 10);
+        if(isNaN(dayNum) || dayNum < 1 || dayNum > 31){
+          /* 빈 칸(-, nbsp 등)에서는 혹시 잘못 붙어있을 수 있는 sun/sat 제거 */
+          td.classList.remove('sun','sat','holiday');
+          return;
+        }
+
+        /* 요일 색상: 0=일, 6=토 */
+        if(colIdx === 0){
+          td.classList.remove('sat');
+          td.classList.add('sun');
+        } else if(colIdx === 6){
+          td.classList.remove('sun');
+          td.classList.add('sat');
+        } else {
+          td.classList.remove('sun','sat');
+        }
+
+        /* 공휴일 마킹 */
+        var dateKey = year + '-' + String(monthNum).padStart(2,'0') + '-' + String(dayNum).padStart(2,'0');
+        var holName = HOLIDAYS[dateKey];
+        if(holName){
+          td.classList.add('holiday');
+          /* 중복 뱃지 제거 후 재추가 (이름이 바뀌었을 수 있으니) */
+          var existing = dateNum.querySelector('.badge-holiday');
+          if(existing) existing.remove();
+          var badge = document.createElement('span');
+          badge.className = 'badge-holiday';
+          badge.textContent = holName;
+          dateNum.appendChild(badge);
+        }
+      });
+    });
+  });
+}
 
 /* ═════════════ memberData ═════════════ */
 /* __MEMBER_DATA_START__ */
@@ -2970,21 +3228,196 @@ monthPickerOverlay.addEventListener('click', function(e){
     monthSwitcherBtn.classList.remove('open');
   }
 });
-document.querySelectorAll('.picker-month-btn').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var m = btn.getAttribute('data-month');
-    activateMonth(m);
-    monthPickerOverlay.classList.remove('show');
-    monthSwitcherBtn.classList.remove('open');
-    window.scrollTo({top:0, behavior:'smooth'});
-  });
+document.getElementById('monthPicker').addEventListener('click', function(e){
+  var btn = e.target.closest('.picker-month-btn');
+  if(!btn) return;
+  var m = btn.getAttribute('data-month');
+  activateMonth(m);
+  monthPickerOverlay.classList.remove('show');
+  monthSwitcherBtn.classList.remove('open');
+  window.scrollTo({top:0, behavior:'smooth'});
 });
 /* ESC 키로 닫기 */
 document.addEventListener('keydown', function(e){
   if(e.key === 'Escape'){
     monthPickerOverlay.classList.remove('show');
     monthSwitcherBtn.classList.remove('open');
+    var amm = document.getElementById('addMonthModal');
+    if(amm) amm.classList.remove('show');
   }
+});
+
+/* ═════════════ 새 월 추가 기능 ═════════════ */
+var addMonthBtn = document.getElementById('addMonthBtn');
+var addMonthModal = document.getElementById('addMonthModal');
+var amYearSel = document.getElementById('amYearSel');
+var amMonthSel = document.getElementById('amMonthSel');
+var amStatus = document.getElementById('amStatus');
+
+/* 연도·월 셀렉트 초기 채우기 (기본값 = 다음 달) */
+(function initAmSelects(){
+  var now = new Date();
+  var curYear = now.getFullYear();
+  /* 연도: 현재 연도 -2 ~ +3 */
+  for(var y = curYear - 2; y <= curYear + 3; y++){
+    var opt = document.createElement('option');
+    opt.value = y; opt.textContent = y + '년';
+    amYearSel.appendChild(opt);
+  }
+  for(var m = 1; m <= 12; m++){
+    var opt2 = document.createElement('option');
+    opt2.value = m; opt2.textContent = m + '월';
+    amMonthSel.appendChild(opt2);
+  }
+  /* 기본: 다음 달 */
+  var nextMonth = now.getMonth() + 2; /* 0-idx+1=현재, +2=다음 */
+  var nextYear = curYear;
+  if(nextMonth > 12){ nextMonth -= 12; nextYear++; }
+  amYearSel.value = nextYear;
+  amMonthSel.value = nextMonth;
+})();
+
+function buildEmptyCalendarHTML(year, month){
+  var firstDow = new Date(year, month-1, 1).getDay();    /* 0=일 */
+  var lastDay = new Date(year, month, 0).getDate();
+  var html = '<table><tbody>\n';
+  html += '<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>\n';
+  var day = 1, col = 0;
+  html += '<tr>\n';
+  for(var i = 0; i < firstDow; i++){
+    html += '  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>\n';
+    col++;
+  }
+  while(day <= lastDay){
+    html += '  <td class=""><div class="date-num">' + day + '</div><div class="event1"></div><div class="event2"></div></td>\n';
+    col++; day++;
+    if(col === 7 && day <= lastDay){
+      html += '</tr>\n<tr>\n';
+      col = 0;
+    }
+  }
+  while(col > 0 && col < 7){
+    html += '  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>\n';
+    col++;
+  }
+  html += '</tr>\n</tbody></table>';
+  return html;
+}
+
+function buildEmptyDetailHTML(year, month){
+  return '<div class="detail-section">\n' +
+    '  <h2>' + year + '년 ' + month + '월 낙우회 상세 일정표</h2>\n' +
+    '  <table>\n' +
+    '    <thead>\n' +
+    '      <tr>\n' +
+    '        <th>일자</th><th>시간</th><th>낙우회 및 행사</th><th>구분</th><th>장소</th><th>주소</th>\n' +
+    '      </tr>\n' +
+    '    </thead>\n' +
+    '    <tbody>\n' +
+    '    </tbody>\n' +
+    '  </table>\n' +
+    '</div>';
+}
+
+function insertMonthPanelInOrder(panel){
+  var main = document.getElementById('monthContent');
+  var newKey = panel.getAttribute('data-month');
+  var existing = main.querySelectorAll('.month-panel');
+  for(var i = 0; i < existing.length; i++){
+    if(existing[i].getAttribute('data-month') > newKey){
+      main.insertBefore(panel, existing[i]);
+      return;
+    }
+  }
+  main.appendChild(panel);
+}
+
+function insertPickerButtonInOrder(monthKey, label){
+  var picker = document.getElementById('monthPicker');
+  var year = monthKey.split('-')[0];
+  /* 연도 그룹 찾거나 생성 */
+  var yearGroup = null;
+  picker.querySelectorAll('.picker-year-group').forEach(function(g){
+    var lbl = g.querySelector('.picker-year-label');
+    if(lbl && lbl.textContent === year + '년') yearGroup = g;
+  });
+  if(!yearGroup){
+    yearGroup = document.createElement('div');
+    yearGroup.className = 'picker-year-group';
+    yearGroup.innerHTML = '<div class="picker-year-label">' + year + '년</div>\n<div class="picker-months"></div>';
+    /* 내림차순 (큰 연도가 위) */
+    var groups = picker.querySelectorAll('.picker-year-group');
+    var inserted = false;
+    for(var i = 0; i < groups.length; i++){
+      var gYear = groups[i].querySelector('.picker-year-label').textContent.replace('년','');
+      if(parseInt(year,10) > parseInt(gYear,10)){
+        picker.insertBefore(yearGroup, groups[i]);
+        inserted = true; break;
+      }
+    }
+    if(!inserted) picker.appendChild(yearGroup);
+  }
+  /* 월 버튼 내림차순 */
+  var monthsDiv = yearGroup.querySelector('.picker-months');
+  var newBtn = document.createElement('button');
+  newBtn.className = 'picker-month-btn';
+  newBtn.setAttribute('data-month', monthKey);
+  newBtn.setAttribute('type', 'button');
+  newBtn.textContent = label;
+  var newMonth = parseInt(monthKey.split('-')[1], 10);
+  var btns = monthsDiv.querySelectorAll('.picker-month-btn');
+  var placed = false;
+  for(var j = 0; j < btns.length; j++){
+    var bm = parseInt(btns[j].getAttribute('data-month').split('-')[1], 10);
+    if(newMonth > bm){ monthsDiv.insertBefore(newBtn, btns[j]); placed = true; break; }
+  }
+  if(!placed) monthsDiv.appendChild(newBtn);
+}
+
+function addNewMonth(year, month){
+  var monthKey = year + '-' + String(month).padStart(2,'0');
+  if(document.querySelector('.month-panel[data-month="' + monthKey + '"]')){
+    return { ok:false, err: year + '년 ' + month + '월은 이미 있습니다.' };
+  }
+  var panel = document.createElement('section');
+  panel.className = 'month-panel';
+  panel.setAttribute('data-month', monthKey);
+  panel.setAttribute('data-quarter', Math.ceil(month / 3));
+  panel.innerHTML =
+    '<h2 class="main-title">' + year + '년 ' + month + '월 낙우회 및 조합원 행사 일정표</h2>\n' +
+    '<div class="cal-wrap">\n' + buildEmptyCalendarHTML(year, month) + '\n</div>\n' +
+    buildEmptyDetailHTML(year, month);
+  insertMonthPanelInOrder(panel);
+  insertPickerButtonInOrder(monthKey, month + '월');
+  markWeekendsAndHolidays();
+  activateMonth(monthKey);
+  if(document.body.classList.contains('edit-mode')){
+    markEditable();
+    refreshDetailDeleteBtns();
+  }
+  return { ok:true };
+}
+
+addMonthBtn.addEventListener('click', function(){
+  amStatus.textContent = '';
+  addMonthModal.classList.add('show');
+});
+document.getElementById('amCancelBtn').addEventListener('click', function(){
+  addMonthModal.classList.remove('show');
+});
+addMonthModal.addEventListener('click', function(e){
+  if(e.target === addMonthModal) addMonthModal.classList.remove('show');
+});
+document.getElementById('amConfirmBtn').addEventListener('click', function(){
+  var year = parseInt(amYearSel.value, 10);
+  var month = parseInt(amMonthSel.value, 10);
+  if(isNaN(year) || isNaN(month) || month < 1 || month > 12){
+    amStatus.textContent = '연도·월을 선택하세요.';
+    return;
+  }
+  var result = addNewMonth(year, month);
+  if(!result.ok){ amStatus.textContent = result.err; return; }
+  addMonthModal.classList.remove('show');
 });
 
 /* ═════════════ 클릭 이벤트 위임 ═════════════ */
@@ -3027,9 +3460,11 @@ document.addEventListener('click', function(e){
   }
 });
 
-/* Enter로 줄바꿈 대신 포커스 이탈 */
+/* Enter로 줄바꿈 대신 포커스 이탈 (단, IME 조합 중이면 통과) */
 document.addEventListener('keydown', function(e){
   if(!document.body.classList.contains('edit-mode')) return;
+  /* IME(한글) 조합 중이면 Enter는 조합 확정용이므로 손대지 않음 */
+  if(e.isComposing || e.keyCode === 229) return;
   if(e.key==='Enter' && e.target && e.target.getAttribute &&
      (e.target.getAttribute('data-editable')==='true' || e.target.getAttribute('data-editable-link')==='true')){
     e.preventDefault();
@@ -3155,7 +3590,7 @@ window.exitEditMode = function(){
     if(t) a.setAttribute('href','tmap://search?name='+encodeURIComponent(t));
   });
   unmarkEditable();
-  document.querySelectorAll('.detail-row-delete-btn').forEach(function(b){b.remove();});
+  document.querySelectorAll('.detail-row-delete-btn, .detail-add-row-wrap, #detail-add-row-wrap, #detail-add-row-btn').forEach(function(b){b.remove();});
   markHasMember();
 };
 
@@ -3395,7 +3830,12 @@ ghUploadBtn.addEventListener('click', async function(){
     else if(shaRes.status===404){}
     else { throw new Error('SHA 조회 실패 ('+shaRes.status+')'); }
 
-    if(editMode) window.exitEditMode();
+    if(editMode) {
+      /* IME 조합 중일 수 있으니 현재 포커스 강제 blur + 짧은 대기 */
+      if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      await new Promise(function(r){ setTimeout(r, 80); });
+      window.exitEditMode();
+    }
     var rawHTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
     var parser = new DOMParser();
     var doc = parser.parseFromString(rawHTML, 'text/html');
@@ -3404,14 +3844,14 @@ ghUploadBtn.addEventListener('click', async function(){
 
     var cFab = doc.getElementById('editorFab');
     if(cFab){ cFab.classList.remove('active'); cFab.textContent='✏'; }
-    ['pwModal','ghModal','meModal','monthPickerOverlay'].forEach(function(id){ var m = doc.getElementById(id); if(m) m.classList.remove('show'); });
-    ['ghStatus','pwError'].forEach(function(id){ var el=doc.getElementById(id); if(el) el.textContent=''; });
+    ['pwModal','ghModal','meModal','monthPickerOverlay','addMonthModal'].forEach(function(id){ var m = doc.getElementById(id); if(m) m.classList.remove('show'); });
+    ['ghStatus','pwError','amStatus'].forEach(function(id){ var el=doc.getElementById(id); if(el) el.textContent=''; });
     ['ghTokenInput','ghPathInput','pwInput','meGroupName'].forEach(function(id){ var el=doc.getElementById(id); if(el) el.value=''; });
 
     doc.querySelectorAll('[data-editable="true"], [data-editable-link="true"]').forEach(function(el){
       el.removeAttribute('contenteditable'); el.removeAttribute('data-editable'); el.removeAttribute('data-editable-link');
     });
-    doc.querySelectorAll('.detail-row-delete-btn, .detail-add-row-wrap').forEach(function(b){b.remove();});
+    doc.querySelectorAll('.detail-row-delete-btn, .detail-add-row-wrap, #detail-add-row-wrap, #detail-add-row-btn').forEach(function(b){b.remove();});
     var mGL = doc.getElementById('meGroupList'); if(mGL) mGL.innerHTML='';
     var mMB = doc.getElementById('meMemberBody'); if(mMB) mMB.innerHTML='';
     var mEA = doc.getElementById('meEditorActive'); if(mEA) mEA.style.display='none';
@@ -3461,6 +3901,7 @@ ghUploadBtn.addEventListener('click', async function(){
 
 /* ═════════════ 초기화 ═════════════ */
 document.body.classList.remove('edit-mode');
+markWeekendsAndHolidays();
 markToday();
 markHasMember();
 
