@@ -1,485 +1,1202 @@
 <!DOCTYPE html>
 <html lang="ko"><head>
 <meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<title>2026년 4월 낙우회 일정</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>당진낙농축협 낙우회 일정표</title>
 <style>
 :root{
-  --bg0:#0b1020;
-  --bg1:#0f172a;
-  --bg2:#111827;
-  --surface: rgba(255,255,255,.88);
-  --surface2: rgba(255,255,255,.96);
-  --card:#ffffff;
-
-  --text:#0f172a;
-  --muted:#475569;
-  --line: rgba(15,23,42,.10);
-
-  --primary:#0f172a;
-  --accent:#0f172a;
-  --accent2:#15803d;
-  --glow: rgba(99,102,241,.35);
-
-  --sun:#ef4444;
-  --sat:#3b82f6;
-  --holiday:#ef4444;
-  --today:#f59e0b;
-
-  --pill1: rgba(21,128,61,.18);
-  --pill2: rgba(185,28,28,.18);
-
-  --radius:18px;
-  --radius2:14px;
+  --text:#0f172a; --muted:#475569; --line: rgba(15,23,42,.10);
+  --accent:#0f172a; --accent2:#15803d;
+  --sun:#ef4444; --sat:#3b82f6; --holiday:#ef4444;
+  --pill1: rgba(21,128,61,.18); --pill2: rgba(185,28,28,.18);
+  --radius:18px; --radius2:14px;
   --shadow: 0 18px 40px rgba(2,6,23,.14);
   --shadow2: 0 10px 22px rgba(2,6,23,.10);
-
-  --header-bg: #eaf2fb;
-  --header-text: #1f3a5f;
-  --header-border: #c7d9ee;
+  --header-bg:#eaf2fb; --header-text:#1f3a5f; --header-border:#c7d9ee;
 }
-
 *{box-sizing:border-box}
 html,body{height:100%}
+html{scroll-behavior:smooth;}
 body{
-  font-family: 'Pretendard','맑은 고딕',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  margin:0;
-  padding:14px;
-  color:var(--text);
-
+  font-family:'Pretendard','맑은 고딕','Malgun Gothic',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  margin:0;padding:14px;color:var(--text);
   background:
     radial-gradient(900px 520px at 18% 6%, rgba(99,102,241,.35) 0%, rgba(99,102,241,0) 60%),
     radial-gradient(800px 520px at 82% 10%, rgba(6,182,212,.28) 0%, rgba(6,182,212,0) 58%),
     radial-gradient(900px 620px at 50% 110%, rgba(245,158,11,.12) 0%, rgba(245,158,11,0) 55%),
     linear-gradient(180deg, #f8fafc 0%, #eef2ff 35%, #f8fafc 100%);
+  background-attachment:fixed;
 }
 
-a{color:inherit}
-
-/* ===== Top nav ===== */
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin:10px 0 14px;
+/* 분기별 테마 — body 전역에 적용 */
+body.q-1{
+  --accent:#2563eb; --accent2:#60a5fa;
+  --pill1: rgba(37,99,235,.14); --pill2: rgba(236,72,153,.14);
+  --header-bg:#eaf2fb; --header-text:#1f3a5f; --header-border:#c7d9ee;
 }
-
-.navbtn{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 14px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:800;
-  color:#fff;
-  background: linear-gradient(135deg, rgba(99,102,241,.92), rgba(6,182,212,.92));
-  box-shadow: 0 10px 18px rgba(2,6,23,.12);
-  border: 1px solid rgba(255,255,255,.25);
-  transition: transform .15s ease, filter .15s ease;
-}
-.navbtn:hover{transform: translateY(-1px); filter: brightness(1.02);}
-.navbtn:active{transform: translateY(0);}
-
-/* ===== Headings ===== */
-h2{
-  text-align:center;
-  margin: 18px 0 10px;
-  font-size: clamp(20px, 2.2vw, 30px);
-  font-weight: 800;
-  color: #1f2a44;
-  letter-spacing: -0.2px;
-}
-h2::after{
-  content:"";
-  display:block;
-  width: 140px;
-  max-width: 55%;
-  height: 3px;
-  margin: 10px auto 0;
-  border-radius: 999px;
-  background: rgba(31,42,68,0.14);
-}
-p{
-  margin: 0 auto 14px;
-  max-width: 1100px;
-  padding: 10px 12px;
-  border-radius: var(--radius2);
-  background: rgba(255,255,255,.72);
-  border: 1px solid rgba(255,255,255,.55);
-  outline: 1px solid rgba(255,255,255,.25);
-  outline-offset: -1px;
-  box-shadow: 0 10px 22px rgba(2,6,23,.06);
-  color: var(--muted);
-  backdrop-filter: blur(8px);
-}
-
-/* ===== Tables as cards ===== */
-table{
-  width:100%;
-  table-layout:fixed;
-  border-collapse: separate;
-  border-spacing:0;
-  margin: 0 auto 24px;
-  max-width: 1100px;
-
-  background: rgba(255,255,255,.78);
-  border: 1px solid rgba(255,255,255,.70);
-  border-radius: var(--radius);
-  overflow:hidden;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(10px);
-}
-
-th, td{
-  border-right: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  padding: 6px;
-  vertical-align: middle;
-  height: 86px;
-  text-align:center;
-}
-
-tr:last-child td{border-bottom:0}
-td:last-child, th:last-child{border-right:0}
-
-th{
-  height: 44px;
-  background: var(--header-bg);
-  color: var(--header-text);
-  font-weight: 900;
-  letter-spacing: -.2px;
-  border-bottom: 1px solid var(--header-border);
-}
-
-#detail-section{
-  margin: 28px auto 0;
-  max-width: 1100px;
-  position: relative;
-  overflow-x:auto;
-}
-
-#detail-section table{
-  max-width: none;
-  min-width: 920px;
-  background: rgba(255,255,255,.86);
-  box-shadow: var(--shadow2);
-}
-
-#detail-section th{
-  background: var(--header-bg);
-  color: var(--header-text);
-  border-bottom: 1px solid var(--header-border);
-  font-size: clamp(14px, 1vw, 16px);
-  padding: 10px 8px;
-}
-
-#member-section th{
-  background: var(--header-bg);
-  color: var(--header-text);
-  border-bottom: 1px solid var(--header-border);
-  padding: 10px 8px;
-}
-
-#detail-section td:nth-child(6){text-align:left}
-
-/* ===== Date number row ===== */
-.date-num{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:6px;
-  font-weight:900;
-  letter-spacing:-.2px;
-}
-
-.date-num > span.today-label,
-.date-num > span.badge-holiday{order:-1}
-
-/* ===== Pills (events) ===== */
-.event1, .event2{
-  position: relative;
-  isolation: isolate;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width: calc(100% - 10px);
-  margin: 6px auto;
-  padding: 8px 11px;
-  min-height: 30px;
-  border-radius: 999px;
-  font-size: clamp(12px, 1.5vw, 15px);
-  font-weight: 800;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-
+body.q-2{
+  --accent:#22c55e; --accent2:#86efac;
+  --pill1: rgba(34,197,94,.18); --pill2: rgba(134,239,172,.18);
+  --header-bg:#ecfdf5; --header-text:#065f46; --header-border:#a7f3d0;
   background:
-    linear-gradient(
-      180deg,
-      rgba(255,255,255,.42),
-      rgba(255,255,255,.22)
-    );
-  backdrop-filter: blur(12px) saturate(1.15);
-  -webkit-backdrop-filter: blur(12px) saturate(1.15);
-
-  border: 1px solid rgba(255,255,255,.55);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.85),
-    inset 0 -1px 0 rgba(255,255,255,.20),
-    0 10px 22px rgba(2,6,23,.12);
-
-  color: #1f2937;
-  text-shadow:
-    0 1px 0 rgba(255,255,255,.6),
-    0 -1px 0 rgba(0,0,0,.06),
-    0 3px 8px rgba(2,6,23,.16);
-
-  transition: transform .16s ease, box-shadow .16s ease;
-}
-
-.event1{ box-shadow:
-  inset 0 0 0 1px rgba(34,139,34,.18),
-  inset 0 1px 0 rgba(255,255,255,.85),
-  inset 0 -1px 0 rgba(255,255,255,.20),
-  0 10px 22px rgba(2,6,23,.12);
-}
-.event2{ box-shadow:
-  inset 0 0 0 1px rgba(178,34,34,.18),
-  inset 0 1px 0 rgba(255,255,255,.85),
-  inset 0 -1px 0 rgba(255,255,255,.20),
-  0 10px 22px rgba(2,6,23,.12);
-}
-
-.event1::before,
-.event2::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:inherit;
-  background: var(--tint);
-  opacity:.78;
-  z-index:-1;
-}
-
-.event1:hover, .event2:hover{
-  transform: translateY(-1.5px);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.9),
-    inset 0 -1px 0 rgba(255,255,255,.25),
-    0 16px 30px rgba(2,6,23,.16);
-}
-
-.event1.has-member{
-  --tint: rgba(245,158,11,.20);
-  border-color: rgba(245,158,11,.35);
-  font-weight: 900;
-}
-
-/* ===== Row highlight ===== */
-.clicked-row{
-  background: rgba(99,102,241,.10) !important;
-  outline: 2px solid rgba(99,102,241,.25);
-  outline-offset: -2px;
-}
-
-/* ===== Today / Holiday badges ===== */
-.today{
-  background: rgba(245,158,11,.10) !important;
-  box-shadow: inset 0 0 0 2px rgba(245,158,11,.45);
-}
-.today-label{
-  display:inline-block;
-  padding: 3px 8px;
-  font-size: 12px;
-  background: rgba(245,158,11,.95);
-  color:#fff;
-  border-radius: 999px;
-  font-weight: 900;
-}
-
-.holiday .date-num{ color: var(--holiday); }
-.badge-holiday{
-  display:inline-block;
-  padding: 3px 8px;
-  font-size: 12px;
-  background: rgba(239,68,68,.95);
-  color:#fff;
-  border-radius: 999px;
-  font-weight: 900;
-}
-
-/* weekend colors */
-.sun .date-num{ color: var(--sun); }
-.sat .date-num{ color: var(--sat); }
-
-/* Member section */
-#member-section{
-  display:none;
-  margin: 16px auto 24px;
-  max-width: 1100px;
-  padding: 14px 14px 4px;
-  border-radius: var(--radius);
-  background: rgba(255,255,255,.86);
-  border: 1px solid rgba(255,255,255,.72);
-  box-shadow: var(--shadow2);
-  backdrop-filter: blur(10px);
-}
-#member-section h3{
-  margin: 0 0 10px;
-  font-size: 18px;
-  font-weight: 900;
-  letter-spacing:-.2px;
-}
-#member-section table{
-  max-width:none;
-  margin: 0 0 10px;
-  box-shadow: none;
-  background: transparent;
-  border: 0;
-}
-#member-section td{
-  padding: 10px 8px;
-  height:auto;
-  border-bottom: 1px solid var(--line);
-}
-
-/* scroll hint */
-.scroll-hint{
-  position:absolute;
-  right:10px;
-  top:62px;
-  transform: translateY(-50%);
-  background: linear-gradient(135deg, rgba(99,102,241,.92), rgba(6,182,212,.92));
-  color:#fff;
-  font-weight:900;
-  font-size: 12px;
-  padding: 8px 10px;
-  border-radius: 999px;
-  pointer-events:none;
-  z-index:10;
-  box-shadow: 0 10px 18px rgba(2,6,23,.12);
-  animation: bounceArrow 1.2s infinite;
-  transition: opacity .6s ease-in-out;
-}
-@keyframes bounceArrow{
-  0%,100%{ transform: translateY(-50%) translateX(0); }
-  50%{ transform: translateY(-50%) translateX(-5px); }
-}
-
-/* Responsive */
-@media (max-width: 768px){
-  body{padding: 10px}
-  th, td{height: 78px}
-  p{margin-bottom: 12px}
-}
-
-/* Print */
-@media print{
-  body{background:#fff; padding:0}
-  .topbar, .scroll-hint{display:none !important}
-  table{box-shadow:none; border:1px solid #ddd; background:#fff}
-  p{box-shadow:none; background:#fff; border:0}
-}
-
-/* 전달(11월) 표시 */
-.badge-transfer{
-  display:inline-block;
-  padding: 3px 8px;
-  font-size: 12px;
-  background: linear-gradient(135deg, rgba(99,102,241,.92), rgba(6,182,212,.92));
-  color:#fff;
-  border-radius: 999px;
-  font-weight: 900;
-  box-shadow: 0 10px 18px rgba(2,6,23,.12);
-}
-
-/* Spring Leaf Background */
-#leaf-canvas{
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 1;
-  opacity: .75;
-}
-body > *:not(#leaf-canvas){
-  position: relative;
-  z-index: 2;
-}
-
-@media (prefers-reduced-motion: reduce){
-  #leaf-canvas{ display:none; }
-}
-@media print{
-  #leaf-canvas{display:none !important;}
-}
-
-html{ scroll-behavior: smooth; }
-
-/* Performance: reduce heavy effects while scrolling */
-body.is-scrolling .event1,
-body.is-scrolling .event2{
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,.08),
-    0 6px 14px rgba(2,6,23,.10) !important;
-}
-
-/* === Header composition tuning === */
-.main-title{
-  padding-top: 68px;
-  margin-top: 0;
-}
-
-/* === February Theme (2026-02) : Green === */
-/* === March Theme (Fresh Spring Green) === */
-body.mar-theme{
-  --accent:#22c55e;
-  --accent2:#86efac;
-  --glow: rgba(34,197,94,.25);
-
-  --header-bg: #ecfdf5;
-  --header-text: #065f46;
-  --header-border: #a7f3d0;
-
-  --pill1: rgba(34,197,94,.18);
-  --pill2: rgba(134,239,172,.18);
-}
-
-/* Spring background */
-body.mar-theme{
-  background:
-    radial-gradient(900px 520px at 18% 6%, rgba(134,239,172,.25) 0%, rgba(134,239,172,0) 60%),
+    radial-gradient(900px 520px at 18% 6%, rgba(134,239,172,.28) 0%, rgba(134,239,172,0) 60%),
     radial-gradient(860px 520px at 82% 10%, rgba(34,197,94,.25) 0%, rgba(34,197,94,0) 58%),
     radial-gradient(900px 620px at 50% 110%, rgba(187,247,208,.22) 0%, rgba(187,247,208,0) 55%),
     linear-gradient(180deg, #f0fdf4 0%, #ecfdf5 40%, #f0fdf4 100%);
+  background-attachment:fixed;
+}
+body.q-3{
+  --accent:#0f766e; --accent2:#f59e0b;
+  --pill1: rgba(15,118,110,.16); --pill2: rgba(245,158,11,.18);
+  --header-bg:#ecfeff; --header-text:#0f4c5c; --header-border:#a5f3fc;
+}
+body.q-4{
+  --accent:#c2410c; --accent2:#dc2626;
+  --pill1: rgba(194,65,12,.16); --pill2: rgba(220,38,38,.14);
+  --header-bg:#fff7ed; --header-text:#7c2d12; --header-border:#fed7aa;
 }
 
-/* buttons / hints spring gradient */
-body.mar-theme .navbtn,
-body.mar-theme .scroll-hint{
-  background: linear-gradient(135deg, rgba(34,197,94,.92), rgba(134,239,172,.90));
+/* ─── 헤더 ─── */
+.app-header{text-align:center;margin:6px auto 18px;max-width:1100px;}
+.app-header h1{margin:0 0 10px;font-size:clamp(17px,2.2vw,24px);font-weight:900;letter-spacing:-.3px;}
+
+/* ─── 월 스위처 버튼 ─── */
+.switcher-wrap{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;align-items:center;}
+.switcher-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.5);
+  background:rgba(255,255,255,.85);backdrop-filter:blur(10px);
+  font-size:15px;font-weight:800;color:var(--text);
+  box-shadow:0 10px 22px rgba(2,6,23,.08);
+  cursor:pointer;font-family:inherit;
+  transition:transform .15s, box-shadow .15s;
+}
+.switcher-btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(2,6,23,.12);}
+.switcher-btn .switcher-arrow{font-size:11px;opacity:.55;transition:transform .15s;}
+.switcher-btn.open .switcher-arrow{transform:rotate(180deg);}
+
+/* ─── 월 선택 드롭다운 ─── */
+.month-picker-overlay{
+  position:fixed;inset:0;background:rgba(15,23,42,.4);
+  display:none;align-items:flex-start;justify-content:center;
+  z-index:9999;padding:80px 14px 14px;
+  animation:fadeIn .15s ease;
+}
+.month-picker-overlay.show{display:flex;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.month-picker{
+  background:#fff;border-radius:16px;padding:14px;
+  max-width:420px;width:100%;max-height:80vh;overflow-y:auto;
+  box-shadow:0 20px 60px rgba(2,6,23,.3);
+  animation:slideDown .2s ease;
+}
+@keyframes slideDown{from{transform:translateY(-10px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.picker-year-group{margin-bottom:12px;}
+.picker-year-group:last-child{margin-bottom:0;}
+.picker-year-label{
+  font-size:12px;font-weight:800;color:#64748b;
+  margin:0 0 8px 4px;letter-spacing:.3px;
+}
+.picker-months{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.picker-month-btn{
+  padding:12px 8px;border:1.5px solid #e2e8f0;background:#fff;
+  border-radius:10px;font-size:14px;font-weight:700;color:#334155;
+  cursor:pointer;font-family:inherit;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  transition:all .15s;
+}
+.picker-month-btn:hover{border-color:#6366f1;background:#f8fafc;}
+.picker-month-btn[data-today="1"]{
+  border-color:#6366f1;background:linear-gradient(135deg,rgba(99,102,241,.10),rgba(6,182,212,.10));
+}
+.picker-today-chip{
+  display:inline-block;padding:2px 6px;font-size:10px;font-weight:800;
+  background:#f59e0b;color:#fff;border-radius:99px;line-height:1.2;
 }
 
+/* ─── 메인 타이틀 & 테이블 (기존 스타일) ─── */
+.main-title{text-align:center;margin:14px 0 14px;font-size:clamp(18px,2vw,24px);font-weight:900;color:#1f2a44;letter-spacing:-.2px;}
+.main-title::after{
+  content:"";display:block;width:140px;max-width:55%;height:3px;
+  margin:10px auto 0;border-radius:999px;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;
+}
+
+.cal-wrap table,.detail-section table{
+  width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;
+  margin:0 auto 18px;max-width:1100px;
+  background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.7);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+}
+.cal-wrap th,.cal-wrap td,.detail-section th,.detail-section td{
+  border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:6px;vertical-align:middle;text-align:center;
+}
+.cal-wrap td{height:86px;}
+.cal-wrap tr:last-child td,.detail-section tr:last-child td{border-bottom:0}
+.cal-wrap td:last-child,.cal-wrap th:last-child,
+.detail-section td:last-child,.detail-section th:last-child{border-right:0}
+.cal-wrap th,.detail-section th{
+  height:44px;background:var(--header-bg);color:var(--header-text);
+  font-weight:900;letter-spacing:-.2px;border-bottom:1px solid var(--header-border);
+}
+.detail-section{margin:22px auto 0;max-width:1100px;position:relative;overflow-x:auto;}
+.detail-section > h2{text-align:center;margin:8px 0 10px;font-size:clamp(16px,1.9vw,22px);font-weight:900;color:#1f2a44;}
+.detail-section table{max-width:none;min-width:920px;background:rgba(255,255,255,.86);box-shadow:var(--shadow2);}
+.detail-section th{font-size:clamp(13px,1vw,15px);padding:10px 8px;}
+.detail-section td{padding:10px 8px;height:auto;}
+.detail-section td:nth-child(6){text-align:left;}
+.detail-section tbody tr{cursor:pointer;}
+
+.date-num{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:900;letter-spacing:-.2px;}
+.date-num > span.today-label,.date-num > span.badge-holiday{order:-1}
+
+/* ─── Pills (빈 것도 표시되게 :empty 숨김 제거) ─── */
+.event1,.event2{
+  position:relative;isolation:isolate;
+  display:flex;align-items:center;justify-content:center;
+  width:calc(100% - 10px);margin:6px auto;padding:8px 11px;
+  min-height:30px;border-radius:999px;
+  font-size:clamp(12px,1.4vw,15px);font-weight:800;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;
+  background:linear-gradient(180deg,rgba(255,255,255,.42),rgba(255,255,255,.22));
+  backdrop-filter:blur(12px) saturate(1.15);-webkit-backdrop-filter:blur(12px) saturate(1.15);
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 22px rgba(2,6,23,.12);
+  color:#1f2937;
+  text-shadow:0 1px 0 rgba(255,255,255,.6),0 -1px 0 rgba(0,0,0,.06),0 3px 8px rgba(2,6,23,.16);
+  transition:transform .16s,box-shadow .16s;
+}
+.event1{box-shadow:inset 0 0 0 1px rgba(34,139,34,.18),inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 22px rgba(2,6,23,.12);}
+.event2{box-shadow:inset 0 0 0 1px rgba(178,34,34,.18),inset 0 1px 0 rgba(255,255,255,.85),inset 0 -1px 0 rgba(255,255,255,.2),0 10px 22px rgba(2,6,23,.12);}
+.event1::before,.event2::before{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--tint);opacity:.78;z-index:-1;}
+.event1{--tint:var(--pill1);}
+.event2{--tint:var(--pill2);}
+.event1:hover:not(:empty),.event2:hover:not(:empty){
+  transform:translateY(-1.5px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 -1px 0 rgba(255,255,255,.25),0 16px 30px rgba(2,6,23,.16);
+}
+.event1.has-member{--tint:rgba(245,158,11,.22);border-color:rgba(245,158,11,.35);font-weight:900;}
+
+.clicked-row{background:rgba(99,102,241,.10) !important;outline:2px solid rgba(99,102,241,.25);outline-offset:-2px;}
+.today{background:rgba(245,158,11,.10) !important;box-shadow:inset 0 0 0 2px rgba(245,158,11,.45);}
+.today-label{display:inline-block;padding:3px 8px;font-size:11px;background:rgba(245,158,11,.95);color:#fff;border-radius:999px;font-weight:900;}
+.holiday .date-num{color:var(--holiday);}
+.badge-holiday{display:inline-block;padding:3px 8px;font-size:11px;background:rgba(239,68,68,.95);color:#fff;border-radius:999px;font-weight:900;}
+.badge-transfer{display:inline-block;padding:3px 8px;font-size:11px;background:linear-gradient(135deg,rgba(99,102,241,.92),rgba(6,182,212,.92));color:#fff;border-radius:999px;font-weight:900;box-shadow:0 10px 18px rgba(2,6,23,.12);}
+.sun .date-num{color:var(--sun);}
+.sat .date-num{color:var(--sat);}
+
+/* ─── 월 패널 (하나만 표시) ─── */
+.month-panel{display:none;}
+.month-panel.active{display:block;animation:pop .25s ease;}
+@keyframes pop{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── 회원 명단 ─── */
+#member-section{display:none;margin:20px auto 24px;max-width:1100px;padding:14px 14px 4px;border-radius:var(--radius);background:rgba(255,255,255,.86);border:1px solid rgba(255,255,255,.72);box-shadow:var(--shadow2);backdrop-filter:blur(10px);}
+#member-section h3{margin:0 0 10px;font-size:17px;font-weight:900;letter-spacing:-.2px;}
+#member-table{width:100%;table-layout:fixed;border-collapse:separate;border-spacing:0;margin:0 0 10px;background:transparent;border:0;}
+#member-table th{background:var(--header-bg);color:var(--header-text);border-bottom:1px solid var(--header-border);padding:10px 8px;font-weight:900;height:44px;text-align:center;}
+#member-table td{padding:10px 8px;height:auto;border-bottom:1px solid var(--line);text-align:center;}
+
+/* scroll hint */
+.scroll-hint{position:absolute;right:10px;top:62px;transform:translateY(-50%);background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:900;font-size:12px;padding:8px 10px;border-radius:999px;pointer-events:none;z-index:10;box-shadow:0 10px 18px rgba(2,6,23,.12);animation:bounceArrow 1.2s infinite;}
+@keyframes bounceArrow{0%,100%{transform:translateY(-50%) translateX(0);}50%{transform:translateY(-50%) translateX(-5px);}}
+
+/* 원본 잔재 무력화 */
+.topbar{display:none !important;}
+body > p,.month-panel > p{display:none !important;}
+.detail-section > p{display:block !important;}
+
+/* ══════════════════════════════════════════════════════════════════
+   편집 모드
+   ══════════════════════════════════════════════════════════════════ */
+#editorFab{position:fixed;bottom:22px;right:22px;width:48px;height:48px;border-radius:50%;background:#1a1a2e;color:#fff;border:none;font-size:18px;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.25);z-index:9998;display:flex;align-items:center;justify-content:center;}
+#editorFab.active{background:#e63946;}
+#memberEditorBtn,#saveHtmlBtn{display:none;position:fixed;border:none;border-radius:99px;font-family:inherit;font-weight:800;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.2);z-index:9998;padding:10px 16px;font-size:13px;color:#fff;}
+#memberEditorBtn{bottom:130px;left:22px;background:#6b46c1;}
+#saveHtmlBtn{bottom:78px;left:22px;background:#238636;}
+body.edit-mode #memberEditorBtn,body.edit-mode #saveHtmlBtn{display:block !important;}
+#editBanner{display:none;position:fixed;top:0;left:0;right:0;background:#e63946;color:#fff;text-align:center;padding:7px 10px;font-size:13px;font-weight:700;z-index:9997;}
+body.edit-mode #editBanner{display:block !important;}
+body.edit-mode{padding-top:44px;}
+body.edit-mode [data-editable="true"],body.edit-mode [data-editable-link="true"]{outline:1px dashed rgba(230,57,70,.55);outline-offset:1px;background:rgba(230,57,70,.04);cursor:text !important;min-height:1em;border-radius:4px;}
+body.edit-mode [data-editable="true"]:hover,body.edit-mode [data-editable-link="true"]:hover{outline:2px dashed #e63946;background:rgba(230,57,70,.10);}
+body.edit-mode [data-editable="true"]:focus,body.edit-mode [data-editable-link="true"]:focus{outline:2px solid #e63946 !important;background:#fff !important;box-shadow:0 0 0 3px rgba(230,57,70,.15) !important;}
+body.edit-mode a[href^="tmap://"]{pointer-events:none;}
+body.edit-mode [data-editable-link="true"]{pointer-events:auto !important;}
+body.edit-mode .month-panel.active .detail-section tbody tr{position:relative;}
+body.edit-mode .detail-row-delete-btn{position:absolute;left:-26px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:none;background:#e63946;color:#fff;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2);z-index:10;}
+body.edit-mode .detail-add-row-wrap{display:block;text-align:center;margin:10px 0;}
+.detail-add-row-wrap{display:none;}
+.detail-add-row-btn{background:#1a1a2e;color:#fff;border:none;border-radius:99px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
+
+/* 비밀번호 모달 */
+#pwModal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:99999;}
+#pwModal.show{display:flex;}
+#pwBox{background:#fff;border-radius:16px;padding:26px 22px;width:min(340px,90vw);box-shadow:0 12px 40px rgba(0,0,0,.2);text-align:center;}
+#pwBox h3{margin:0 0 6px;font-size:17px;}
+#pwBox p{margin:0 0 14px;font-size:13px;color:#666;display:block !important;padding:0;background:none;border:0;box-shadow:none;max-width:none;backdrop-filter:none;}
+#pwInput{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #ddd;border-radius:10px;font-size:15px;text-align:center;letter-spacing:4px;outline:none;margin-bottom:8px;}
+#pwInput:focus{border-color:#1a1a2e;}
+#pwInput.shake{animation:pwShake .3s;}
+@keyframes pwShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+#pwConfirm{width:100%;padding:11px;background:#1a1a2e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px;}
+#pwCancel{background:none;border:none;color:#888;font-size:13px;cursor:pointer;width:100%;padding:6px;}
+#pwError{color:#e63946;font-size:12px;margin-bottom:6px;min-height:16px;}
+
+/* GitHub 저장 모달 */
+#ghModal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:99999;}
+#ghModal.show{display:flex;}
+#ghBox{background:#fff;border-radius:20px;padding:22px;width:min(380px,92vw);box-shadow:0 16px 48px rgba(0,0,0,.2);}
+#ghBox .gh-title{font-size:17px;font-weight:800;margin-bottom:6px;}
+#ghBox .gh-desc{font-size:13px;color:#666;margin-bottom:12px;line-height:1.6;display:block !important;padding:0;background:none;border:0;box-shadow:none;max-width:none;backdrop-filter:none;}
+#ghBox .gh-label{font-size:12px;color:#888;margin-bottom:4px;margin-top:10px;}
+#ghBox .gh-repo-display{font-size:13px;font-weight:700;color:#238636;background:#f0fff4;border-radius:8px;padding:8px 12px;font-family:monospace;}
+#ghBox input.gh-input{width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:10px;font-size:13px;outline:none;font-family:monospace;}
+#ghBox .gh-checkrow{display:flex;align-items:center;gap:8px;font-size:12px;color:#666;margin:10px 0 14px;cursor:pointer;}
+#ghStatus{font-size:12px;min-height:18px;margin-bottom:10px;text-align:center;color:#888;}
+#ghBox .gh-btns{display:flex;gap:8px;}
+#ghUploadBtn{flex:1;padding:11px;background:#238636;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;}
+#ghUploadBtn:disabled{opacity:.5;cursor:not-allowed;}
+#ghCancelBtn{padding:11px 16px;background:#f0f0f0;color:#555;border:none;border-radius:10px;font-size:13px;cursor:pointer;}
+
+/* 명단 편집 모달 */
+#meModal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:99999;padding:12px;}
+#meModal.show{display:flex;}
+.me-container{background:#fff;border-radius:16px;width:min(1000px,100%);height:min(720px,100%);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+.me-header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid #eee;background:#f9f9fb;flex-shrink:0;}
+.me-header h2{margin:0;font-size:16px;font-weight:800;}
+.me-close-x{background:none;border:none;font-size:20px;cursor:pointer;color:#888;padding:4px 10px;border-radius:6px;}
+.me-close-x:hover{background:#eee;}
+.me-body{flex:1;display:flex;min-height:0;}
+.me-sidebar{width:230px;flex-shrink:0;border-right:1px solid #eee;background:#fafafa;display:flex;flex-direction:column;min-height:0;}
+.me-group-list{flex:1;overflow-y:auto;padding:8px;}
+.me-group-item{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:8px;cursor:pointer;font-size:13px;color:#333;margin-bottom:2px;user-select:none;}
+.me-group-item:hover{background:#ececf0;}
+.me-group-item.active{background:#6b46c1;color:#fff;}
+.me-group-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
+.me-group-count{font-size:11px;color:#999;margin-left:6px;flex-shrink:0;}
+.me-group-item.active .me-group-count{color:#e0d5f5;}
+.me-add-group{margin:10px;padding:10px;background:#1a1a2e;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;font-family:inherit;}
+.me-editor{flex:1;display:flex;flex-direction:column;min-height:0;min-width:0;}
+.me-editor-empty{flex:1;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:14px;padding:40px;text-align:center;}
+.me-editor-hdr{padding:12px 18px;border-bottom:1px solid #eee;display:flex;gap:8px;align-items:center;flex-shrink:0;}
+.me-editor-hdr input.me-group-rename{flex:1;padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;font-weight:700;outline:none;font-family:inherit;}
+.me-editor-hdr input.me-group-rename:focus{border-color:#6b46c1;}
+.me-group-del-btn{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:13px;font-family:inherit;}
+.me-editor-body{flex:1;overflow-y:auto;padding:8px 18px;}
+.me-member-table{width:100%;border-collapse:collapse;font-size:13px;}
+.me-member-table th{background:#f4f4f8;color:#555;font-weight:600;padding:8px 10px;text-align:left;border-bottom:1px solid #e0e0e0;font-size:12px;position:sticky;top:0;}
+.me-member-table td{padding:4px 6px;border-bottom:1px solid #f2f2f5;vertical-align:middle;}
+.me-member-table input{width:100%;box-sizing:border-box;padding:7px 9px;border:1px solid transparent;border-radius:5px;font-size:13px;background:transparent;font-family:inherit;}
+.me-member-table input:focus{border-color:#6b46c1;outline:none;background:#fff;box-shadow:0 0 0 2px rgba(107,70,193,.15);}
+.me-member-table input.f-num{text-align:center;}
+.me-member-table th.col-num,.me-member-table td:first-child{width:60px;}
+.me-member-table th.col-act,.me-member-table td:last-child{width:36px;}
+.me-member-delete{background:none;border:none;color:#e63946;font-size:14px;cursor:pointer;padding:3px 6px;border-radius:4px;}
+.me-editor-footer{padding:10px 18px;border-top:1px solid #eee;display:flex;gap:8px;flex-shrink:0;}
+.me-btn-primary{padding:8px 14px;background:#1a1a2e;color:#fff;border:none;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.me-btn-secondary{padding:8px 14px;background:#6b46c1;color:#fff;border:none;border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;}
+.me-modal-footer{padding:12px 20px;border-top:1px solid #eee;display:flex;justify-content:flex-end;gap:10px;flex-shrink:0;}
+.me-done-btn{padding:10px 22px;background:#238636;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+@media (max-width:640px){.me-body{flex-direction:column;}.me-sidebar{width:100%;max-height:200px;border-right:none;border-bottom:1px solid #eee;}}
+
+/* 반응형 */
+@media (max-width:768px){body{padding:10px}.cal-wrap th,.cal-wrap td{height:78px}}
+@media (max-width:540px){.event1,.event2{font-size:11px;padding:5px 7px;min-height:24px;}.cal-wrap th,.cal-wrap td{padding:3px;height:64px;}.detail-section table{min-width:560px;}}
+
+/* 인쇄 */
+@media print{
+  body{background:#fff;padding:0;}
+  .switcher-wrap,.month-picker-overlay,#editorFab,#memberEditorBtn,#saveHtmlBtn,#editBanner,
+  #pwModal,#ghModal,#meModal,.detail-add-row-wrap,.detail-row-delete-btn{display:none !important;}
+  .cal-wrap table,.detail-section table{box-shadow:none;border:1px solid #ddd;background:#fff;}
+}
 </style>
 </head>
+<body class="q-2">
 
-<body class="mar-theme">
-<canvas id="leaf-canvas" aria-hidden="true" width="3828" height="1962" style="width: 2552px; height: 1308px;"></canvas>
+<header class="app-header">
+  <h1>🐄 당진낙농축협 낙우회 일정표</h1>
+  <div class="switcher-wrap">
+    <button class="switcher-btn" id="monthSwitcherBtn" type="button">
+      <span class="switcher-icon">📅</span>
+      <span class="switcher-label" id="switcherLabel">2026년 4월</span>
+      <span class="switcher-arrow">▾</span>
+    </button>
+  </div>
+</header>
 
-<div class="topbar">
-  <a href="../../../../../Downloads/2026-03.html" class="navbtn">← 3월</a>
+<!-- 월 선택 드롭다운 오버레이 -->
+<div class="month-picker-overlay" id="monthPickerOverlay">
+  <div class="month-picker" id="monthPicker">
+    <div class="picker-year-group">
+  <div class="picker-year-label">2026년</div>
+  <div class="picker-months">
+    <button class="picker-month-btn" data-month="2026-04" data-today="1" type="button">4월 <span class="picker-today-chip">오늘</span></button><button class="picker-month-btn" data-month="2026-03" type="button">3월</button><button class="picker-month-btn" data-month="2026-02" type="button">2월</button><button class="picker-month-btn" data-month="2026-01" type="button">1월</button>
+  </div>
+</div>
+<div class="picker-year-group">
+  <div class="picker-year-label">2025년</div>
+  <div class="picker-months">
+    <button class="picker-month-btn" data-month="2025-12" type="button">12월</button><button class="picker-month-btn" data-month="2025-11" type="button">11월</button><button class="picker-month-btn" data-month="2025-10" type="button">10월</button><button class="picker-month-btn" data-month="2025-09" type="button">9월</button><button class="picker-month-btn" data-month="2025-08" type="button">8월</button><button class="picker-month-btn" data-month="2025-07" type="button">7월</button>
+  </div>
+</div>
+  </div>
 </div>
 
-<h2 class="main-title">2026년 4월 낙우회 및 조합원 행사 일정표</h2>
-<p>※  2026년 4월 수시로 변경됩니다.</p>
+<main id="monthContent">
+<section class="month-panel" data-month="2025-07" data-quarter="3">
+  <h2 class="main-title">2025년 7월 낙우회 일정표 달력</h2>
+  <div class="cal-wrap">
+<table>
+    <tbody><tr>
+      <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+    </tr>
+    <tr>
+      <td><div class="date-num">&nbsp;</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">7</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+      <td><div class="date-num">8</div><div class="event1">대호</div><div class="event2">잔다리</div></td>
+      <td><div class="date-num">9</div><div class="event1">면천</div><div class="event2"></div></td>
+      <td><div class="date-num">10</div><div class="event1">순성</div><div class="event2"></div></td>
+      <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">14</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+      <td><div class="date-num">15</div><div class="event1">아산</div><div class="event2"></div></td>
+      <td><div class="date-num">16</div><div class="event1">삼괴</div><div class="event2"></div></td>
+      <td><div class="date-num">17</div><div class="event1"><s>청어람</s></div><div class="event2"><s>송악송산</s></div></td>
+      <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2">신평</div></td>
+      <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+    <tr>
+      <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+      <td><div class="date-num">&nbsp;</div><div class="event1"></div><div class="event2"></div></td>
+    </tr>
+  </tbody></table>
+  </div>
+<div class="detail-section">
+    <h2>2025년 7월 낙우회 상세 일정표</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>일자</th><th>시간</th><th>낙우회</th><th>낙우회 구분</th><th>장소</th><th>주소 (출발지)</th>
+        </tr>
+      </thead>
+      <tbody>
+  <tr id="대호">
+    <td>7월 8일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>동이네식당포차</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%B2%9C%EB%B3%801%EA%B8%B8%20160">충남 당진시 천변1길 160</a></td>
+  </tr>
+  <tr id="잔다리">
+    <td>7월 8일</td><td>12시</td><td>잔다리낙우회</td><td>낙우회</td><td>장어가</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%B2%9C%EC%95%88%EC%8B%9C%20%EB%8F%99%EB%82%A8%EA%B5%AC%20%ED%92%8D%EC%84%B8%EB%A9%B4%20%EC%98%81%EC%84%B12%EA%B8%B8%203">충남 천안시 동남구 풍세면 영성2길 3</a></td>
+  </tr>
+  <tr id="면천">
+    <td>7월 9일</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>암소고개가든</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%A9%B4%EC%B2%9C%EB%A9%B4%20%EC%98%A4%EB%B4%89%EB%8C%80%EA%B8%B8%20171">충남 당진시 면천면 오봉대길 171</a></td>
+  </tr>
+  <tr id="순성">
+    <td>7월 10일</td><td>9시 50분</td><td>순성낙우회</td><td>야유회</td><td>안면도</td>
+    <td>(순성낙우회 사무실 출발)</td>
+  </tr>
+  <tr id="아산">
+    <td>7월 15일</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>별장가든</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%98%88%EC%82%B0%EA%B5%B0%20%EC%98%88%EC%82%B0%EC%9D%8D%20%EB%B2%9A%EA%BD%83%EB%A1%9C%20182%EB%B2%88%EA%B8%B8%2055">충남 예산군 예산읍 벚꽃로 182번길 55</a></td>
+  </tr>
+  <tr id="삼괴">
+    <td>7월 16일</td><td>9시 30분</td><td>삼괴낙우회(진흥회)</td><td>야유회</td><td><p>용현자연휴양림(서산)</p>
+      <p>서울가든&nbsp;</p></td>
+    <td><p>(쌍봉산 근린공원 출발)</p>
+      <p><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%84%9C%EC%82%B0%EC%8B%9C%20%EC%9A%B4%EC%82%B0%EB%A9%B4%20%EB%A7%88%EC%95%A0%EC%82%BC%EC%A1%B4%EB%B6%88%EA%B8%B8%20115-3">충남 서산시 운산면 마애삼존불길 115-3</a></p></td>
+  </tr>
+  <tr id="청어람">
+    <td>7월 17일</td><td>11시 30분</td><td>청어람</td><td>낙우회</td><td>나능이 능이버섯백숙 당진점</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%95%84%EB%AF%B8%EB%A1%9C%20786">충남 당진시 아미로 786</a></td>
+  </tr>
+  <tr id="송악송산">
+    <td>7월 17일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%9B%90%EB%8B%B9%EA%B3%A8%EA%B8%B8%208">충남 당진시 원당골길 8</a></td>
+  </tr>
+  <tr id="합덕">
+    <td>7월 24일</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B41%EA%B8%B8%2089">충남 당진시 합덕읍 버그내1길 89&nbsp;</a></td>
+  </tr>
+  <tr id="신평">
+	<td>7월 24일</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>약산도 신평점</td>
+    <td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EA%B1%B0%EC%82%B03%EA%B1%B0%EB%A6%AC%EA%B8%B8%2097">충남 당진시 신평면 거산3거리길 97&nbsp;</a></td>
+</tr></tbody>
 
-<!-- ===== Monthly Calendar (2026-04 starts Wednesday, 30 days) ===== -->
+
+    </table>
+  </div>
+</section>
+
+<section class="month-panel" data-month="2025-08" data-quarter="3">
+  <h2 class="main-title">2025년 8월 낙우회 일정표 달력</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+<th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+</tr>
+<tr>
+<td><div class="date-num">-</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">4</div><div class="event1">&nbsp;</div><div class="event2">&nbsp;</div></td>
+<td><div class="date-num">5</div><div class="event1">&nbsp;순성</div><div class="event2">&nbsp;</div></td>
+<td><div class="date-num">6</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+<td><div class="date-num">7</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+<td><div class="date-num">8</div><div class="event1">면천&nbsp;</div><div class="event2"></div></td>
+<td><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">11</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+<td><div class="date-num">12</div><div class="event1">&nbsp;대호</div><div class="event2"></div></td>
+<td><div class="date-num">13</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+<td><div class="date-num">14</div><div class="event1">아산&nbsp;</div><div class="event2"></div></td>
+<td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">19</div><div class="event1">송악송산</div><div class="event2"></div></td>
+<td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">21</div><div class="event1"></div><div class="event2">&nbsp;</div></td>
+<td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">25</div><div class="event1">합덕</div><div class="event2"></div></td>
+<td><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">28</div><div class="event1">신평</div><div class="event2"></div></td>
+<td><div class="date-num">29</div><div class="event1">연세&nbsp;</div><div class="event2"></div></td>
+<td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+<td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+<td><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+</tbody></table>
+  </div>
+<div class="detail-section">
+<h2>2025년 8월 낙우회 상세 일정표</h2>
+    ※ 낙우회명단 확인 시 해당낙우회 클릭
+<div class="scroll-hint">옆으로 스크롤 ⇨</div>
+<table>
+<thead>
+<tr>
+<th>일자</th><th>시간</th><th>낙우회</th><th>낙우회 구분</th><th>장소</th><th>주소 (출발지)</th>
+</tr>
+</thead>
+<tbody>
+<tr id="순성">
+<td>8월 5일</td><td>12시</td><td>순성낙우회</td><td>낙우회</td><td>솔밭가든</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%88%9C%EC%84%B1%EB%A9%B4%20%EC%88%9C%EC%84%B1%EB%A1%9C%20599-5">충남 당진시 순성면 순성로 599-5</a></td>
+</tr>
+<tr id="면천">
+<td>8월 8일</td><td>12시</td><td>면천낙우회</td><td>야유회</td><td>서산농원가든</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%84%9C%EC%82%B0%EC%8B%9C%20%EC%9A%B4%EC%82%B0%EB%A9%B4%20%EC%9B%90%ED%8F%892%EA%B8%B8%2078-16">충남 서산시 운산면 원평2길 78-16</a></td>
+</tr>
+<tr id="대호">
+<td>8월 12일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>한가네</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%97%AD%EC%B2%9C%EB%A1%9C%20692">충남 당진시 역천로 692</a></td>
+</tr>
+<tr id="아산">
+<td>8월 14일</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>강철골가든</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EC%97%BC%EC%B9%98%EC%9D%8D%20%EA%B0%95%EC%B2%AD%EB%A6%AC%EA%B8%B8%20138">충남 아산시 염치읍 강청리길 138</a></td>
+</tr>
+<tr id="송악송산">
+<td>8월 19일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>장수골</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%9B%90%EB%8B%B9%EA%B3%A8%EA%B8%B8%208">충남 당진시 원당골길 8</a></td>
+</tr>
+<tr id="합덕">
+<td>8월 25일</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>석천가든</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%ED%95%A9%EB%8D%95%EB%8C%80%EB%8D%95%EB%A1%9C%20333-53">충남 당진시 합덕읍 합덕대덕로 333-53</a></td>
+</tr>
+<tr id="신평">
+<td>8월 28일</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>샤브올데이</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%88%98%EC%B2%AD%EB%8F%99%201306">충남 당진시 수청동 1306</a></td>
+</tr>
+<tr id="연세">
+<td>8월 29일</td><td>11시30분</td><td>연세낙우회</td><td>낙우회</td><td>털보장어</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%B2%9C%EB%B3%802%EA%B8%B8%20109">충청남도 당진시 천변2길 109</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="month-panel" data-month="2025-09" data-quarter="3">
+  <h2 class="main-title">2025년 9월 낙우회 일정표 달력</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+<th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+</tr>
+
+
+
+
+
+
+<tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">3</div><div class="event1"><s>대호</s></div><div class="event2"></div></td><td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">9</div><div class="event1">순성</div><div class="event2">면천</div></td><td class=""><div class="date-num">10</div><div class="event1">청어람&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1">대호&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td><td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">26</div><div class="event1">연세</div><div class="event2"></div></td><td class="sat"><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr></tbody></table>
+  </div>
+<div class="detail-section">
+<h2>2025년 9월 낙우회 상세 일정표</h2>
+    ※ 낙우회명단 확인 시 해당낙우회 클릭
+<div class="scroll-hint">옆으로 스크롤 ⇨</div>
+<table>
+<thead>
+<tr>
+<th>일자</th><th>시간</th><th>낙우회</th><th>낙우회 구분</th><th>장소</th><th>주소 (출발지)</th>
+</tr>
+</thead>
+<tbody>
+<tr id="대호">
+	<td><s>9월 3일</s></td><td><s>12시</s></td><td><s>대호낙우회</s></td><td><s>낙우회</s></td><td><s>당진냉면갈비</s></td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%82%A8%EB%B6%80%EB%A1%9C%20252"><s>충남 당진시 남부로 252</s></a></td>
+</tr>
+<tr id="순성">
+<td>9월 9일</td><td>12시</td><td>순성낙우회</td><td>낙우회</td><td>솔밭가든</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%88%9C%EC%84%B1%EB%A9%B4%20%EC%88%9C%EC%84%B1%EB%A1%9C%20599-5">충남 당진시 순성면 순성로 599-5</a></td>
+</tr>
+<tr id="면천">
+<td>9월 9일</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>전망대종합어시장톡톡조개구이</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EC%82%BD%EA%B5%90%EC%B2%9C3%EA%B8%B8%2093">충남 당진시 신평면 삽교천3길 93</a></td>
+</tr>
+<tr id="청어람">
+<td>9월 10일</td><td>12시</td><td>청어람</td><td>낙우회</td><td>진흥수산</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EC%83%9B%ED%84%B0%EA%B8%B8%20117-112">충청남도 당진시 신평면 샛터길 117-112</a></td>
+</tr>
+<tr id="대호">
+<td>9월 17일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>당진냉면갈비</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%82%A8%EB%B6%80%EB%A1%9C%20252">충남 당진시 남부로 252</a></td>
+</tr>
+<tr id="합덕">
+<td>9월 24일</td><td>09시30분(합덕낙우회사무실)</td><td>합덕낙우회</td><td>야유회</td><td>대천해수욕장</td>
+<td><a href="tmap://search?name=%EB%8C%80%EC%B2%9C%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5">대천해수욕장</a></td>
+</tr>
+<tr id="연세">
+<td>9월 26일</td><td>11시30분</td><td>연세낙우회</td><td>낙우회</td><td>청록수산</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%86%A1%EC%95%85%EC%9D%8D%20%EB%B3%B5%EC%9A%B4%EB%A6%AC%20367-7">충남 당진시 송악읍 복운리 367-7</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="month-panel" data-month="2025-10" data-quarter="4">
+  <h2 class="main-title">2025년 10월 낙우회 일정표 달력</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+<th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+</tr>
+<tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td><td class="sat holiday"><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun holiday"><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td><td class="holiday"><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">10</div><div class="event1">&nbsp;</div><div class="event2"></div></td><td class="sat"><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">16</div><div class="event1">면천</div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">23</div><div class="event1">대호</div><div class="event2">신평</div></td><td class=""><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td><td class="sat"><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1">송악송산</div><div class="event2"></div></td><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr><tr><td class="sun"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class="sat"><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr></tbody></table>
+  </div>
+<div class="detail-section">
+<h2>2025년 10월 낙우회 상세 일정표</h2>
+    ※ 낙우회명단 확인 시 해당낙우회 클릭
+<div class="scroll-hint">옆으로 스크롤 ⇨</div>
+<table>
+<thead>
+<tr>
+<th>일자</th><th>시간</th><th>낙우회</th><th>낙우회 구분</th><th>장소</th><th>주소 (출발지)</th>
+</tr>
+</thead>
+<tbody>
+<tr id="면천">
+<td>10월 16일</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>화로등갈비 본점</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EC%84%A0%EC%9E%A5%EB%A9%B4%20%EC%82%BC%EB%B4%89%EC%82%B0%EA%B8%B8%2019">충남 아산시 선장면 삼봉산길 19</a></td>
+</tr>
+<tr id="대호">
+<td>10월 23일</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>진흥수산</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EC%83%9B%ED%84%B0%EA%B8%B8%20117-11">충청남도 당진시 신평면 샛터길 117-11</a></td>
+</tr>
+<tr id="신평">
+<td>10월 23일</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>청록수산</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%86%A1%EC%95%85%EC%9D%8D%20%EB%B3%B5%EC%9A%B41%EA%B8%B8%2030-1">충남 당진시 송악읍 복운1길 30-1</a></td>
+</tr>
+<tr id="합덕">
+<td>10월 24일</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B41%EA%B8%B8%2089">충남 당진시 합덕읍 버그내1길 89</a></td>
+</tr>
+<tr id="송악송산">
+<td>10월 29일</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>굴따리 한우 생삽겹</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%86%A1%EC%95%85%EC%9D%8D%20%EB%B6%80%EB%8F%99%EA%B8%B8%206">충남 당진시 송악읍 부동길 6</a></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="month-panel" data-month="2025-11" data-quarter="4">
+  <h2 class="main-title">2025년 11월 낙우회 및 조합원 행사 일정표</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+<th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+</tr>
+<tr><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">7</div><div class="event1">대호</div><div class="event2"></div></td><td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">9</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">14</div><div class="event1">아산</div><div class="event2"></div></td><td class=""><div class="date-num">15</div><div class="event1">아산 양지 자혼&nbsp;&nbsp;</div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">16</div><div class="event1">이천 월산 여혼</div><div class="event2"></div></td><td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">21</div><div class="event1">산악회</div><div class="event2"></div></td><td class=""><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">24</div><div class="event1">합덕&nbsp;</div><div class="event2"></div></td><td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">27</div><div class="event1">신평</div><div class="event2"></div></td><td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">29</div><div class="event1">예산 영신 자혼</div><div class="event2"></div></td></tr>
+<tr><td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td><td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td></tr>
+</tbody></table>
+  </div>
+<div class="detail-section">
+<h2>2025년 11월 낙우회 상세 일정표</h2>
+    ※ 낙우회명단 확인 시 해당낙우회 클릭
+<div class="scroll-hint">옆으로 스크롤 ⇨</div>
+<table>
+<thead>
+<tr>
+<th>일자</th><th>시간</th><th>낙우회 및 행사</th><th>구분</th><th>장소</th><th>주소 (출발지)</th>
+</tr>
+</thead>
+<tbody>
+<tr id="대호">
+<td>11월 7일(금)</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>왕산포횟집</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%84%9C%EC%82%B0%EC%8B%9C%20%EC%A7%80%EA%B3%A1%EB%A9%B4%20%EC%A4%91%EC%99%95%EB%B1%83%EB%A7%88%EC%9D%84%EA%B8%B8%2020">충남 서산시 지곡면 중왕뱃마을길 20</a></td>
+</tr>
+<tr id="아산">
+<td>11월 14일(금)</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>마포숯불갈비</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EC%8B%A0%EC%B0%BD%EB%A9%B4%20%EC%98%A8%EC%B2%9C%EB%8C%80%EB%A1%9C%20896-17">충남 아산시 신창면 온천대로 896-17</a></td>
+</tr>
+<tr id="아산 양지 자혼">
+	<td>11월 15일(토)</td><td>13시 00분&nbsp;</td><td><p>아산 양지(지덕영) 자혼<br>마음전하실 곳 : <br><br>
+	  농협 174253-52-068987<br></p></td><td>결혼식</td><td>그랜드하우스(인천) 7층</td>
+<td><a href="tmap://search?name=%EC%9D%B8%EC%B2%9C%20%EB%AF%B8%EC%B6%94%ED%99%80%EA%B5%AC%20%EC%A3%BC%EC%95%88%EB%A1%9C%20103-18">인천 미추홀구 주안로 103-18</a></td>
+</tr>
+<tr id="이천 월산 여혼">
+<td>11월 16일(일)</td><td>11시 00분&nbsp;</td><td>이천 월산(장석중) 여혼<br>마음전하실 곳 : <br><br>농협 233082-52-016387<br></td><td>결혼식</td><td>더베일리하우스 삼성</td>
+<td><a href="tmap://search?name=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EC%98%81%EB%8F%99%EB%8C%80%EB%A1%9C%20506">서울특별시 강남구 영동대로 506</a></td>
+</tr>
+<tr id="산악회">
+<td>11월 21일(금)</td><td>8시 30분&nbsp;</td><td>조합원산악회</td><td>신악회</td><td>논산탑정호둘레길&nbsp;</td>
+<td><a href="tmap://search?name=%ED%95%A9%EB%8D%95%EA%B0%80%EA%B3%B5%EA%B3%B5%EC%9E%A5%EC%B6%9C%EB%B0%9C">합덕가공공장출발</a></td>
+</tr>
+<tr id="합덕">
+<td>11월 24일(월)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B41%EA%B8%B8%2089">충남 당진시 합덕읍 버그내1길 89</a></td>
+</tr>
+<tr id="신평">
+<td>11월 27일(목)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>칠복칼국수</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EA%B1%B0%EC%82%B03%EA%B1%B0%EB%A6%AC%EA%B8%B8%2067">충남 당진시 신평면 거산3거리길 67</a></td>
+</tr>
+<tr id="예산 영신 자혼">
+	<td>11월 29일(토)</td><td>15시 00분&nbsp;</td><td><p>예산 영신(이구선) 자혼<br>마음전하실 곳 : <br><br>
+	  농협 475103-52-094053<br></p></td><td>결혼식</td><td>CA웨딩컨벤션</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EB%B0%B0%EB%B0%A9%EC%9D%8D%20%ED%9D%AC%EB%A7%9D%EB%A1%9C%20100%20KTX%EC%B2%9C%EC%95%88%EC%95%84%EC%82%B0%EC%97%AD%20%EC%97%AD%EC%82%AC%EB%82%B4%202%EC%B8%B5">충남 아산시 배방읍 희망로 100 KTX천안아산역 역사내 2층</a></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="month-panel" data-month="2025-12" data-quarter="4">
+  <h2 class="main-title">2025년 12월 낙우회 및 조합원 행사 일정표</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+<th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+</tr>
+<tr>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">9</div><div class="event1">면천</div><div class="event2">남양</div></td>
+  <td class=""><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">12</div><div class="event1">대호</div><div class="event2">청어람</div></td>
+  <td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">15</div><div class="event1">잔다리</div><div class="event2">&nbsp;</div></td>
+  <td class=""><div class="date-num">16</div><div class="event1">고덕</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">17</div><div class="event1">순성</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">18</div><div class="event1">송악송산</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">19</div><div class="event1">아산</div><div class="event2">연세</div></td>
+  <td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">22</div><div class="event1">합덕</div><div class="event2">고덕(빙그레)</div></td>
+  <td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">24</div><div class="event1">신평</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">26</div><div class="event1">예산2세</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">29</div><div class="event1">대한</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+</tbody></table>
+  </div>
+<div class="detail-section">
+<h2>2025년 12월 낙우회 상세 일정표</h2>
+    ※ 낙우회명단 확인 시 해당낙우회 클릭
+<div class="scroll-hint">옆으로 스크롤 ⇨</div>
+<table>
+<thead>
+<tr>
+<th>일자</th><th>시간</th><th>낙우회 및 행사</th><th>구분</th><th>장소</th><th>주소 (출발지)</th>
+</tr>
+</thead>
+<tbody>
+<tr id="면천">
+<td>12월 9일(화)</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>갈비명가</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%A9%B4%EC%B2%9C%EB%A9%B4%20%EC%84%B1%ED%95%98%EB%A1%9C%20271">충남 당진시 면천면 성하로 271</a></td>
+</tr>
+<tr id="남양">
+<td>12월 9일(화)</td><td>18시30분</td><td>남양낙우회</td><td>낙우회</td><td>갯마을횟집</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%ED%95%A9%EB%8D%95%EA%B5%90%EB%8F%991%EA%B8%B8%208">충남 당진시 합덕읍 합덕교동1길 8</a></td>
+</tr>
+<tr id="대호">
+	<td>12월 12일(금)</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>원당풍천장어</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EA%B3%A0%EC%8B%A41%EA%B8%B8%2041-10">충청남도 당진시 고실1길 41-10</a></td>
+</tr>
+<tr id="청어람">
+<td>12월 12일(금)</td><td>19시</td><td>청어람</td><td>낙우회</td><td>성진한우마을</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B42%EA%B8%B8%20128-25">충남 당진시 합덕읍 버그내2길 128-25</a></td>
+</tr>
+<tr id="잔다리">
+<td>12월 15일(월)</td><td>12시</td><td>잔다리낙우회</td><td>낙우회</td><td>건강식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%B2%9C%EC%95%88%EC%8B%9C%20%EB%8F%99%EB%82%A8%EA%B5%AC%20%ED%92%8D%EC%84%B8%EB%A9%B4%20%EB%AF%B8%EC%A3%BD%EB%A1%9C%203">충남 천안시 동남구 풍세면 미죽로 3</a></td>
+</tr>
+<tr id="고덕">
+<td>12월 16일(화)</td><td>12시</td><td>고덕낙우회</td><td>낙우회</td><td>수목가든</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EC%98%88%EC%82%B0%EA%B5%B0%20%EA%B3%A0%EB%8D%95%EB%A9%B4%20%ED%99%A9%EA%B8%88%EB%9C%B0%EB%A1%9C%20187">충청남도 예산군 고덕면 황금뜰로 187</a></td>
+</tr>
+<tr id="순성">
+<td>12월 17일(수)</td><td>12시</td><td>순성낙우회</td><td>낙우회</td><td>성진한우마을</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B42%EA%B8%B8%20128-25">충남 당진시 합덕읍 버그내2길 128-25</a></td>
+</tr>
+<tr id="송악송산">
+<td>12월 18일(목)</td><td>11시30분</td><td>송악송산낙우회</td><td>낙우회</td><td>만석식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EC%84%9C%EC%82%B0%EC%8B%9C%20%EB%8C%80%EC%82%B0%EC%9D%8D%20%EC%82%BC%EA%B8%B8%ED%8F%AC1%EB%A1%9C%2061">충청남도 서산시 대산읍 삼길포1로 61</a></td>
+</tr>
+<tr id="아산">
+<td>12월 19일(금)</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>남산촌장골</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EC%8B%A0%EC%A0%95%EB%A1%9C%20632-7%20%EB%B0%A9%EC%B6%95%EB%8F%995-1">충남 아산시 신정로 632-7 방축동5-1</a></td>
+</tr>
+<tr id="연세">
+<td>12월 19일(금)</td><td>12시</td><td>연세낙우회</td><td>낙우회</td><td>한우애진심</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%8B%B9%EC%A7%84%EC%A4%91%EC%95%992%EB%A1%9C%20139-6">충남 당진시 당진중앙2로 139-6</a></td>
+</tr>
+<tr id="합덕">
+<td>12월 22일(월)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B41%EA%B8%B8%2089">충남 당진시 합덕읍 버그내1길 89</a></td>
+</tr>
+<tr id="고덕(빙그레)">
+<td>12월 22일(월)</td><td>12시</td><td>고덕(빙그레)낙우회</td><td>낙우회</td><td>현대식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EC%98%88%EC%82%B0%EA%B5%B0%20%EA%B3%A0%EB%8D%95%EB%A9%B4%20%EB%82%B4%EC%84%9D%EA%B3%A1%EA%B8%B8%204">충청남도 예산군 고덕면 내석곡길 4</a></td>
+</tr>
+<tr id="신평">
+<td>12월 24일(수)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>터주생태우렁이전문</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EC%84%9C%ED%95%B4%EB%A1%9C%207459">충남 당진시 신평면 서해로 7459</a></td>
+</tr>
+<tr id="예산2세">
+<td>12월 26일(금)</td><td>12시</td><td>예산2세낙우회</td><td>낙우회</td><td>금강숯불갈비</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%98%88%EC%82%B0%EA%B5%B0%20%EC%82%BD%EA%B5%90%EC%9D%8D%20%EC%82%BD%EA%B5%90%EB%A1%9C%20253">충남 예산군 삽교읍 삽교로 253</a></td>
+</tr>
+<tr id="대한">
+<td>12월 29일(월)</td><td>12시</td><td>대한낙우회</td><td>낙우회</td><td>전망대종합어시장<br>
+  톡톡조개구이<br></td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EC%82%BD%EA%B5%90%EC%B2%9C3%EA%B8%B8%2093">충청남도 당진시 신평면 삽교천3길 93</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="month-panel" data-month="2026-01" data-quarter="1">
+  <h2 class="main-title">2026년 1월 낙우회 및 조합원 행사 일정표</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+<th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font> </th>
+</tr>
+<tr>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class="holiday"><div class="date-num">1<span class="badge-holiday">신정</span></div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">6</div><div class="event1">서산</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">9</div><div class="event1">면천</div><div class="event2">&nbsp;</div></td>
+  <td class=""><div class="date-num">10</div><div class="event1">순성</div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">15</div><div class="event1">아산</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">19</div><div class="event1">삼괴</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">22</div><div class="event1">신평</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">24</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">26</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">27</div><div class="event1">고덕(남양)</div><div class="event2">대호</div></td>
+  <td class=""><div class="date-num">28</div><div class="event1">합덕</div><div class="event2"></div></td>
+  <td class=""><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+<tr>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+  <td class=""><div class="date-num">-</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+</tbody></table>
+  </div>
+<div class="detail-section">
+<h2>2026년 1월 낙우회 상세 일정표</h2>
+    ※ 낙우회명단 확인 시 해당낙우회 클릭
+<div class="scroll-hint">옆으로 스크롤 ⇨</div>
+<table>
+<thead>
+<tr>
+<th>일자</th><th>시간</th><th>낙우회 및 행사</th><th>구분</th><th>장소</th><th>주소 (출발지)</th>
+</tr>
+</thead>
+<tbody>
+<tr id="서산">
+  <td>1월 6일(화)</td><td>11시30분</td><td>서산낙우회</td><td>낙우회</td><td>서산축협한우프라자</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EC%84%9C%EC%82%B0%EC%8B%9C%20%EC%9D%8C%EC%95%94%EB%A9%B4%20%EC%9A%B4%EC%95%94%EB%A1%9C%20141-13">충청남도 서산시 음암면 운암로 141-13</a></td>
+</tr>
+<tr id="면천">
+  <td>1월 9일(금)</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>서문칼국수</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%A9%B4%EC%B2%9C%EB%A9%B4%20%EB%A9%B4%EC%B2%9C%EC%84%9C%EB%AC%B81%EA%B8%B8%2064">충남 당진시 면천면 면천서문1길 64</a></td>
+</tr>
+<tr id="순성">
+  <td>1월 10일(토)</td><td>12시</td><td>순성낙우회</td><td>낙우회</td><td>거산양꼬치</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EA%B1%B0%EC%82%B03%EA%B1%B0%EB%A6%AC%EA%B8%B8%2043">충남 당진시 신평면 거산3거리길 43</a></td>
+</tr>
+<tr id="아산">
+  <td>1월 15일(목)</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>강청골가든</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EC%97%BC%EC%B9%98%EC%9D%8D%20%EA%B0%95%EC%B2%AD%EB%A6%AC%EA%B8%B8%20138">충남 아산시 염치읍 강청리길 138</a></td>
+</tr>
+<tr id="삼괴">
+  <td>1월 19일(월)</td><td>12시</td><td>삼괴낙우회(진흥회)</td><td>낙우회</td><td>태마당숯불갈비</td>
+<td><a href="tmap://search?name=%EA%B2%BD%EA%B8%B0%20%ED%99%94%EC%84%B1%EC%8B%9C%20%EC%9E%A5%EC%95%88%EB%A9%B4%20%EC%9E%A5%EC%95%88%EB%A1%9C%20111-14">경기 화성시 장안면 장안로 111-14</a></td>
+</tr>
+<tr id="신평">
+  <td>1월 22일(목)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>원조낙동강숯불장어</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%86%A1%EC%95%85%EC%9D%8D%20%EC%95%88%ED%8B%80%EB%AA%A8%EC%8B%9C%EA%B8%B8%2083-6">충남 당진시 송악읍 안틀모시길 83-6</a></td>
+</tr>
+<tr id="고덕(남양)">
+  <td>1월 27일(화)</td><td>12시</td><td>고덕(남양)낙우회</td><td>낙우회</td><td>남양낙우회사무실</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EC%98%88%EC%82%B0%EA%B5%B0%20%EA%B3%A0%EB%8D%95%EB%A9%B4%20%EA%B3%A0%EB%8D%95%EC%A4%91%EC%95%99%EB%A1%9C%2042-2">충청남도 예산군 고덕면 고덕중앙로 42-2</a></td>
+</tr>
+<tr id="대호">
+  <td>1월 27일(화)</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>파도횟집 석문점</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%84%9D%EB%AC%B8%EB%A9%B4%20%EC%84%9D%EB%AC%B8%EB%B0%A9%EC%A1%B0%EC%A0%9C%EB%A1%9C%201796">충남 당진시 석문면 석문방조제로 1796</a></td>
+</tr>
+<tr id="합덕">
+  <td>1월 28일(수)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B41%EA%B8%B8%2089">충남 당진시 합덕읍 버그내1길 89</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="month-panel" data-month="2026-02" data-quarter="1">
+  <h2 class="main-title">2026년 2월 낙우회 및 조합원 행사 일정표</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+  <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font></th>
+</tr>
+
+<tr>
+  <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">3</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">4</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">5</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">6</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">7</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+
+<tr>
+  <td><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">9</div><div class="event1">송악송산</div><div class="event2">면천</div></td>
+  <td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">13</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+
+<tr>
+  <td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">17</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+
+<tr>
+  <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td>
+  <td><div class="date-num">25</div><div class="event1">&nbsp;</div><div class="event2"></div></td>
+  <td><div class="date-num">26</div><div class="event1">아산</div><div class="event2">신평</div></td>
+  <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+</tbody></table>
+  </div>
+<div class="detail-section">
+  <h2>2026년 2월 낙우회 상세 일정표</h2>
+  ※ 
+  <div class="scroll-hint">옆으로 스크롤 ⇨</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>일자</th><th>시간</th><th>낙우회 및 행사</th><th>구분</th><th>장소</th><th>주소 (출발지)</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr id="송악송산">
+  <td>2월 9일(월)</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>굴따리 한우 생삼겹</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%86%A1%EC%95%85%EC%9D%8D%20%EB%B6%80%EB%8F%99%EA%B8%B8%206">충남 당진시 송악읍 부동길 6</a></td>
+</tr>
+<tr id="면천">
+  <td>2월 9일(월)</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>갈비명가</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%A9%B4%EC%B2%9C%EB%A9%B4%20%EC%84%B1%ED%95%98%EB%A1%9C%20271">충남 당진시 면천면 성하로 271</a></td>
+</tr>	
+<tr id="합덕">
+  <td>2월 24일(화)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>갯마을횟집</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%ED%95%A9%EB%8D%95%EA%B5%90%EB%8F%991%EA%B8%B8%208">충남 당진시 합덕읍 합덕교동1길 8</a></td>
+</tr>
+<tr id="아산">
+  <td>2월 26일(목)</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>바다양푼이동태탕</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EC%8B%A0%EC%B0%BD%EB%A9%B4%20%EC%84%9C%EB%B6%80%EB%B6%81%EB%A1%9C%20740">충남 아산시 신창면 서부북로 740</a></td>
+</tr>
+<tr id="신평">
+  <td>2월 26일(목)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>활어회수산</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EA%B1%B0%EC%82%B03%EA%B1%B0%EB%A6%AC%EA%B8%B8%2028">충남 당진시 신평면 거산3거리길 28</a></td>
+</tr>
+		
+    </tbody>
+  </table>
+</div>
+</section>
+
+<section class="month-panel" data-month="2026-03" data-quarter="1">
+  <h2 class="main-title">2026년 3월 낙우회 및 조합원 행사 일정표</h2>
+  <div class="cal-wrap">
+<table>
+<tbody><tr>
+  <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font></th>
+</tr>
+<tr>
+  <td><div class="date-num">1</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">2</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">3</div><div class="event1">아산</div><div class="event2"></div></td>
+  <td><div class="date-num">4</div><div class="event1">아산</div><div class="event2">순성</div></td>
+  <td><div class="date-num">5</div><div class="event1">아산</div><div class="event2">순성</div></td>
+  <td><div class="date-num">6</div><div class="event1"></div><div class="event2">순성</div></td>
+  <td><div class="date-num">7</div><div class="event1">아산인호</div><div class="event2">순성</div></td>
+</tr>
+
+<tr>
+  <td><div class="date-num">8</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">9</div><div class="event1">면천</div><div class="event2"></div></td>
+  <td><div class="date-num">10</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">11</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">12</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">13</div><div class="event1">대호</div><div class="event2"></div></td>
+  <td><div class="date-num">14</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+
+<tr>
+  <td><div class="date-num">15</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">16</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">17</div><div class="event1">아산</div><div class="event2"></div></td>
+  <td><div class="date-num">18</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">19</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">20</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+
+<tr>
+  <td><div class="date-num">22</div><div class="event1">수종</div><div class="event2"></div></td>
+  <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td>
+  <td><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">26</div><div class="event1">신평</div><div class="event2"></div></td>
+  <td><div class="date-num">27</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">28</div><div class="event1"></div><div class="event2"></div></td>
+</tr>
+
+<tr>
+  <td><div class="date-num">29</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">30</div><div class="event1"></div><div class="event2"></div></td>
+  <td><div class="date-num">31</div><div class="event1"></div><div class="event2"></div></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+</tr>
+</tbody></table>
+  </div>
+<div class="detail-section">
+  <h2>2026년 3월 낙우회 상세 일정표</h2>
+  ※ 
+  <div class="scroll-hint">옆으로 스크롤 ⇨</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>일자</th><th>시간</th><th>낙우회 및 행사</th><th>구분</th><th>장소</th><th>주소 (출발지)</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr id="아산">
+  <td>3월 3일(화)~5일(목)</td><td>-</td><td>아산낙우회</td><td>야유회</td><td>남해</td>
+<td><a href="-">-</a></td>
+</tr>
+<tr id="순성">
+  <td>3월 4일(수)~7일(토)</td><td>-</td><td>순성낙우회</td><td>해외</td><td>중국 상해</td>
+	<td><a href="-">-</a></td>
+</tr>
+<tr id="아산인호">
+  <td>3월 7일(토)</td><td>12시</td><td>아산인호목장</td><td>본인혼</td><td>호텔오노마 5층 그랜드볼룸</td>
+	<td><a href="tmap://search?name=%EB%8C%80%EC%A0%84%20%EC%9C%A0%EC%84%B1%EA%B5%AC%20%EC%97%91%EC%8A%A4%ED%8F%AC%EB%A1%9C%201">대전 유성구 엑스포로 1</a></td>
+</tr>
+<tr id="면천">
+  <td>3월 9일(월)</td><td>12시</td><td>면천낙우회</td><td>낙우회</td><td>신토불이</td>
+	<td><a href="tmap://search?name=%EC%B6%A9%EC%B2%AD%EB%82%A8%EB%8F%84%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%A9%B4%EC%B2%9C%EB%A9%B4%20%ED%9B%84%EB%8F%99%EA%B8%B8%2049">충청남도 당진시 면천면 후동길 49</a></td>
+</tr>
+<tr id="대호">
+  <td>3월 13일(금)</td><td>12시</td><td>대호낙우회</td><td>낙우회</td><td>태균네횟집</td>
+	<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%84%9D%EB%AC%B8%EB%A9%B4%20%EC%84%9D%EB%AC%B8%EB%B0%A9%EC%A1%B0%EC%A0%9C%EB%A1%9C%201798-8">충남 당진시 석문면 석문방조제로 1798-8</a></td>
+</tr>
+<tr id="아산">
+  <td>3월 17일(화)</td><td>11시30분</td><td>아산낙우회</td><td>낙우회</td><td>바다양푼이동태탕</td>
+	<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EC%95%84%EC%82%B0%EC%8B%9C%20%EC%8B%A0%EC%B0%BD%EB%A9%B4%20%EC%84%9C%EB%B6%80%EB%B6%81%EB%A1%9C%20740">충남 아산시 신창면 서부북로 740</a></td>
+</tr>
+<tr id="수종">
+  <td>3월 22일(일)</td><td>13시20분</td><td>수종목장</td><td>여혼</td><td>당진설악웨딩타운 F층 아트그레이스홀</td>
+	<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%82%A8%EB%B6%80%EB%A1%9C%20122">충남 당진시 남부로 122</a></td>
+</tr>
+<tr id="합덕">
+  <td>3월 24일(화)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>벌떼암소한마리정육식당</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%EB%B2%84%EA%B7%B8%EB%82%B41%EA%B8%B8%2089">충남 당진시 합덕읍 버그내1길 89</a></td>
+</tr>
+<tr id="신평">
+  <td>3월 26일(목)</td><td>12시</td><td>신평낙우회</td><td>낙우회</td><td>구공구이</td>
+<td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EC%8B%A0%ED%8F%89%EB%A9%B4%20%EB%8D%95%ED%8F%89%EB%A1%9C%201380">충남 당진시 신평면 덕평로 1380</a></td>
+</tr>
+</tbody>
+  </table>
+</div>
+</section>
+
+<section class="month-panel active" data-month="2026-04" data-quarter="2">
+  <h2 class="main-title">2026년 4월 낙우회 및 조합원 행사 일정표</h2>
+  <div class="cal-wrap">
 <table>
 <tbody><tr>
   <th><font color="#ee1515">일</font></th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th><font color="#0066ff">토</font></th>
@@ -517,7 +1234,7 @@ body.mar-theme .scroll-hint{
   <td><div class="date-num">21</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">22</div><div class="event1"></div><div class="event2"></div></td>
   <td><div class="date-num">23</div><div class="event1"></div><div class="event2"></div></td>
-  <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2"></div></td>
+  <td><div class="date-num">24</div><div class="event1">합덕</div><div class="event2">송악송산</div></td>
   <td class=""><div class="date-num">25</div><div class="event1"></div><div class="event2"></div></td>
 </tr>
 <tr>
@@ -530,8 +1247,8 @@ body.mar-theme .scroll-hint{
   <td class=""></td>
 </tr>
 </tbody></table>
-
-<div id="detail-section">
+  </div>
+<div class="detail-section">
   <h2>2026년 4월 낙우회 상세 일정표</h2>
   ※ 
   <div class="scroll-hint" style="opacity: 1;">옆으로 스크롤 ⇨</div>
@@ -559,24 +1276,104 @@ body.mar-theme .scroll-hint{
   <td>4월 14일(화)</td><td>8시30분(출발:쌍봉산근린공원)</td><td>삼괴낙우회</td><td>야유회</td><td>소금산출렁다리</td>
 <td><a href="tmap://search?name=%EA%B0%95%EC%9B%90%20%EC%9B%90%EC%A3%BC%EC%8B%9C%20%EC%A7%80%EC%A0%95%EB%A9%B4%20%EC%86%8C%EA%B8%88%EC%82%B0%EA%B8%B8%20100">강원 원주시 지정면 소금산길 100</a></td>
 </tr>
-<tr style="position: relative;"><td>4월 24일(금)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>석천가</td><td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%ED%95%A9%EB%8D%95%EB%8C%80%EB%8D%95%EB%A1%9C%20333-53"><span style="color: rgb(0, 0, 0); font-family: -apple-system, BlinkMacSystemFont, helvetica, &quot;Apple SD Gothic Neo&quot;, sans-serif; font-size: 16px; letter-spacing: -0.3px; white-space: pre; background-color: rgb(240, 240, 240);">충남 당진시 합덕읍 합덕대덕로 333-53</span></a></td></tr></tbody>
+<tr style="position: relative;"><td>4월 24일(금)</td><td>12시</td><td>합덕낙우회</td><td>낙우회</td><td>석천가</td><td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%ED%95%A9%EB%8D%95%EC%9D%8D%20%ED%95%A9%EB%8D%95%EB%8C%80%EB%8D%95%EB%A1%9C%20333-53"><span style="color: rgb(0, 0, 0); font-family: -apple-system, BlinkMacSystemFont, helvetica, &quot;Apple SD Gothic Neo&quot;, sans-serif; font-size: 16px; letter-spacing: -0.3px; white-space: pre; background-color: rgb(240, 240, 240);">충남 당진시 합덕읍 합덕대덕로 333-53</span></a></td></tr><tr style="position: relative;"><td>4월 24일(금)</td><td>12시</td><td>송악송산낙우회</td><td>낙우회</td><td>빅쭌부대찌</td><td><a href="tmap://search?name=%EC%B6%A9%EB%82%A8%20%EB%8B%B9%EC%A7%84%EC%8B%9C%20%EB%B0%98%EC%B4%8C%EB%A1%9C%205-11"><span style="color: rgb(0, 0, 0); font-family: -apple-system, BlinkMacSystemFont, helvetica, &quot;Apple SD Gothic Neo&quot;, sans-serif; font-size: 16px; letter-spacing: -0.3px; white-space: pre; background-color: rgb(240, 240, 240);">충남 당진시 반촌로 5-11</span></a></td></tr></tbody>
   </table>
 <div id="detail-add-row-wrap"><button id="detail-add-row-btn" type="button">＋ 상세 일정 행 추가</button></div></div>
+</section>
+</main>
 
+<!-- 공용 회원 명단 -->
 <div id="member-section">
   <h3>회원 명단</h3>
   <table id="member-table">
-    <thead>
-      <tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr>
-    </thead>
-	  
+    <thead><tr><th>순번</th><th>목장명</th><th>대표자</th><th>직책</th></tr></thead>
     <tbody></tbody>
   </table>
 </div>
 
-<script>
-    /* __MEMBER_DATA_START__ */
-    var memberData = {
+<!-- 편집 UI -->
+<div id="editBanner">✏ 편집 모드 — 셀 클릭 편집 · 👥 명단 편집 · ☁ GitHub 저장</div>
+<button id="editorFab" title="편집 모드" type="button" class="">✏</button>
+<button id="memberEditorBtn" type="button">👥 명단 편집</button>
+<button id="saveHtmlBtn" type="button">☁ GitHub 저장</button>
+
+<div id="pwModal" class="">
+  <div id="pwBox">
+    <h3>편집 모드</h3>
+    <p>비밀번호를 입력해주세요</p>
+    <input id="pwInput" type="password" placeholder="••••••" maxlength="20" autocomplete="off">
+    <div id="pwError"></div>
+    <button id="pwConfirm" type="button">확인</button>
+    <button id="pwCancel" type="button">취소</button>
+  </div>
+</div>
+
+<div id="ghModal" class="">
+  <div id="ghBox">
+    <div class="gh-title">GitHub에 저장</div>
+    <div class="gh-desc">이 index.html 파일 전체가 저장됩니다.</div>
+    <div class="gh-label">저장소</div>
+    <div class="gh-repo-display">djnaknong/nakwoo</div>
+    <div class="gh-label">파일 경로 (예: index.html)</div>
+    <input id="ghPathInput" class="gh-input" type="text" placeholder="index.html">
+    <div class="gh-label">Personal Access Token</div>
+    <input id="ghTokenInput" class="gh-input" type="password" placeholder="ghp_xxxxxxxxxxxx">
+    <label class="gh-checkrow">
+      <input type="checkbox" id="ghSaveToken" checked="" style="width:14px;height:14px;cursor:pointer;">
+      토큰·경로 브라우저에 저장
+    </label>
+    <div id="ghStatus" style="color: rgb(136, 136, 136);"></div>
+    <div class="gh-btns">
+      <button id="ghUploadBtn" type="button" disabled="">☁ 업로드</button>
+      <button id="ghCancelBtn" type="button">취소</button>
+    </div>
+  </div>
+</div>
+
+<div id="meModal">
+  <div class="me-container">
+    <div class="me-header">
+      <h2>👥 낙우회 명단 편집</h2>
+      <button class="me-close-x" id="meCloseX" type="button">✕</button>
+    </div>
+    <div class="me-body">
+      <div class="me-sidebar">
+        <div class="me-group-list" id="meGroupList"></div>
+        <button class="me-add-group" id="meAddGroupBtn" type="button">+ 낙우회 추가</button>
+      </div>
+      <div class="me-editor" id="meEditor">
+        <div class="me-editor-empty" id="meEditorEmpty" style="display: flex;">← 왼쪽에서 낙우회를 선택하세요</div>
+        <div id="meEditorActive" style="display:none;flex:1;flex-direction:column;min-height:0;">
+          <div class="me-editor-hdr">
+            <input type="text" class="me-group-rename" id="meGroupName" placeholder="낙우회 이름">
+            <button class="me-group-del-btn" id="meDeleteGroupBtn" type="button">🗑 삭제</button>
+          </div>
+          <div class="me-editor-body">
+            <table class="me-member-table" id="meMemberTable">
+              <thead><tr><th class="col-num">순번</th><th>목장명</th><th>대표자</th><th>직책</th><th class="col-act"></th></tr></thead>
+              <tbody id="meMemberBody"></tbody>
+            </table>
+          </div>
+          <div class="me-editor-footer">
+            <button class="me-btn-primary" id="meAddMemberBtn" type="button">+ 회원 추가</button>
+            <button class="me-btn-secondary" id="meRenumberBtn" type="button">순번 재정렬</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="me-modal-footer">
+      <button class="me-done-btn" id="meDoneBtn" type="button">완료</button>
+    </div>
+  </div>
+</div>
+
+<script id="app-script">
+(function(){
+'use strict';
+
+/* ═════════════ memberData ═════════════ */
+/* __MEMBER_DATA_START__ */
+var memberData = {
   "대호낙우회": [
     {
       "순번": 1,
@@ -2028,884 +2825,262 @@ body.mar-theme .scroll-hint{
     }
   ]
 };
-    window.__memberData = memberData;
-    /* __MEMBER_DATA_END__ */
+window.__memberData = memberData;
+/* __MEMBER_DATA_END__ */
 
-  function showMemberList(groupName) {
-    const section = document.getElementById("member-section");
-    const tbody = document.getElementById("member-table")?.querySelector("tbody");
-    const title = section?.querySelector("h3");
-
-    if (!section || !tbody || !title) return;
-
-    tbody.innerHTML = "";
-    const members = memberData[groupName];
-
-    if (!members) {
-      section.style.display = "none";
-      return;
-    }
-
-    title.textContent = `${groupName} 회원명단`;
-    window.__currentMemberGroup = groupName;
-
-    members.forEach(row => {
-      const tr = document.createElement("tr");
-      ["순번", "목장명", "대표자", "직책"].forEach(key => {
-        const td = document.createElement("td");
-        td.textContent = row[key] ?? "";
-        tr.appendChild(td);
-      });
-      tbody.appendChild(tr);
-    });
-
-    section.style.display = "block";
-    section.scrollIntoView({ block: "start" });
-  }
-
-  function highlightDetailRow(row) {
-    document.querySelectorAll("#detail-section tbody tr").forEach(r => r.classList.remove("clicked-row"));
-    if (row) row.classList.add("clicked-row");
-  }
-
-  function hideMemberSection() {
-    const section = document.getElementById("member-section");
-    if (section) section.style.display = "none";
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    // 1) 상세일정표: 행 클릭 시 회원명단 표시
-    document.querySelectorAll("#detail-section tbody tr").forEach(row => {
-      row.addEventListener("click", () => {
-        highlightDetailRow(row);
-        const groupName = row.children[2]?.textContent?.trim();
-        if (groupName) showMemberList(groupName);
-      });
-    });
-
-    // 2) 월간 달력: 일정(셀 안의 event1/event2) 클릭 시 상세일정표로 스크롤 + 강조
-    // (2월은 행사 없음이므로 클릭해도 이동하지 않음)
-    document.querySelectorAll(".event1, .event2").forEach(el => {
-      el.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const id = el.textContent.trim();
-        if (!id) return;
-
-        const row = document.getElementById(id);
-        if (row) {
-          hideMemberSection();
-          highlightDetailRow(row);
-          row.scrollIntoView({ block: "center" });
-        } else {
-          hideMemberSection();
-        }
-      });
-    });
-
-    // 3) 달력의 빈 영역 클릭 시: 회원명단/강조 해제
-    const calendarTable = document.querySelectorAll("table")[0];
-    if (calendarTable) {
-      calendarTable.addEventListener("click", () => {
-        hideMemberSection();
-        highlightDetailRow(null);
-      });
-    }
-
-    // 4) 상세일정표 스크롤 힌트
-    const hintEl = document.querySelector(".scroll-hint");
-    const detailContainer = document.getElementById("detail-section");
-    if (hintEl && detailContainer) {
-      hintEl.style.opacity = "1";
-      detailContainer.addEventListener("scroll", () => {
-        const fadeStart = 30;
-        const fadeEnd = 200;
-        const scrolled = detailContainer.scrollLeft;
-        let newOpacity = 1;
-        if (scrolled > fadeStart) {
-          const progress = (scrolled - fadeStart) / (fadeEnd - fadeStart);
-          newOpacity = Math.max(0, 1 - progress);
-        }
-        hintEl.style.opacity = String(newOpacity);
-        if (scrolled > 0) hintEl.style.animation = "none";
-      });
-    }
-  });
-</script>
-
-<script>
-  // 일요일/토요일 색상 클래스 부여
-  document.addEventListener('DOMContentLoaded', () => {
-    const calendar = document.querySelectorAll('table')[0];
-    if (!calendar) return;
-
-    const rows = calendar.querySelectorAll('tr');
-    rows.forEach((row, idx) => {
-      if (idx === 0) return;
-      const cells = row.querySelectorAll('td');
-      if (cells.length !== 7) return;
-
-      const sunCell = cells[0];
-      const satCell = cells[6];
-      if (sunCell) sunCell.classList.add('sun');
-      if (satCell) satCell.classList.add('sat');
-    });
-  });
-</script>
-
-<script>
-  // === 오프라인 공휴일 데이터 (KR_HOLIDAYS) ===
-  // * 온라인 API 호출 없이 동작하도록 "하드코딩"된 공휴일만 사용
-  window.KR_HOLIDAYS = {
-    "2025": {
-      "01": [
-        {"day": 1, "name": "신정"},
-        {"day": 27, "name": "임시공휴일"},
-        {"day": 28, "name": "설날 연휴"},
-        {"day": 29, "name": "설날"},
-        {"day": 30, "name": "설날 연휴"}
-      ],
-      "03": [
-        {"day": 1, "name": "삼일절"},
-        {"day": 3, "name": "대체공휴일(삼일절)"}
-      ],
-      "05": [
-        {"day": 5, "name": "어린이날 · 부처님오신날"},
-        {"day": 6, "name": "대체공휴일(어린이날)"}
-      ],
-      "06": [
-        {"day": 6, "name": "현충일"}
-      ],
-      "08": [
-        {"day": 15, "name": "광복절"}
-      ],
-      "10": [
-        {"day": 3, "name": "개천절"},
-        {"day": 5, "name": "추석 연휴(전날)"},
-        {"day": 6, "name": "추석"},
-        {"day": 7, "name": "추석 연휴(다음날)"},
-        {"day": 8, "name": "대체공휴일(추석)"},
-        {"day": 9, "name": "한글날"}
-      ],
-      "12": [
-        {"day": 25, "name": "크리스마스"}
-      ]
-    },
-    "2026": {
-      "01": [
-        {"day": 1, "name": "신정"}
-      ],
-      "02": [
-        {"day": 16, "name": "설날 연휴"},
-        {"day": 17, "name": "설날"},
-        {"day": 18, "name": "설날 연휴"}
-      ]
-    ,
-      "03": [
-        {"day": 1, "name": "삼일절"},
-        {"day": 2, "name": "대체공휴일(삼일절)"}
-      ]
-    }
-  };
-
-  (function () {
-    function getYearMonthFromTitle() {
-      const h2 = document.querySelector("h2");
-      let year = "2026";
-      let month2 = "04";
-      if (!h2) return { year, month2 };
-
-      const m = h2.textContent.match(/(\d{4})\s*년\s*(\d{1,2})\s*월/);
-      if (m) {
-        year = m[1];
-        month2 = String(m[2]).padStart(2, "0");
-      }
-      return { year, month2 };
-    }
-
-    // (원본 로직 기반) 오늘 표시: 날짜만 같으면 표시됨
-    function markToday() {
-      const today = new Date();
-      const todayDate = today.getDate();
-
-      document.querySelectorAll(".date-num").forEach(el => {
-        const d = parseInt(el.textContent, 10);
-        if (!Number.isFinite(d)) return;
-        if (d === todayDate) {
-          const td = el.parentElement;
-          td.classList.add("today");
-
-          if (!el.querySelector(".today-label")) {
-            const label = document.createElement("span");
-            label.className = "today-label";
-            label.textContent = "오늘";
-            el.appendChild(label);
-          }
-        }
-      });
-    }
-
-    function applyHolidays(year, month2) {
-      const yearData = (window.KR_HOLIDAYS || {})[year];
-      if (!yearData) return;
-
-      const list = yearData[month2];
-      if (!Array.isArray(list) || list.length === 0) return;
-
-      const dayElMap = new Map();
-      document.querySelectorAll(".date-num").forEach(el => {
-        const d = parseInt(el.textContent, 10);
-        if (Number.isFinite(d)) dayElMap.set(d, el);
-      });
-
-      list.forEach(h => {
-        const el = dayElMap.get(h.day);
-        if (!el) return;
-
-        const td = el.parentElement;
-        td.classList.add("holiday");
-
-        if (!el.querySelector(".badge-holiday") && !el.querySelector(".badge-transfer")) {
-          const badge = document.createElement("span");
-          if ((h.name || "").includes("전달")) {
-            badge.className = "badge-transfer";
-          } else {
-            badge.className = "badge-holiday";
-          }
-          badge.textContent = h.name || "공휴일";
-          el.appendChild(badge);
-        }
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      const { year, month2 } = getYearMonthFromTitle();
-      markToday();
-      applyHolidays(year, month2);
-    });
-  })();
-</script>
-
-<script>
-/* Spring green leaf background - pure JS canvas (offline)
-   - respects prefers-reduced-motion
-   - pauses when tab is hidden
-   - light-weight: pauses heavy drawing while scrolling (uses body.is-scrolling)
-*/
-(function(){
-  const canvas = document.getElementById('leaf-canvas');
-  if(!canvas) return;
-
-  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduceMotion){ canvas.style.display = 'none'; return; }
-
-  const ctx = canvas.getContext('2d', { alpha: true });
-
-  let W=0, H=0, DPR=1;
-  function resize(){
-    DPR = Math.max(1, Math.min(1.6, window.devicePixelRatio || 1));
-    W = Math.floor(window.innerWidth);
-    H = Math.floor(window.innerHeight);
-    canvas.width  = Math.floor(W * DPR);
-    canvas.height = Math.floor(H * DPR);
-    canvas.style.width  = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-  }
-  window.addEventListener('resize', resize, { passive:true });
-  resize();
-
-  const isMobile = window.innerWidth < 768;
-  const COUNT = Math.round(Math.min(70, Math.max(35, W / 22)));
-  const leaves = [];
-
-  function rand(a,b){ return a + Math.random()*(b-a); }
-
-  function resetLeaf(L, init=false){
-    L.x = rand(-20, W + 20);
-    L.y = init ? rand(-10, H) : rand(-H*0.2, -40);
-    L.size = isMobile ? rand(10, 18) : rand(12, 22);
-    L.vy = rand(0.55, 1.25);
-    L.vx = rand(-0.25, 0.25);
-    L.swing = rand(0.6, 1.35);   // sideways sway intensity
-    L.freq  = rand(0.008, 0.02); // sway speed
-    L.phase = rand(0, Math.PI*2);
-    L.rot = rand(0, Math.PI*2);
-    L.vrot = rand(-0.018, 0.018);
-    L.alpha = rand(0.55, 0.95);
-    L.hue = rand(110, 145);      // green range
-    L.sat = rand(55, 78);
-    L.light = rand(32, 46);
-  }
-
-  for(let i=0;i<COUNT;i++){
-    const L = {};
-    resetLeaf(L, true);
-    leaves.push(L);
-  }
-
-  function drawLeaf(x, y, size, rot, fillStyle){
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(rot);
-
-    // Leaf shape (simple bezier) + small stem
-    const w = size * 0.8;
-    const h = size * 1.15;
-
-    ctx.beginPath();
-    ctx.moveTo(0, -h*0.55);
-    ctx.bezierCurveTo( w*0.55, -h*0.35,  w*0.55,  h*0.25, 0,  h*0.55);
-    ctx.bezierCurveTo(-w*0.55,  h*0.25, -w*0.55, -h*0.35, 0, -h*0.55);
-    ctx.closePath();
-    ctx.fillStyle = fillStyle;
-    ctx.fill();
-
-    // vein (subtle)
-    ctx.globalAlpha *= 0.35;
-    ctx.strokeStyle = 'rgba(15, 23, 42, 0.35)';
-    ctx.lineWidth = Math.max(1, size * 0.06);
-    ctx.beginPath();
-    ctx.moveTo(0, -h*0.5);
-    ctx.lineTo(0,  h*0.42);
-    ctx.stroke();
-
-    // stem
-    ctx.globalAlpha *= 0.55;
-    ctx.strokeStyle = 'rgba(21, 128, 61, 0.65)';
-    ctx.lineWidth = Math.max(1, size * 0.08);
-    ctx.beginPath();
-    ctx.moveTo(0,  h*0.55);
-    ctx.lineTo(0,  h*0.78);
-    ctx.stroke();
-
-    ctx.restore();
-  }
-
-  let running = true;
-  let last = 0;
-
-  document.addEventListener('visibilitychange', ()=>{
-    running = !document.hidden;
-    if(running) requestAnimationFrame(tick);
-  });
-
-  function tick(ts){
-    if(!running) return;
-
-    // cap FPS ~30
-    if(ts - last < 33){ requestAnimationFrame(tick); return; }
-    last = ts;
-
-    // performance: during scroll, keep canvas but stop heavy drawing
-    if(document.body.classList.contains('is-scrolling')){
-      requestAnimationFrame(tick);
-      return;
-    }
-
-    ctx.clearRect(0,0,W,H);
-
-    for(const L of leaves){
-      L.phase += L.freq;
-      L.x += L.vx + Math.sin(L.phase) * L.swing * 0.6;
-      L.y += L.vy;
-      L.rot += L.vrot + Math.sin(L.phase) * 0.002;
-
-      if(L.y > H + 40 || L.x < -60 || L.x > W + 60){
-        resetLeaf(L, false);
-      }
-
-      const fill = `hsla(${L.hue}, ${L.sat}%, ${L.light}%, ${L.alpha})`;
-      drawLeaf(L.x, L.y, L.size, L.rot, fill);
-    }
-
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-})();
-</script>
-
-<script>
-// ===== Performance: detect scrolling (used to pause animations) =====
-let __scrollTimer = null;
-function __setScrolling(active){
-  document.body.classList.toggle('is-scrolling', active);
-  if(active){
-    clearTimeout(__scrollTimer);
-    __scrollTimer = setTimeout(() => {
-      document.body.classList.remove('is-scrolling');
-    }, 220);
-  }
-}
-window.addEventListener('scroll', () => __setScrolling(true), { passive:true });
-</script>
-
-<!-- ===== 전용 편집기 v2 (index(5) 낙우회 일정표용) ===== -->
-<style id="editor-styles">
-/* ── 플로팅 버튼 & 배너 ── */
-#editorFab{position:fixed;bottom:80px;right:16px;width:52px;height:52px;border-radius:50%;background:#1a1a2e;color:#fff;border:none;font-size:20px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);z-index:999998;display:flex;align-items:center;justify-content:center;}
-#editorFab.active{background:#e63946;}
-#saveHtmlBtn{display:none;position:fixed;bottom:80px;left:16px;background:#238636;color:#fff;border:none;border-radius:99px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2);z-index:999998;}
-#memberEditorBtn{display:none;position:fixed;bottom:140px;left:16px;background:#6b46c1;color:#fff;border:none;border-radius:99px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.2);z-index:999998;}
-body.edit-mode #saveHtmlBtn,
-body.edit-mode #memberEditorBtn{display:block !important;}
-#editBanner{display:none;position:fixed;top:0;left:0;right:0;background:#e63946;color:#fff;text-align:center;padding:7px 10px;font-size:13px;font-weight:700;z-index:999997;line-height:1.4;}
-body.edit-mode #editBanner{display:block !important;}
-body.edit-mode{padding-top:40px;}
-
-/* ── 편집 가능 요소 시각 표시 ── */
-body.edit-mode [data-editable="true"],
-body.edit-mode [data-editable-link="true"]{
-  outline:1px dashed rgba(230,57,70,.55);
-  outline-offset:1px;
-  background:rgba(230,57,70,.05);
-  cursor:text !important;
-  min-height:1em;
-  border-radius:4px;
-  transition: outline .1s, background .1s;
-}
-body.edit-mode [data-editable="true"]:hover,
-body.edit-mode [data-editable-link="true"]:hover{
-  outline:2px dashed #e63946;
-  background:rgba(230,57,70,.12);
-}
-body.edit-mode [data-editable="true"]:focus,
-body.edit-mode [data-editable-link="true"]:focus{
-  outline:2px solid #e63946 !important;
-  background:#fff !important;
-  box-shadow:0 0 0 3px rgba(230,57,70,.15) !important;
-}
-
-/* ── 편집 모드에서 자동 스크롤/네비 차단 ── */
-body.edit-mode a[href^="tmap://"]{pointer-events:none;}
-body.edit-mode [data-editable-link="true"]{pointer-events:auto !important;}
-
-/* ── 상세 일정표 행 추가/삭제 ── */
-body.edit-mode #detail-section tbody tr{position:relative;}
-body.edit-mode .detail-row-delete-btn{
-  position:absolute;left:-28px;top:50%;transform:translateY(-50%);
-  width:22px;height:22px;border-radius:50%;border:none;
-  background:#e63946;color:#fff;font-size:12px;font-weight:800;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2);
-  z-index:10;
-}
-body.edit-mode #detail-add-row-wrap{display:block;text-align:center;margin:10px 0;}
-#detail-add-row-wrap{display:none;}
-#detail-add-row-btn{
-  background:#1a1a2e;color:#fff;border:none;border-radius:99px;
-  padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;
-}
-
-/* ── 비밀번호 모달 ── */
-#pwModal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:9999999;}
-#pwModal.show{display:flex;}
-#pwBox{background:#fff;border-radius:16px;padding:28px 24px;width:min(340px,90vw);box-shadow:0 12px 40px rgba(0,0,0,.2);text-align:center;}
-#pwBox h3{margin:0 0 6px;font-size:17px;color:#111;}
-#pwBox p{margin:0 0 16px;font-size:13px;color:#666;}
-#pwInput{width:100%;box-sizing:border-box;padding:11px 14px;border:1.5px solid #ddd;border-radius:10px;font-size:15px;text-align:center;letter-spacing:4px;outline:none;margin-bottom:8px;}
-#pwInput:focus{border-color:#1a1a2e;}
-#pwInput.shake{animation:pwShake .3s;}
-@keyframes pwShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-#pwConfirm{width:100%;padding:11px;background:#1a1a2e;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:8px;}
-#pwCancel{background:none;border:none;color:#888;font-size:13px;cursor:pointer;width:100%;padding:6px;}
-#pwError{color:#e63946;font-size:12px;margin-bottom:6px;min-height:16px;}
-
-/* ── GitHub 저장 모달 ── */
-#ghModal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:9999999;}
-#ghModal.show{display:flex;}
-#ghBox{background:#fff;border-radius:20px;padding:24px 22px;width:min(380px,92vw);box-shadow:0 16px 48px rgba(0,0,0,.2);}
-#ghBox .gh-title{font-size:17px;font-weight:800;color:#1a1a2e;margin-bottom:6px;}
-#ghBox .gh-desc{font-size:13px;color:#666;margin-bottom:14px;line-height:1.6;}
-#ghBox .gh-label{font-size:12px;color:#888;margin-bottom:4px;margin-top:10px;}
-#ghBox .gh-repo-display{font-size:13px;font-weight:700;color:#238636;background:#f0fff4;border-radius:8px;padding:8px 12px;font-family:monospace;margin-bottom:6px;}
-#ghBox input.gh-input{width:100%;box-sizing:border-box;padding:10px 12px;border:1.5px solid #ddd;border-radius:10px;font-size:13px;outline:none;font-family:monospace;}
-#ghBox input.gh-input:focus{border-color:#1a1a2e;}
-#ghBox .gh-checkrow{display:flex;align-items:center;gap:8px;font-size:12px;color:#666;margin:10px 0 14px;cursor:pointer;}
-#ghStatus{font-size:12px;min-height:18px;margin-bottom:10px;text-align:center;color:#888;}
-#ghBox .gh-btns{display:flex;gap:8px;}
-#ghUploadBtn{flex:1;padding:11px;background:#238636;color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;}
-#ghUploadBtn:disabled{opacity:.5;cursor:not-allowed;}
-#ghCancelBtn{padding:11px 16px;background:#f0f0f0;color:#555;border:none;border-radius:10px;font-size:13px;cursor:pointer;}
-#ghHint{margin-top:12px;font-size:11px;color:#bbb;text-align:center;line-height:1.5;}
-
-/* ── 명단 편집 모달 ── */
-#meModal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:9999999;padding:12px;box-sizing:border-box;}
-#meModal.show{display:flex;}
-.me-container{
-  background:#fff;border-radius:16px;
-  width:min(1000px,100%);height:min(720px,100%);
-  display:flex;flex-direction:column;overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.3);
-}
-.me-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 20px;border-bottom:1px solid #eee;
-  background:#f9f9fb;flex-shrink:0;
-}
-.me-header h2{margin:0;font-size:16px;color:#1a1a2e;font-weight:800;}
-.me-close-x{background:none;border:none;font-size:20px;cursor:pointer;color:#888;padding:4px 10px;border-radius:6px;}
-.me-close-x:hover{background:#eee;}
-
-.me-body{flex:1;display:flex;min-height:0;}
-
-.me-sidebar{
-  width:230px;flex-shrink:0;border-right:1px solid #eee;background:#fafafa;
-  display:flex;flex-direction:column;min-height:0;
-}
-.me-group-list{flex:1;overflow-y:auto;padding:8px;}
-.me-group-item{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:9px 11px;border-radius:8px;cursor:pointer;
-  font-size:13px;color:#333;margin-bottom:2px;
-  user-select:none;
-}
-.me-group-item:hover{background:#ececf0;}
-.me-group-item.active{background:#6b46c1;color:#fff;}
-.me-group-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;}
-.me-group-count{font-size:11px;color:#999;margin-left:6px;flex-shrink:0;}
-.me-group-item.active .me-group-count{color:#e0d5f5;}
-.me-add-group{
-  margin:10px;padding:10px;background:#1a1a2e;color:#fff;border:none;
-  border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;
-}
-.me-add-group:hover{background:#2a2a4a;}
-
-.me-editor{flex:1;display:flex;flex-direction:column;min-height:0;min-width:0;}
-.me-editor-empty{
-  flex:1;display:flex;align-items:center;justify-content:center;
-  color:#aaa;font-size:14px;padding:40px;text-align:center;
-}
-.me-editor-hdr{
-  padding:12px 18px;border-bottom:1px solid #eee;
-  display:flex;gap:8px;align-items:center;flex-shrink:0;
-}
-.me-editor-hdr input.me-group-rename{
-  flex:1;padding:8px 12px;border:1.5px solid #ddd;border-radius:8px;
-  font-size:14px;font-weight:700;outline:none;
-}
-.me-editor-hdr input.me-group-rename:focus{border-color:#6b46c1;}
-.me-group-del-btn{
-  background:#fef2f2;border:1px solid #fecaca;color:#dc2626;
-  padding:6px 12px;border-radius:8px;cursor:pointer;font-size:13px;
-}
-.me-group-del-btn:hover{background:#fee2e2;}
-
-.me-editor-body{flex:1;overflow-y:auto;padding:8px 18px;}
-.me-member-table{width:100%;border-collapse:collapse;font-size:13px;}
-.me-member-table th{
-  background:#f4f4f8;color:#555;font-weight:600;
-  padding:8px 10px;text-align:left;border-bottom:1px solid #e0e0e0;
-  font-size:12px;position:sticky;top:0;
-}
-.me-member-table td{padding:4px 6px;border-bottom:1px solid #f2f2f5;vertical-align:middle;}
-.me-member-table tr:hover td{background:#fafafa;}
-.me-member-table input{
-  width:100%;box-sizing:border-box;
-  padding:7px 9px;border:1px solid transparent;border-radius:5px;
-  font-size:13px;background:transparent;
-  font-family:inherit;
-}
-.me-member-table input:focus{
-  border-color:#6b46c1;outline:none;background:#fff;
-  box-shadow:0 0 0 2px rgba(107,70,193,.15);
-}
-.me-member-table input.f-num{text-align:center;width:60px;}
-.me-member-table th.col-num{width:60px;}
-.me-member-table th.col-act{width:36px;}
-.me-member-delete{
-  background:none;border:none;color:#e63946;font-size:14px;cursor:pointer;padding:3px 6px;border-radius:4px;
-}
-.me-member-delete:hover{background:#fee;}
-
-.me-editor-footer{
-  padding:10px 18px;border-top:1px solid #eee;display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0;
-}
-.me-btn-primary{
-  padding:8px 14px;background:#1a1a2e;color:#fff;border:none;
-  border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;
-}
-.me-btn-primary:hover{background:#2a2a4a;}
-.me-btn-secondary{
-  padding:8px 14px;background:#6b46c1;color:#fff;border:none;
-  border-radius:99px;font-size:13px;font-weight:600;cursor:pointer;
-}
-
-.me-modal-footer{
-  padding:12px 20px;border-top:1px solid #eee;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-shrink:0;
-}
-.me-footer-note{font-size:12px;color:#888;}
-.me-done-btn{
-  padding:10px 22px;background:#238636;color:#fff;border:none;
-  border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;
-}
-.me-done-btn:hover{background:#2ea043;}
-
-/* 모바일 대응 */
-@media (max-width: 640px){
-  .me-body{flex-direction:column;}
-  .me-sidebar{width:100%;max-height:200px;border-right:none;border-bottom:1px solid #eee;}
-}
-
-/* 프린트 시 편집기 UI 숨김 */
-@media print{
-  #editorFab,#saveHtmlBtn,#memberEditorBtn,#editBanner,#pwModal,#ghModal,#meModal,
-  #detail-add-row-wrap,.detail-row-delete-btn{display:none !important;}
-  body.edit-mode [data-editable="true"],
-  body.edit-mode [data-editable-link="true"]{outline:none !important;background:none !important;}
-}
-</style>
-
-<div id="editBanner">✏ 편집 모드 — 셀을 클릭해서 바로 수정 · 👥 로 명단 편집 · ☁ 로 GitHub 저장</div>
-<button id="editorFab" title="편집 모드" type="button" class="">✏</button>
-<button id="memberEditorBtn" type="button">👥 명단 편집</button>
-<button id="saveHtmlBtn" type="button">☁ GitHub 저장</button>
-
-<!-- 비밀번호 모달 -->
-<div id="pwModal" class="">
-  <div id="pwBox">
-    <h3>편집 모드</h3>
-    <p>비밀번호를 입력해주세요</p>
-    <input id="pwInput" type="password" placeholder="••••••" maxlength="20" autocomplete="off">
-    <div id="pwError"></div>
-    <button id="pwConfirm" type="button">확인</button>
-    <button id="pwCancel" type="button">취소</button>
-  </div>
-</div>
-
-<!-- GitHub 저장 모달 -->
-<div id="ghModal" class="">
-  <div id="ghBox">
-    <div class="gh-title">GitHub에 저장</div>
-    <div class="gh-desc">Personal Access Token과 파일 경로를 입력하세요.<br>
-      <span style="font-size:11px;color:#aaa;">토큰은 브라우저에만 저장되며 파일엔 포함되지 않습니다.</span>
-    </div>
-    <div class="gh-label">저장소</div>
-    <div class="gh-repo-display">djnaknong/nakwoo</div>
-    <div class="gh-label">파일 경로 (예: 2026-04.html, calendar/2026-04.html)</div>
-    <input id="ghPathInput" class="gh-input" type="text" placeholder="2026-04.html">
-    <div class="gh-label">Personal Access Token</div>
-    <input id="ghTokenInput" class="gh-input" type="password" placeholder="ghp_xxxxxxxxxxxx">
-    <label class="gh-checkrow">
-      <input type="checkbox" id="ghSaveToken" checked="" style="width:14px;height:14px;cursor:pointer;">
-      토큰·경로 브라우저에 저장 (다음에 자동 입력)
-    </label>
-    <div id="ghStatus" style="color: rgb(136, 136, 136);"></div>
-    <div class="gh-btns">
-      <button id="ghUploadBtn" type="button" disabled="">☁ 업로드</button>
-      <button id="ghCancelBtn" type="button">취소</button>
-    </div>
-    <div id="ghHint">
-      토큰 발급: GitHub → Settings → Developer settings → Personal access tokens → <b>repo</b> 권한
-    </div>
-  </div>
-</div>
-
-<!-- 명단 편집 모달 -->
-<div id="meModal">
-  <div class="me-container">
-    <div class="me-header">
-      <h2>👥 낙우회 명단 편집</h2>
-      <button class="me-close-x" id="meCloseX" type="button">✕</button>
-    </div>
-    <div class="me-body">
-      <div class="me-sidebar">
-        <div class="me-group-list" id="meGroupList"></div>
-        <button class="me-add-group" id="meAddGroupBtn" type="button">+ 낙우회 추가</button>
-      </div>
-      <div class="me-editor" id="meEditor">
-        <div class="me-editor-empty" id="meEditorEmpty" style="display: flex;">← 왼쪽에서 낙우회를 선택하거나 추가하세요</div>
-        <div id="meEditorActive" style="display:none;flex:1;flex-direction:column;min-height:0;">
-          <div class="me-editor-hdr">
-            <input type="text" class="me-group-rename" id="meGroupName" placeholder="낙우회 이름 (예: 합덕낙우회)">
-            <button class="me-group-del-btn" id="meDeleteGroupBtn" type="button">🗑 이 낙우회 삭제</button>
-          </div>
-          <div class="me-editor-body">
-            <table class="me-member-table" id="meMemberTable">
-              <thead>
-                <tr>
-                  <th class="col-num">순번</th>
-                  <th>목장명</th>
-                  <th>대표자</th>
-                  <th>직책</th>
-                  <th class="col-act"></th>
-                </tr>
-              </thead>
-              <tbody id="meMemberBody"></tbody>
-            </table>
-          </div>
-          <div class="me-editor-footer">
-            <button class="me-btn-primary" id="meAddMemberBtn" type="button">+ 회원 추가</button>
-            <button class="me-btn-secondary" id="meRenumberBtn" type="button">순번 재정렬</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="me-modal-footer">
-      <span class="me-footer-note">변경사항은 실시간으로 반영됩니다. GitHub 저장 버튼으로 최종 반영하세요.</span>
-      <button class="me-done-btn" id="meDoneBtn" type="button">완료</button>
-    </div>
-  </div>
-</div>
-
-<script id="editor-logic">
-(function(){
-'use strict';
-
-/* ══════════════════════════════════════════════════════════════════
-   1. 유연한 텍스트 매칭 (id 없어도 동작)
-   ══════════════════════════════════════════════════════════════════ */
+/* ═════════════ 유연 매칭 ═════════════ */
 function normalizeGroupKey(s){
   if(!s) return '';
   return String(s).trim()
-    .replace(/\(.*?\)/g,'')                   /* 괄호 안 제거 */
-    .replace(/[\s\-_·,.()\[\]]+/g,'')         /* 공백·구분자 제거 */
-    .replace(/(낙우회|진흥회|조합)+$/g,'');   /* 접미사 제거 */
+    .replace(/\(.*?\)/g,'')
+    .replace(/[\s\-_·,.()\[\]]+/g,'')
+    .replace(/(낙우회|진흥회|조합)+$/g,'');
 }
-
-/* 달력 텍스트 → 상세표 행 찾기 */
-function findDetailRowFlex(text){
-  if(!text) return null;
-  /* 1) id 정확 매칭 (기존 원본 방식 — 하위호환) */
-  var byId = document.getElementById(text);
-  if(byId && byId.closest && byId.closest('#detail-section')) return byId;
-
-  /* 2) 3번째 열 정규화 매칭 */
+function findDetailRowInPanel(panel, text){
+  if(!panel || !text) return null;
+  var section = panel.querySelector('.detail-section');
+  if(!section) return null;
+  var rows = section.querySelectorAll('tbody tr'), i;
+  for(i=0;i<rows.length;i++){ if(rows[i].id === text) return rows[i]; }
   var target = normalizeGroupKey(text);
   if(!target) return null;
-  var rows = document.querySelectorAll('#detail-section tbody tr');
-  var i, label, labelNorm;
-  /* 2-1) 정확한 정규화 매칭 */
-  for(i=0; i<rows.length; i++){
-    label = rows[i].children[2] ? rows[i].children[2].textContent : '';
+  for(i=0;i<rows.length;i++){
+    var label = rows[i].children[2] ? rows[i].children[2].textContent : '';
     if(normalizeGroupKey(label) === target) return rows[i];
   }
-  /* 2-2) 포함 관계 */
-  for(i=0; i<rows.length; i++){
-    label = rows[i].children[2] ? rows[i].children[2].textContent : '';
-    labelNorm = normalizeGroupKey(label);
-    if(labelNorm && (labelNorm.indexOf(target) >= 0 || target.indexOf(labelNorm) >= 0)) return rows[i];
+  for(i=0;i<rows.length;i++){
+    var l2 = rows[i].children[2] ? rows[i].children[2].textContent : '';
+    var ln = normalizeGroupKey(l2);
+    if(ln && (ln.indexOf(target) >= 0 || target.indexOf(ln) >= 0)) return rows[i];
   }
   return null;
 }
-
-/* memberData 키 유연 매칭 */
 function findMemberGroup(groupName){
   var data = window.__memberData || {};
   if(data[groupName]) return groupName;
   var target = normalizeGroupKey(groupName);
   if(!target) return null;
   var keys = Object.keys(data), i;
-  for(i=0; i<keys.length; i++){
-    if(normalizeGroupKey(keys[i]) === target) return keys[i];
-  }
-  for(i=0; i<keys.length; i++){
+  for(i=0;i<keys.length;i++){ if(normalizeGroupKey(keys[i]) === target) return keys[i]; }
+  for(i=0;i<keys.length;i++){
     var k = normalizeGroupKey(keys[i]);
     if(k && (k.indexOf(target) >= 0 || target.indexOf(k) >= 0)) return keys[i];
   }
   return null;
 }
 
-/* 원본 showMemberList 래핑 → 유연 매칭 적용 */
-(function wrapShowMemberList(){
-  var tries = 0;
-  var iv = setInterval(function(){
-    tries++;
-    if(typeof window.showMemberList === 'function'){
-      clearInterval(iv);
-      var _orig = window.showMemberList;
-      window.showMemberList = function(groupName){
-        var actual = findMemberGroup(groupName);
-        if(actual) _orig(actual);
-        else _orig(groupName);  /* 원래 동작(숨김 처리) */
-      };
-    } else if(tries > 50){
-      clearInterval(iv);
-    }
-  }, 50);
-})();
+function markHasMember(){
+  document.querySelectorAll('.event1').forEach(function(el){
+    el.classList.remove('has-member');
+    var t = el.textContent.trim();
+    if(t && findMemberGroup(t)) el.classList.add('has-member');
+  });
+}
 
-/* 캡처 단계에서 클릭 가로채기 (편집모드 아닐 때만) */
+/* ═════════════ 회원 명단 표시 ═════════════ */
+function showMemberList(groupName){
+  var section = document.getElementById('member-section');
+  var tbody = document.getElementById('member-table').querySelector('tbody');
+  var title = section.querySelector('h3');
+  var actualKey = findMemberGroup(groupName);
+  if(!actualKey){ section.style.display='none'; return; }
+  var members = window.__memberData[actualKey];
+  if(!members){ section.style.display='none'; return; }
+  title.textContent = actualKey + ' 회원명단';
+  window.__currentMemberGroup = actualKey;
+  tbody.innerHTML = '';
+  members.forEach(function(m){
+    var tr = document.createElement('tr');
+    ['순번','목장명','대표자','직책'].forEach(function(k){
+      var td = document.createElement('td');
+      td.textContent = (m && m[k] != null) ? m[k] : '';
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  section.style.display = 'block';
+  setTimeout(function(){ section.scrollIntoView({behavior:'smooth', block:'start'}); }, 60);
+}
+window.showMemberList = showMemberList;
+function hideMemberSection(){ var s = document.getElementById('member-section'); if(s) s.style.display='none'; }
+function clearDetailHighlight(){ document.querySelectorAll('.detail-section tbody tr.clicked-row').forEach(function(r){ r.classList.remove('clicked-row'); }); }
+
+/* ═════════════ 월 전환 ═════════════ */
+function activateMonth(month){
+  document.querySelectorAll('.month-panel').forEach(function(p){
+    p.classList.toggle('active', p.getAttribute('data-month') === month);
+  });
+  /* 분기 테마 */
+  var activePanel = document.querySelector('.month-panel.active');
+  if(activePanel){
+    var q = activePanel.getAttribute('data-quarter');
+    document.body.classList.remove('q-1','q-2','q-3','q-4');
+    document.body.classList.add('q-' + q);
+    /* 스위처 라벨 */
+    var title = activePanel.querySelector('.main-title');
+    if(title){
+      var m = month.split('-');
+      document.getElementById('switcherLabel').textContent = parseInt(m[0])+'년 '+parseInt(m[1])+'월';
+    }
+    /* 편집 모드라면 편집 마커 재적용 */
+    if(document.body.classList.contains('edit-mode')){
+      markEditable();
+      refreshDetailDeleteBtns();
+    }
+  }
+  hideMemberSection();
+  clearDetailHighlight();
+  markHasMember();
+}
+window.activateMonth = activateMonth;
+
+/* 오늘 뱃지 */
+function markToday(){
+  var now = new Date();
+  var ym = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+  var panel = document.querySelector('.month-panel[data-month="' + ym + '"]');
+  if(!panel) return;
+  var today = now.getDate();
+  panel.querySelectorAll('.cal-wrap td').forEach(function(td){
+    var num = td.querySelector('.date-num');
+    if(!num) return;
+    if(num.querySelector('.today-label')) return;
+    var txt = (num.textContent || '').replace(/[^\d]/g,'').trim();
+    if(parseInt(txt,10) === today){
+      td.classList.add('today');
+      var lbl = document.createElement('span');
+      lbl.className = 'today-label';
+      lbl.textContent = '오늘';
+      num.appendChild(lbl);
+    }
+  });
+}
+
+/* ═════════════ 월 선택 드롭다운 ═════════════ */
+var monthPickerOverlay = document.getElementById('monthPickerOverlay');
+var monthSwitcherBtn = document.getElementById('monthSwitcherBtn');
+monthSwitcherBtn.addEventListener('click', function(e){
+  e.stopPropagation();
+  var isShown = monthPickerOverlay.classList.toggle('show');
+  monthSwitcherBtn.classList.toggle('open', isShown);
+});
+monthPickerOverlay.addEventListener('click', function(e){
+  if(e.target === monthPickerOverlay){
+    monthPickerOverlay.classList.remove('show');
+    monthSwitcherBtn.classList.remove('open');
+  }
+});
+document.querySelectorAll('.picker-month-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var m = btn.getAttribute('data-month');
+    activateMonth(m);
+    monthPickerOverlay.classList.remove('show');
+    monthSwitcherBtn.classList.remove('open');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+/* ESC 키로 닫기 */
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape'){
+    monthPickerOverlay.classList.remove('show');
+    monthSwitcherBtn.classList.remove('open');
+  }
+});
+
+/* ═════════════ 클릭 이벤트 위임 ═════════════ */
 document.addEventListener('click', function(e){
-  if(document.body.classList.contains('edit-mode')) return;
   if(!e.target || !e.target.closest) return;
 
-  /* 1. 달력 event1/event2 클릭 */
-  var eventEl = e.target.closest('.event1, .event2');
+  /* 편집 모드에서는 기본 클릭 차단 (셀 편집 방해하지 않도록) */
+  if(document.body.classList.contains('edit-mode')){
+    /* 편집 UI/모달 클릭은 통과 */
+    if(e.target.closest('#editorFab,#pwModal,#ghModal,#meModal,#saveHtmlBtn,#memberEditorBtn,#editBanner,#monthSwitcherBtn,#monthPicker,.detail-row-delete-btn,.detail-add-row-wrap')) return;
+    /* 그 외 클릭(셀 클릭 등)은 포커스만 */
+    e.stopPropagation();
+    return;
+  }
+
+  /* 달력 알약 클릭 */
+  var eventEl = e.target.closest('.cal-wrap .event1, .cal-wrap .event2');
   if(eventEl && eventEl.textContent.trim()){
     var text = eventEl.textContent.trim();
-    var row = findDetailRowFlex(text);
+    var panel = eventEl.closest('.month-panel');
+    var row = findDetailRowInPanel(panel, text);
     if(row){
-      if(typeof window.hideMemberSection === 'function') window.hideMemberSection();
-      document.querySelectorAll('#detail-section tbody tr').forEach(function(r){r.classList.remove('clicked-row');});
+      hideMemberSection();
+      clearDetailHighlight();
       row.classList.add('clicked-row');
-      row.scrollIntoView({block:'center'});
-    } else {
-      if(typeof window.hideMemberSection === 'function') window.hideMemberSection();
-    }
-    e.stopImmediatePropagation();
+      row.scrollIntoView({behavior:'smooth', block:'center'});
+    } else { hideMemberSection(); }
     return;
   }
 
-  /* 2. 상세표 행 클릭 (새 행 포함, 이벤트 위임) */
-  var tr = e.target.closest('#detail-section tbody tr');
+  /* 상세표 행 클릭 */
+  var tr = e.target.closest('.detail-section tbody tr');
   if(tr){
-    /* 주소 링크 클릭은 그대로 */
     if(e.target.closest && e.target.closest('a[href^="tmap://"]')) return;
-    document.querySelectorAll('#detail-section tbody tr').forEach(function(r){r.classList.remove('clicked-row');});
+    clearDetailHighlight();
     tr.classList.add('clicked-row');
     var groupName = tr.children[2] ? tr.children[2].textContent.trim() : '';
-    if(groupName && typeof window.showMemberList === 'function') window.showMemberList(groupName);
-    e.stopImmediatePropagation();
+    if(groupName) showMemberList(groupName);
     return;
   }
+});
+
+/* Enter로 줄바꿈 대신 포커스 이탈 */
+document.addEventListener('keydown', function(e){
+  if(!document.body.classList.contains('edit-mode')) return;
+  if(e.key==='Enter' && e.target && e.target.getAttribute &&
+     (e.target.getAttribute('data-editable')==='true' || e.target.getAttribute('data-editable-link')==='true')){
+    e.preventDefault();
+    e.target.blur();
+  }
+});
+document.addEventListener('click', function(e){
+  if(!document.body.classList.contains('edit-mode')) return;
+  var a = e.target.closest('a');
+  if(a && !e.target.closest('[data-editable-link="true"]')) e.preventDefault();
 }, true);
 
-
-/* ══════════════════════════════════════════════════════════════════
-   2. 비밀번호 / 편집 모드
-   ══════════════════════════════════════════════════════════════════ */
+/* ═════════════ 편집 모드 ═════════════ */
 var PW_HASH='a6b3a81355a5197a13239d7a56ef0340cf8e2a87fd825f896262738bcbe1c283'; /* helper2026 */
 async function sha256(msg){
   var buf=new TextEncoder().encode(msg);
   var hash=await crypto.subtle.digest('SHA-256',buf);
   return Array.from(new Uint8Array(hash)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
 }
+var editMode=false, _uploading=false;
+var fab = document.getElementById('editorFab');
+var pwModal = document.getElementById('pwModal');
+var pwInput = document.getElementById('pwInput');
+var pwError = document.getElementById('pwError');
+var ghModal = document.getElementById('ghModal');
 
-var editMode=false;
-var _uploading=false;
-
-var fab       = document.getElementById('editorFab');
-var pwModal   = document.getElementById('pwModal');
-var pwInput   = document.getElementById('pwInput');
-var pwError   = document.getElementById('pwError');
-var ghModal   = document.getElementById('ghModal');
-
-/* GitHub 설정 */
 var REPO='djnaknong/nakwoo';
 var BRANCH='main';
 
-/* 편집 가능 요소 지정 */
 function setEditable(el){ if(!el) return; el.setAttribute('contenteditable','true'); el.setAttribute('data-editable','true'); }
 function setEditableLink(el){ el.setAttribute('contenteditable','true'); el.setAttribute('data-editable-link','true'); }
+
 function markEditable(){
-  /* 메인 제목 & 문구 */
-  document.querySelectorAll('h2.main-title, h2.main-title ~ p').forEach(setEditable);
-  /* 달력 event1/event2 */
-  document.querySelectorAll('table td .event1, table td .event2').forEach(setEditable);
-  /* 상세 일정표 제목 */
-  var detailH2 = document.querySelector('#detail-section h2');
-  if(detailH2) setEditable(detailH2);
-  /* 상세 일정표 헤더 */
-  document.querySelectorAll('#detail-section thead th').forEach(setEditable);
-  /* 상세 일정표 셀 */
-  document.querySelectorAll('#detail-section tbody td').forEach(function(td){
+  /* 현재 활성 월만 편집 대상 */
+  var panel = document.querySelector('.month-panel.active');
+  if(!panel) return;
+  /* 제목 */
+  panel.querySelectorAll('.main-title').forEach(setEditable);
+  /* 달력 알약 */
+  panel.querySelectorAll('.cal-wrap td .event1, .cal-wrap td .event2').forEach(setEditable);
+  /* 상세 제목 */
+  var dh = panel.querySelector('.detail-section > h2');
+  if(dh) setEditable(dh);
+  /* 상세 헤더 */
+  panel.querySelectorAll('.detail-section thead th').forEach(setEditable);
+  /* 상세 셀 */
+  panel.querySelectorAll('.detail-section tbody td').forEach(function(td){
     var link = td.querySelector('a[href^="tmap://"]');
-    if(link){ setEditableLink(link); }
-    else    { setEditable(td); }
+    if(link) setEditableLink(link);
+    else setEditable(td);
   });
-  /* 회원 섹션 제목 */
-  var memberH3 = document.querySelector('#member-section h3');
-  if(memberH3) setEditable(memberH3);
-  /* ※ 회원 테이블은 이제 별도 편집기에서만 관리 (인라인 편집 제거) */
 }
 function unmarkEditable(){
   document.querySelectorAll('[data-editable="true"], [data-editable-link="true"]').forEach(function(el){
@@ -2915,35 +3090,30 @@ function unmarkEditable(){
   });
 }
 
-/* 상세 일정표 행 추가/삭제 */
-var detailTbody = document.querySelector('#detail-section tbody');
-var detailAddWrap = null;
-if(detailTbody){
-  detailAddWrap = document.createElement('div');
-  detailAddWrap.id = 'detail-add-row-wrap';
-  detailAddWrap.innerHTML = '<button id="detail-add-row-btn" type="button">＋ 상세 일정 행 추가</button>';
-  document.getElementById('detail-section').appendChild(detailAddWrap);
-  detailAddWrap.querySelector('#detail-add-row-btn').addEventListener('click', function(){
+/* 상세 행 추가/삭제 */
+function ensureAddRowBtn(){
+  var panel = document.querySelector('.month-panel.active');
+  if(!panel) return;
+  var section = panel.querySelector('.detail-section');
+  if(!section) return;
+  if(section.querySelector('.detail-add-row-wrap')) return;
+  var wrap = document.createElement('div');
+  wrap.className = 'detail-add-row-wrap';
+  wrap.innerHTML = '<button class="detail-add-row-btn" type="button">＋ 상세 일정 행 추가</button>';
+  section.appendChild(wrap);
+  wrap.querySelector('.detail-add-row-btn').addEventListener('click', function(){
     if(!editMode) return;
+    var tbody = section.querySelector('tbody');
+    if(!tbody) return;
     var tr = document.createElement('tr');
-    tr.innerHTML =
-      '<td>날짜</td>'+
-      '<td>시간</td>'+
-      '<td>행사명</td>'+
-      '<td>낙우회</td>'+
-      '<td>장소</td>'+
-      '<td><a href="tmap://search?name=주소">주소</a></td>';
-    detailTbody.appendChild(tr);
+    tr.innerHTML = '<td>날짜</td><td>시간</td><td>낙우회</td><td>구분</td><td>장소</td><td><a href="tmap://search?name=주소">주소</a></td>';
+    tbody.appendChild(tr);
     tr.querySelectorAll('td').forEach(function(td){
       var link = td.querySelector('a[href^="tmap://"]');
-      if(link){ setEditableLink(link); }
-      else    { setEditable(td); }
+      if(link) setEditableLink(link); else setEditable(td);
     });
     attachDetailRowDeleteBtn(tr);
-    setTimeout(function(){
-      var firstTd = tr.querySelector('td');
-      if(firstTd){ firstTd.focus(); document.execCommand('selectAll', false, null); }
-    }, 50);
+    setTimeout(function(){ var ft = tr.querySelector('td'); if(ft){ ft.focus(); document.execCommand('selectAll', false, null); } }, 50);
   });
 }
 function attachDetailRowDeleteBtn(tr){
@@ -2962,32 +3132,33 @@ function attachDetailRowDeleteBtn(tr){
   tr.appendChild(btn);
 }
 function refreshDetailDeleteBtns(){
-  if(!detailTbody) return;
-  detailTbody.querySelectorAll('tr').forEach(attachDetailRowDeleteBtn);
+  var panel = document.querySelector('.month-panel.active');
+  if(!panel) return;
+  panel.querySelectorAll('.detail-section tbody tr').forEach(attachDetailRowDeleteBtn);
+  ensureAddRowBtn();
 }
 
-/* 편집 모드 진입 / 종료 */
 function enterEditMode(){
-  editMode=true;
+  editMode = true;
   document.body.classList.add('edit-mode');
   fab.classList.add('active'); fab.textContent='✕';
   markEditable();
   refreshDetailDeleteBtns();
 }
 window.exitEditMode = function(){
-  editMode=false;
+  editMode = false;
   document.body.classList.remove('edit-mode');
   fab.classList.remove('active'); fab.textContent='✏';
-  /* 주소 링크 href 재생성 */
-  document.querySelectorAll('#detail-section tbody td a[href^="tmap://"]').forEach(function(a){
+  /* tmap href 재생성 */
+  document.querySelectorAll('.detail-section tbody td a[href^="tmap://"]').forEach(function(a){
     var t = (a.textContent||'').trim();
     if(t) a.setAttribute('href','tmap://search?name='+encodeURIComponent(t));
   });
   unmarkEditable();
   document.querySelectorAll('.detail-row-delete-btn').forEach(function(b){b.remove();});
+  markHasMember();
 };
 
-/* FAB 클릭 */
 fab.addEventListener('click', function(){
   if(editMode) window.exitEditMode();
   else{
@@ -2996,8 +3167,6 @@ fab.addEventListener('click', function(){
     setTimeout(function(){pwInput.focus();},60);
   }
 });
-
-/* 비밀번호 확인 */
 async function checkPw(){
   var val=pwInput.value;
   if(!val){pwError.textContent='비밀번호를 입력해주세요';return;}
@@ -3014,50 +3183,19 @@ document.getElementById('pwConfirm').addEventListener('click', checkPw);
 pwInput.addEventListener('keydown', function(e){ if(e.key==='Enter') checkPw(); });
 document.getElementById('pwCancel').addEventListener('click', function(){ pwModal.classList.remove('show'); });
 
-/* 편집 모드에서 기존 클릭 차단 (셀 포커스는 허용) */
-document.addEventListener('click', function(e){
-  if(!editMode) return;
-  if(e.target.closest('#editorFab, #pwModal, #ghModal, #meModal, #saveHtmlBtn, #memberEditorBtn, #editBanner, .detail-row-delete-btn, #detail-add-row-wrap')) return;
-  e.stopPropagation();
-}, true);
-/* 편집 중 링크 네비게이션 방지 */
-document.addEventListener('click', function(e){
-  if(!editMode) return;
-  var a = e.target.closest('a');
-  if(a) e.preventDefault();
-}, true);
-/* Enter로 줄바꿈 대신 포커스 이탈 */
-document.addEventListener('keydown', function(e){
-  if(!editMode) return;
-  if(e.key==='Enter' && e.target && e.target.getAttribute &&
-     (e.target.getAttribute('data-editable')==='true' || e.target.getAttribute('data-editable-link')==='true')){
-    e.preventDefault();
-    e.target.blur();
-  }
-});
-
-
-/* ══════════════════════════════════════════════════════════════════
-   3. 명단 편집 모달
-   ══════════════════════════════════════════════════════════════════ */
-var meModal        = document.getElementById('meModal');
-var meGroupList    = document.getElementById('meGroupList');
-var meEditorEmpty  = document.getElementById('meEditorEmpty');
+/* ═════════════ 명단 편집 모달 ═════════════ */
+var meModal = document.getElementById('meModal');
+var meGroupList = document.getElementById('meGroupList');
+var meEditorEmpty = document.getElementById('meEditorEmpty');
 var meEditorActive = document.getElementById('meEditorActive');
-var meGroupName    = document.getElementById('meGroupName');
-var meMemberBody   = document.getElementById('meMemberBody');
-
+var meGroupName = document.getElementById('meGroupName');
+var meMemberBody = document.getElementById('meMemberBody');
 var _selectedGroup = null;
 
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, function(c){
-    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-  });
-}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
 function openMemberEditor(){
   if(!window.__memberData) window.__memberData = {};
-  /* 현재 보고 있던 그룹이 있으면 기본 선택 */
   if(window.__currentMemberGroup && window.__memberData[window.__currentMemberGroup]){
     _selectedGroup = window.__currentMemberGroup;
   } else {
@@ -3070,17 +3208,12 @@ function openMemberEditor(){
 function closeMemberEditor(){
   commitCurrentGroup();
   meModal.classList.remove('show');
-  /* 현재 화면에 표시된 명단이 있으면 갱신 */
-  if(window.__currentMemberGroup && typeof window.showMemberList === 'function'){
-    /* 삭제된 그룹이면 숨김 */
-    if(!window.__memberData[window.__currentMemberGroup] && typeof window.hideMemberSection === 'function'){
-      window.hideMemberSection();
-    } else {
-      window.showMemberList(window.__currentMemberGroup);
-    }
+  if(window.__currentMemberGroup){
+    if(!window.__memberData[window.__currentMemberGroup]) hideMemberSection();
+    else showMemberList(window.__currentMemberGroup);
   }
+  markHasMember();
 }
-
 function renderGroupList(){
   var data = window.__memberData || {};
   meGroupList.innerHTML = '';
@@ -3088,8 +3221,7 @@ function renderGroupList(){
     var item = document.createElement('div');
     item.className = 'me-group-item' + (key === _selectedGroup ? ' active' : '');
     var count = (data[key] || []).length;
-    item.innerHTML = '<span class="me-group-name">' + escapeHtml(key) + '</span>' +
-                     '<span class="me-group-count">' + count + '명</span>';
+    item.innerHTML = '<span class="me-group-name">' + escapeHtml(key) + '</span><span class="me-group-count">' + count + '명</span>';
     item.addEventListener('click', function(){
       commitCurrentGroup();
       _selectedGroup = key;
@@ -3098,33 +3230,28 @@ function renderGroupList(){
     });
     meGroupList.appendChild(item);
   });
-  /* 비어있을 때 안내 */
   if(Object.keys(data).length === 0){
     var empty = document.createElement('div');
     empty.style.cssText = 'padding:20px;text-align:center;color:#aaa;font-size:12px;';
-    empty.textContent = '등록된 낙우회가 없습니다.\n아래 버튼으로 추가하세요.';
+    empty.textContent = '등록된 낙우회가 없습니다.';
     meGroupList.appendChild(empty);
   }
 }
-
 function renderEditor(){
   if(!_selectedGroup || !(window.__memberData && window.__memberData[_selectedGroup])){
-    meEditorEmpty.style.display = 'flex';
-    meEditorActive.style.display = 'none';
+    meEditorEmpty.style.display='flex';
+    meEditorActive.style.display='none';
     return;
   }
-  meEditorEmpty.style.display = 'none';
-  meEditorActive.style.display = 'flex';
+  meEditorEmpty.style.display='none';
+  meEditorActive.style.display='flex';
   meGroupName.value = _selectedGroup;
   meMemberBody.innerHTML = '';
-  var members = window.__memberData[_selectedGroup] || [];
-  members.forEach(function(m){ appendMemberRow(m); });
+  (window.__memberData[_selectedGroup] || []).forEach(function(m){ appendMemberRow(m); });
 }
-
 function appendMemberRow(m){
   var tr = document.createElement('tr');
-  var fields = ['순번','목장명','대표자','직책'];
-  fields.forEach(function(k){
+  ['순번','목장명','대표자','직책'].forEach(function(k){
     var td = document.createElement('td');
     var inp = document.createElement('input');
     inp.type = 'text';
@@ -3137,322 +3264,208 @@ function appendMemberRow(m){
   var td = document.createElement('td');
   var del = document.createElement('button');
   del.className = 'me-member-delete';
-  del.textContent = '✕';
-  del.type = 'button';
-  del.title = '회원 삭제';
+  del.textContent = '✕'; del.type='button';
   del.addEventListener('click', function(){ tr.remove(); });
-  td.appendChild(del);
-  tr.appendChild(td);
+  td.appendChild(del); tr.appendChild(td);
   meMemberBody.appendChild(tr);
   return tr;
 }
-
 function commitCurrentGroup(){
   if(!_selectedGroup || !window.__memberData) return;
   if(!window.__memberData[_selectedGroup]) return;
-
-  /* 이름 변경 */
   var newName = meGroupName ? meGroupName.value.trim() : _selectedGroup;
   if(newName && newName !== _selectedGroup){
     if(window.__memberData[newName]){
-      alert('"' + newName + '" 이름의 낙우회가 이미 있습니다. 다른 이름을 사용해주세요.');
+      alert('"'+newName+'" 이름의 낙우회가 이미 있습니다.');
       if(meGroupName) meGroupName.value = _selectedGroup;
     } else {
-      /* 순서 유지한 채 키 이름만 변경 */
       var newData = {};
       Object.keys(window.__memberData).forEach(function(key){
         if(key === _selectedGroup) newData[newName] = window.__memberData[key];
-        else                       newData[key]     = window.__memberData[key];
+        else newData[key] = window.__memberData[key];
       });
       window.__memberData = newData;
       if(window.__currentMemberGroup === _selectedGroup) window.__currentMemberGroup = newName;
       _selectedGroup = newName;
     }
   }
-
-  /* 회원 목록 수집 */
   var members = [];
   meMemberBody.querySelectorAll('tr').forEach(function(tr){
     var obj = {};
     tr.querySelectorAll('input[data-field]').forEach(function(inp){
       var k = inp.getAttribute('data-field');
       var v = inp.value.trim();
-      if(k === '순번'){
-        var n = parseInt(v, 10);
-        obj[k] = isNaN(n) ? v : n;
-      } else {
-        obj[k] = v;
-      }
+      if(k === '순번'){ var n = parseInt(v,10); obj[k] = isNaN(n) ? v : n; }
+      else obj[k] = v;
     });
-    /* 완전히 빈 행은 제외 */
     if(obj.목장명 || obj.대표자 || obj.직책) members.push(obj);
   });
   window.__memberData[_selectedGroup] = members;
 }
-
-/* 이벤트 바인딩 */
 document.getElementById('memberEditorBtn').addEventListener('click', openMemberEditor);
 document.getElementById('meCloseX').addEventListener('click', closeMemberEditor);
 document.getElementById('meDoneBtn').addEventListener('click', closeMemberEditor);
 meModal.addEventListener('click', function(e){ if(e.target === meModal) closeMemberEditor(); });
-
 document.getElementById('meAddGroupBtn').addEventListener('click', function(){
   var name = prompt('새 낙우회 이름을 입력하세요 (예: "합덕낙우회")');
   if(!name) return;
   name = name.trim();
   if(!name) return;
   if(!window.__memberData) window.__memberData = {};
-  if(window.__memberData[name]){
-    alert('이미 있는 낙우회입니다.');
-    return;
-  }
+  if(window.__memberData[name]){ alert('이미 있는 낙우회입니다.'); return; }
   commitCurrentGroup();
   window.__memberData[name] = [];
   _selectedGroup = name;
   renderGroupList();
   renderEditor();
-  /* 이름 입력 포커스 */
   setTimeout(function(){ if(meGroupName) meGroupName.focus(); }, 50);
 });
-
 document.getElementById('meDeleteGroupBtn').addEventListener('click', function(){
   if(!_selectedGroup) return;
-  if(!confirm('"' + _selectedGroup + '" 낙우회를 삭제하시겠습니까? (회원 ' +
-              ((window.__memberData[_selectedGroup]||[]).length) + '명도 함께 삭제됩니다)')) return;
+  if(!confirm('"'+_selectedGroup+'" 낙우회를 삭제하시겠습니까? (회원 '+(window.__memberData[_selectedGroup]||[]).length+'명 함께 삭제)')) return;
   delete window.__memberData[_selectedGroup];
   if(window.__currentMemberGroup === _selectedGroup) window.__currentMemberGroup = null;
   _selectedGroup = null;
   renderGroupList();
   renderEditor();
 });
-
 document.getElementById('meAddMemberBtn').addEventListener('click', function(){
   if(!_selectedGroup) return;
-  var currentCount = meMemberBody.querySelectorAll('tr').length;
-  var newMember = {순번: currentCount + 1, 목장명: '', 대표자: '', 직책: '회원'};
-  var tr = appendMemberRow(newMember);
-  /* 목장명 포커스 */
-  setTimeout(function(){
-    var inp = tr.querySelector('input[data-field="목장명"]');
-    if(inp) inp.focus();
-  }, 30);
+  var c = meMemberBody.querySelectorAll('tr').length;
+  var tr = appendMemberRow({순번:c+1, 목장명:'', 대표자:'', 직책:'회원'});
+  setTimeout(function(){ var inp = tr.querySelector('input[data-field="목장명"]'); if(inp) inp.focus(); }, 30);
 });
-
 document.getElementById('meRenumberBtn').addEventListener('click', function(){
-  var trs = meMemberBody.querySelectorAll('tr');
-  trs.forEach(function(tr, i){
+  meMemberBody.querySelectorAll('tr').forEach(function(tr,i){
     var inp = tr.querySelector('input[data-field="순번"]');
-    if(inp) inp.value = i + 1;
+    if(inp) inp.value = i+1;
   });
 });
+meGroupName.addEventListener('blur', function(){ commitCurrentGroup(); renderGroupList(); });
 
-/* 이름 입력 blur로 동기화 */
-meGroupName.addEventListener('blur', function(){
-  commitCurrentGroup();
-  renderGroupList();
-});
-
-
-/* ══════════════════════════════════════════════════════════════════
-   4. GitHub 저장
-   ══════════════════════════════════════════════════════════════════ */
-function serializeMemberData(obj){
-  return JSON.stringify(obj, null, 2);
-}
-
-var pathInput   = document.getElementById('ghPathInput');
-var tokenInput  = document.getElementById('ghTokenInput');
+/* ═════════════ GitHub 저장 ═════════════ */
+var pathInput = document.getElementById('ghPathInput');
+var tokenInput = document.getElementById('ghTokenInput');
 var saveTokenCb = document.getElementById('ghSaveToken');
-var ghStatus    = document.getElementById('ghStatus');
+var ghStatus = document.getElementById('ghStatus');
 var ghUploadBtn = document.getElementById('ghUploadBtn');
 
-function guessPath(){
-  var p = location.pathname.replace(/^\//,'').replace(/\/$/,'');
-  if(!p) return '';
-  if(/\.html?$/i.test(p)) return p;
-  return p + '/index.html';
-}
-
 document.getElementById('saveHtmlBtn').addEventListener('click', function(){
-  /* 명단 편집 모달 열려있으면 먼저 커밋 */
   if(meModal.classList.contains('show')) commitCurrentGroup();
-
   try{
-    var savedTok = localStorage.getItem('gh_pat_nakwoo');
-    var savedPath= localStorage.getItem('gh_path_nakwoo');
-    if(savedTok)  tokenInput.value = savedTok;
-    if(savedPath) pathInput.value  = savedPath;
-    else if(!pathInput.value) pathInput.value = guessPath();
+    var st = localStorage.getItem('gh_pat_nakwoo_combined');
+    var sp = localStorage.getItem('gh_path_nakwoo_combined');
+    if(st) tokenInput.value = st;
+    if(sp) pathInput.value = sp;
+    else if(!pathInput.value) pathInput.value = 'index.html';
   }catch(e){}
-
-  ghStatus.textContent='';
-  ghStatus.style.color='#888';
+  ghStatus.textContent=''; ghStatus.style.color='#888';
   ghUploadBtn.disabled=false;
   ghModal.classList.add('show');
-  setTimeout(function(){
-    if(!pathInput.value) pathInput.focus();
-    else if(!tokenInput.value) tokenInput.focus();
-  },60);
+  setTimeout(function(){ if(!pathInput.value) pathInput.focus(); else if(!tokenInput.value) tokenInput.focus(); }, 60);
 });
-
-document.getElementById('ghCancelBtn').addEventListener('click', function(){
-  ghModal.classList.remove('show');
-});
-ghModal.addEventListener('click', function(e){
-  if(e.target===ghModal) ghModal.classList.remove('show');
-});
+document.getElementById('ghCancelBtn').addEventListener('click', function(){ ghModal.classList.remove('show'); });
+ghModal.addEventListener('click', function(e){ if(e.target===ghModal) ghModal.classList.remove('show'); });
 
 ghUploadBtn.addEventListener('click', async function(){
   if(_uploading) return;
   var token = tokenInput.value.trim();
   var path  = pathInput.value.trim().replace(/^\//,'');
-
-  if(!path){  ghStatus.style.color='#e63946'; ghStatus.textContent='파일 경로를 입력해주세요'; return; }
+  if(!path){ ghStatus.style.color='#e63946'; ghStatus.textContent='파일 경로를 입력해주세요'; return; }
   if(!token){ ghStatus.style.color='#e63946'; ghStatus.textContent='토큰을 입력해주세요'; return; }
-
   try{
     if(saveTokenCb.checked){
-      localStorage.setItem('gh_pat_nakwoo', token);
-      localStorage.setItem('gh_path_nakwoo', path);
+      localStorage.setItem('gh_pat_nakwoo_combined', token);
+      localStorage.setItem('gh_path_nakwoo_combined', path);
     }else{
-      localStorage.removeItem('gh_pat_nakwoo');
-      localStorage.removeItem('gh_path_nakwoo');
+      localStorage.removeItem('gh_pat_nakwoo_combined');
+      localStorage.removeItem('gh_path_nakwoo_combined');
     }
   }catch(e){}
-
   var API='https://api.github.com/repos/'+REPO+'/contents/'+path.split('/').map(encodeURIComponent).join('/');
-
-  _uploading=true;
-  ghUploadBtn.disabled=true;
-  ghStatus.style.color='#888';
-  ghStatus.textContent='⏳ 업로드 중...';
-
+  _uploading=true; ghUploadBtn.disabled=true;
+  ghStatus.style.color='#888'; ghStatus.textContent='⏳ 업로드 중...';
   try{
     var shaRes = await fetch(API+'?ref='+BRANCH+'&t='+Date.now(),{
-      cache:'no-store',
-      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
+      cache:'no-store', headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json'}
     });
     var sha=null;
     if(shaRes.ok){ sha=(await shaRes.json()).sha; }
     else if(shaRes.status===401){ throw new Error('토큰이 올바르지 않습니다'); }
-    else if(shaRes.status===404){ /* 새 파일 */ }
+    else if(shaRes.status===404){}
     else { throw new Error('SHA 조회 실패 ('+shaRes.status+')'); }
 
-    /* 편집 모드 종료 (DOM 정리) */
     if(editMode) window.exitEditMode();
-
     var rawHTML = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-
     var parser = new DOMParser();
     var doc = parser.parseFromString(rawHTML, 'text/html');
-
-    /* 복제본 상태 정리 */
     doc.body.classList.remove('edit-mode');
     doc.body.removeAttribute('style');
 
     var cFab = doc.getElementById('editorFab');
     if(cFab){ cFab.classList.remove('active'); cFab.textContent='✏'; }
-
-    ['pwModal','ghModal','meModal'].forEach(function(id){
-      var m = doc.getElementById(id);
-      if(m){ m.classList.remove('show'); }
-    });
+    ['pwModal','ghModal','meModal','monthPickerOverlay'].forEach(function(id){ var m = doc.getElementById(id); if(m) m.classList.remove('show'); });
     ['ghStatus','pwError'].forEach(function(id){ var el=doc.getElementById(id); if(el) el.textContent=''; });
     ['ghTokenInput','ghPathInput','pwInput','meGroupName'].forEach(function(id){ var el=doc.getElementById(id); if(el) el.value=''; });
 
-    /* 편집 속성 제거 */
     doc.querySelectorAll('[data-editable="true"], [data-editable-link="true"]').forEach(function(el){
-      el.removeAttribute('contenteditable');
-      el.removeAttribute('data-editable');
-      el.removeAttribute('data-editable-link');
+      el.removeAttribute('contenteditable'); el.removeAttribute('data-editable'); el.removeAttribute('data-editable-link');
     });
+    doc.querySelectorAll('.detail-row-delete-btn, .detail-add-row-wrap').forEach(function(b){b.remove();});
+    var mGL = doc.getElementById('meGroupList'); if(mGL) mGL.innerHTML='';
+    var mMB = doc.getElementById('meMemberBody'); if(mMB) mMB.innerHTML='';
+    var mEA = doc.getElementById('meEditorActive'); if(mEA) mEA.style.display='none';
+    var mEE = doc.getElementById('meEditorEmpty'); if(mEE) mEE.style.display='flex';
 
-    /* 행 삭제 버튼 제거 */
-    doc.querySelectorAll('.detail-row-delete-btn').forEach(function(b){b.remove();});
+    var mSec = doc.getElementById('member-section'); if(mSec){ mSec.style.display=''; mSec.removeAttribute('style'); }
+    var cMemTb = doc.querySelector('#member-table tbody'); if(cMemTb) cMemTb.innerHTML='';
 
-    /* 명단 편집기 상태 초기화 */
-    var meGL = doc.getElementById('meGroupList'); if(meGL) meGL.innerHTML='';
-    var meMB = doc.getElementById('meMemberBody'); if(meMB) meMB.innerHTML='';
-    var meEA = doc.getElementById('meEditorActive'); if(meEA) meEA.style.display='none';
-    var meEE = doc.getElementById('meEditorEmpty'); if(meEE) meEE.style.display='flex';
-
-    /* 회원 섹션: display inline style 제거 */
-    var mSec = doc.getElementById('member-section');
-    if(mSec){ mSec.style.display=''; mSec.removeAttribute('style'); }
-
-    /* 동적 추가 요소 제거 (로드 시 재생성됨) */
-    doc.querySelectorAll('.today-label, .badge-holiday, .badge-transfer').forEach(function(el){el.remove();});
+    doc.querySelectorAll('.today-label').forEach(function(el){el.remove();});
     doc.querySelectorAll('.today').forEach(function(el){el.classList.remove('today');});
-    doc.querySelectorAll('.holiday').forEach(function(el){el.classList.remove('holiday');});
-    doc.querySelectorAll('.sun, .sat').forEach(function(el){ el.classList.remove('sun'); el.classList.remove('sat'); });
     doc.querySelectorAll('.clicked-row').forEach(function(el){el.classList.remove('clicked-row');});
+    doc.querySelectorAll('.event1.has-member').forEach(function(el){el.classList.remove('has-member');});
 
-    /* 회원 테이블 tbody 비우기 (초기 상태) */
-    var cMemTb = doc.querySelector('#member-table tbody');
-    if(cMemTb) cMemTb.innerHTML='';
-
-    /* memberData 직렬화 & 스크립트 내부 교체 */
     var finalHTML = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
-    var startMark = '/* __MEMBER_DATA_START__ */';
-    var endMark   = '/* __MEMBER_DATA_END__ */';
+    var startMark='/* __MEMBER_DATA_START__ */';
+    var endMark='/* __MEMBER_DATA_END__ */';
     var sIdx = finalHTML.indexOf(startMark);
     var eIdx = finalHTML.indexOf(endMark);
     if(sIdx !== -1 && eIdx !== -1 && eIdx > sIdx){
-      var newBlock = startMark + '\n' +
-        '    var memberData = ' + serializeMemberData(window.__memberData) + ';\n' +
-        '    window.__memberData = memberData;\n    ' + endMark;
+      var newBlock = startMark + '\nvar memberData = ' + JSON.stringify(window.__memberData, null, 2) + ';\nwindow.__memberData = memberData;\n' + endMark;
       finalHTML = finalHTML.substring(0, sIdx) + newBlock + finalHTML.substring(eIdx + endMark.length);
     }
 
     var b64 = btoa(unescape(encodeURIComponent(finalHTML)));
-
     var now = new Date();
-    var msg = '낙우회 일정표 업데이트 '+
-      now.getFullYear()+'.'+
-      String(now.getMonth()+1).padStart(2,'0')+'.'+
-      String(now.getDate()).padStart(2,'0')+' '+
-      String(now.getHours()).padStart(2,'0')+':'+
-      String(now.getMinutes()).padStart(2,'0');
-
+    var msg = '낙우회 통합일정표 '+now.getFullYear()+'.'+String(now.getMonth()+1).padStart(2,'0')+'.'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
     var body = {message:msg, content:b64, branch:BRANCH};
     if(sha) body.sha=sha;
-
     var putRes = await fetch(API,{
       method:'PUT',
-      headers:{
-        'Authorization':'token '+token,
-        'Accept':'application/vnd.github.v3+json',
-        'Content-Type':'application/json'
-      },
+      headers:{'Authorization':'token '+token,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
       body:JSON.stringify(body)
     });
-
     if(putRes.ok){
-      ghStatus.style.color='#238636';
-      ghStatus.textContent='✅ GitHub에 저장 완료!';
-      setTimeout(function(){
-        ghModal.classList.remove('show');
-        ghStatus.textContent='';
-      }, 1800);
+      ghStatus.style.color='#238636'; ghStatus.textContent='✅ GitHub 저장 완료!';
+      setTimeout(function(){ ghModal.classList.remove('show'); ghStatus.textContent=''; }, 1800);
     }else{
       var err = await putRes.json().catch(function(){return{};});
       throw new Error(err.message || '업로드 실패 ('+putRes.status+')');
     }
   }catch(e){
-    ghStatus.style.color='#e63946';
-    ghStatus.textContent='❌ '+e.message;
+    ghStatus.style.color='#e63946'; ghStatus.textContent='❌ '+e.message;
   }finally{
-    _uploading=false;
-    ghUploadBtn.disabled=false;
+    _uploading=false; ghUploadBtn.disabled=false;
   }
 });
 
-/* 로드 시 남은 edit-mode 상태 초기화 */
+/* ═════════════ 초기화 ═════════════ */
 document.body.classList.remove('edit-mode');
+markToday();
+markHasMember();
 
 })();
 </script>
-
 
 
 
