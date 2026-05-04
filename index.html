@@ -372,7 +372,7 @@ body.edit-mode .detail-add-row-wrap{display:block !important;text-align:center;m
   <div class="switcher-wrap">
     <button class="switcher-btn" id="monthSwitcherBtn" type="button">
       <span class="switcher-icon">📅</span>
-      <span class="switcher-label" id="switcherLabel">2026년 4월</span>
+      <span class="switcher-label" id="switcherLabel">2026년 5월</span>
       <span class="switcher-arrow">▾</span>
     </button>
   </div>
@@ -384,7 +384,7 @@ body.edit-mode .detail-add-row-wrap{display:block !important;text-align:center;m
     <div class="picker-year-group">
   <div class="picker-year-label">2026년</div>
   <div class="picker-months">
-    <button class="picker-month-btn" data-month="2026-05" type="button">5월</button><button class="picker-month-btn" data-month="2026-04" data-today="1" type="button">4월 <span class="picker-today-chip">오늘</span></button><button class="picker-month-btn" data-month="2026-03" type="button">3월</button><button class="picker-month-btn" data-month="2026-02" type="button">2월</button><button class="picker-month-btn" data-month="2026-01" type="button">1월</button>
+    <button class="picker-month-btn" data-month="2026-05" data-today="1" type="button">5월 <span class="picker-today-chip">오늘</span></button><button class="picker-month-btn" data-month="2026-04" type="button">4월</button><button class="picker-month-btn" data-month="2026-03" type="button">3월</button><button class="picker-month-btn" data-month="2026-02" type="button">2월</button><button class="picker-month-btn" data-month="2026-01" type="button">1월</button>
   </div>
 </div>
 <div class="picker-year-group">
@@ -1243,7 +1243,7 @@ body.edit-mode .detail-add-row-wrap{display:block !important;text-align:center;m
 </div>
 </section>
 
-<section class="month-panel active" data-month="2026-04" data-quarter="2">
+<section class="month-panel" data-month="2026-04" data-quarter="2">
   <h2 class="main-title">2026년 4월 낙우회 및 조합원 행사 일정표</h2>
   <div class="cal-wrap">
 <table>
@@ -1330,7 +1330,7 @@ body.edit-mode .detail-add-row-wrap{display:block !important;text-align:center;m
 </div>
 </section>
 
-<section class="month-panel" data-month="2026-05" data-quarter="2">
+<section class="month-panel active" data-month="2026-05" data-quarter="2">
   <h2 class="main-title">2026년 5월 낙우회 및 조합원 행사 일정표</h2>
   <div class="cal-wrap">
 <table>
@@ -3901,6 +3901,43 @@ ghUploadBtn.addEventListener('click', async function(){
 
 /* ═════════════ 초기화 ═════════════ */
 document.body.classList.remove('edit-mode');
+
+/* 현재 월 자동 활성화 + 피커 '오늘' 뱃지 갱신 (시간이 지나도 자동 동작) */
+(function autoActivateCurrentMonth(){
+  var now = new Date();
+  var ym = now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0');
+  var panel = document.querySelector('.month-panel[data-month="' + ym + '"]');
+  if(panel){ activateMonth(ym); }
+  /* 피커의 '오늘' 뱃지를 현재 월 버튼으로 이동 */
+  document.querySelectorAll('.picker-month-btn[data-today="1"]').forEach(function(b){
+    b.removeAttribute('data-today');
+    var chip = b.querySelector('.picker-today-chip');
+    if(chip) chip.remove();
+    b.textContent = b.textContent.replace(/\s*오늘\s*$/, '').trim();
+  });
+  var todayBtn = document.querySelector('.picker-month-btn[data-month="' + ym + '"]');
+  if(todayBtn && !todayBtn.querySelector('.picker-today-chip')){
+    todayBtn.setAttribute('data-today', '1');
+    todayBtn.appendChild(document.createTextNode(' '));
+    var chip2 = document.createElement('span');
+    chip2.className = 'picker-today-chip';
+    chip2.textContent = '오늘';
+    todayBtn.appendChild(chip2);
+  }
+  /* 현재 월 버튼을 자기 연도 그룹의 맨 앞으로, 그 연도 그룹을 picker 맨 위로 이동 */
+  if(todayBtn){
+    var monthsDiv = todayBtn.parentElement;
+    if(monthsDiv && monthsDiv.firstElementChild !== todayBtn){
+      monthsDiv.insertBefore(todayBtn, monthsDiv.firstElementChild);
+    }
+    var yearGroup = monthsDiv && monthsDiv.closest('.picker-year-group');
+    var picker = document.getElementById('monthPicker');
+    if(yearGroup && picker && picker.firstElementChild !== yearGroup){
+      picker.insertBefore(yearGroup, picker.firstElementChild);
+    }
+  }
+})();
+
 markWeekendsAndHolidays();
 markToday();
 markHasMember();
