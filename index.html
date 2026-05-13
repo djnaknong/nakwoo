@@ -155,6 +155,48 @@ body.q-4{
 .detail-section td:nth-child(6){text-align:left;}
 .detail-section tbody tr{cursor:pointer;}
 
+/* ─── 상세 일정표 일자 정렬 헤더 ─── */
+.detail-section thead th.th-sortable{
+  cursor:pointer;
+  user-select:none;
+  position:relative;
+  padding-right:22px;
+  transition:background-color .15s;
+}
+.detail-section thead th.th-sortable:hover{
+  background-color:rgba(0,0,0,.05);
+}
+.detail-section thead th.th-sortable::after{
+  content:"↕";
+  position:absolute;
+  right:6px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:0.78em;
+  opacity:0.45;
+  font-weight:700;
+  pointer-events:none;
+  transition:opacity .15s;
+}
+.detail-section thead th.th-sortable.sort-asc::after{
+  content:"▲";
+  opacity:1;
+  color:var(--accent);
+}
+.detail-section thead th.th-sortable.sort-desc::after{
+  content:"▼";
+  opacity:1;
+  color:var(--accent);
+}
+/* 편집 모드일 때는 정렬 인디케이터/커서 숨김 (헤더 텍스트 편집 우선) */
+body.edit-mode .detail-section thead th.th-sortable{
+  cursor:text;
+  padding-right:8px;
+}
+body.edit-mode .detail-section thead th.th-sortable::after{
+  display:none;
+}
+
 .date-num{display:flex;align-items:center;justify-content:center;gap:6px;font-weight:900;letter-spacing:-.2px;}
 .date-num > span.today-label,.date-num > span.badge-holiday{order:-1}
 
@@ -3941,6 +3983,98 @@ document.body.classList.remove('edit-mode');
 markWeekendsAndHolidays();
 markToday();
 markHasMember();
+
+/* ═════════════ 상세 일정표 일자 정렬 ═════════════ */
+(function initDetailSort(){
+  /* "X월 Y일" → 비교용 숫자 (월*100 + 일) */
+  function parseKoreanDate(text){
+    if(!text) return 999999;
+    var t = (text+'').replace(/\s+/g,' ').trim();
+    var m = t.match(/(\d+)\s*월\s*(\d+)\s*일/);
+    if(m){ return parseInt(m[1],10)*100 + parseInt(m[2],10); }
+    var m2 = t.match(/(\d+)[\.\-\/](\d+)/);
+    if(m2){ return parseInt(m2[1],10)*100 + parseInt(m2[2],10); }
+    return 999999;
+  }
+
+  function sortTable(table, asc){
+    var tbody = table.querySelector('tbody');
+    if(!tbody) return;
+    var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
+    /* 안정 정렬을 위한 현재 인덱스 부여 (동일 날짜는 현재 순서 유지) */
+    rows.forEach(function(r,i){ r.__stableIdx = i; });
+    rows.sort(function(a,b){
+      var aTd = a.querySelector('td');
+      var bTd = b.querySelector('td');
+      var aT = aTd ? (aTd.innerText || aTd.textContent || '') : '';
+      var bT = bTd ? (bTd.innerText || bTd.textContent || '') : '';
+      var aN = parseKoreanDate(aT);
+      var bN = parseKoreanDate(bT);
+      if(aN === bN) return a.__stableIdx - b.__stableIdx;
+      return asc ? (aN - bN) : (bN - aN);
+    });
+    var frag = document.createDocumentFragment();
+    rows.forEach(function(r){ frag.appendChild(r); });
+    tbody.appendChild(frag);
+  }
+
+  /* 일자 헤더(각 상세표의 첫 번째 th) 식별 */
+  function isDateHeader(th){
+    if(!th) return false;
+    if(!th.closest('.detail-section')) return false;
+    var thead = th.closest('thead');
+    if(!thead) return false;
+    return thead.querySelector('th') === th;
+  }
+
+  function markSortable(){
+    document.querySelectorAll('.detail-section thead tr').forEach(function(tr){
+      var th = tr.querySelector('th');
+      if(th && !th.classList.contains('th-sortable')){
+        th.classList.add('th-sortable');
+        th.setAttribute('title','클릭: 날짜 오름차순 / 내림차순 정렬');
+      }
+    });
+  }
+
+  /* 클릭 이벤트 위임 (편집모드에서는 동작 안 함) */
+  document.addEventListener('click', function(e){
+    if(typeof editMode !== 'undefined' && editMode) return;
+    var th = e.target.closest && e.target.closest('th');
+    if(!th || !isDateHeader(th)) return;
+    e.preventDefault();
+    if(!th.classList.contains('th-sortable')) th.classList.add('th-sortable');
+    var table = th.closest('table');
+    /* 다른 헤더의 정렬 표시 제거 (방어적) */
+    table.querySelectorAll('thead th').forEach(function(o){
+      if(o !== th) o.classList.remove('sort-asc','sort-desc');
+    });
+    /* asc → desc → asc 토글. 아직 정렬 안 했으면 asc부터 */
+    var asc = !th.classList.contains('sort-asc');
+    th.classList.remove('sort-asc','sort-desc');
+    th.classList.add(asc ? 'sort-asc' : 'sort-desc');
+    sortTable(table, asc);
+  });
+
+  /* 신규 월 패널이 추가될 때 자동 초기화 */
+  var mo = new MutationObserver(function(muts){
+    for(var i=0;i<muts.length;i++){
+      var added = muts[i].addedNodes;
+      for(var j=0;j<added.length;j++){
+        var n = added[j];
+        if(n.nodeType !== 1) continue;
+        if((n.matches && (n.matches('.month-panel') || n.matches('.detail-section'))) ||
+           (n.querySelector && n.querySelector('.detail-section thead th'))){
+          markSortable();
+          return;
+        }
+      }
+    }
+  });
+  mo.observe(document.body, {childList:true, subtree:true});
+
+  markSortable();
+})();
 
 })();
 </script>
