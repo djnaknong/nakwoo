@@ -436,6 +436,28 @@ body.edit-mode .detail-add-row-wrap{display:block !important;text-align:center;m
   .detail-section tbody td *{font-size:13px !important;}
 }
 
+/* ─── '낙우회' 접미사 제거 버튼 (편집모드 전용) ─── */
+.suffix-strip-btn{
+  display:inline-flex !important;
+  align-items:center;
+  margin-left:6px;
+  padding:1px 7px;
+  font-size:11px !important;
+  font-weight:700 !important;
+  color:#b91c1c !important;
+  background:#fee2e2 !important;
+  border:1px solid #fca5a5 !important;
+  border-radius:8px;
+  cursor:pointer;
+  font-family:inherit;
+  white-space:nowrap;
+  vertical-align:middle;
+  user-select:none;
+}
+.suffix-strip-btn:hover{background:#fecaca !important; border-color:#f87171 !important;}
+body:not(.edit-mode) .suffix-strip-btn{display:none !important;}
+@media print{.suffix-strip-btn{display:none !important;}}
+
 /* ─── 편집 모드 드롭다운 헬퍼 ─── */
 .edit-helper{
   position:absolute; z-index:10000;
@@ -4533,7 +4555,7 @@ ghUploadBtn.addEventListener('click', async function(){
     doc.querySelectorAll('[data-editable="true"], [data-editable-link="true"]').forEach(function(el){
       el.removeAttribute('contenteditable'); el.removeAttribute('data-editable'); el.removeAttribute('data-editable-link');
     });
-    doc.querySelectorAll('.detail-row-delete-btn, .detail-add-row-wrap, #detail-add-row-wrap, #detail-add-row-btn').forEach(function(b){b.remove();});
+    doc.querySelectorAll('.detail-row-delete-btn, .detail-add-row-wrap, #detail-add-row-wrap, #detail-add-row-btn, .suffix-strip-btn, .row-search-btn, .edit-helper, .sort-toast').forEach(function(b){b.remove();});
     var mGL = doc.getElementById('meGroupList'); if(mGL) mGL.innerHTML='';
     var mMB = doc.getElementById('meMemberBody'); if(mMB) mMB.innerHTML='';
     var mEA = doc.getElementById('meEditorActive'); if(mEA) mEA.style.display='none';
@@ -4936,9 +4958,11 @@ markHasMember();
   var bodyObserver = new MutationObserver(function(){
     if(document.body.classList.contains('edit-mode')){
       refreshRowSearchBtns();
+      if(typeof refreshSuffixBtns === 'function') refreshSuffixBtns();
     } else {
       hideHelper();
       removeRowSearchBtns();
+      if(typeof removeAllSuffixBtns === 'function') removeAllSuffixBtns();
     }
   });
   bodyObserver.observe(document.body, {attributes:true, attributeFilter:['class']});
@@ -5012,6 +5036,8 @@ markHasMember();
     var next = e.relatedTarget;
     if(next && td.contains(next)) return;
     setTimeout(function(){ sortTableForCell(td); }, 80);
+    /* 낙우회 접미사 버튼 재계산 (이름 셀이 바뀐 경우 등) */
+    setTimeout(function(){ if(typeof refreshSuffixBtns === 'function') refreshSuffixBtns(); }, 100);
   });
 
   /* 새 행 추가 직후에도 한 번 정렬(추가 행은 보통 맨 끝으로) */
@@ -5088,6 +5114,243 @@ markHasMember();
     if(needSort) setTimeout(sortAllTables, 30);
   });
   sortObserver.observe(document.body, {childList:true, subtree:true});
+
+  /* ═══ 달력 알약 ↔ 상세 행 자동 동기화 ═══ */
+  var DOW_KO = ['일','월','화','수','목','금','토'];
+
+  function normalizePillText(s){
+    return (s||'').replace(/ /g,' ').replace(/\s+/g,' ').trim();
+  }
+
+  function getDateInfoFromCalCell(td){
+    if(!td) return null;
+    var dateNum = td.querySelector('.date-num');
+    if(!dateNum) return null;
+    /* badge-holiday 등 자식 span을 제외하고 숫자만 추출 */
+    var dayText = '';
+    for(var i=0;i<dateNum.childNodes.length;i++){
+      var n = dateNum.childNodes[i];
+      if(n.nodeType === 3) dayText += n.nodeValue;
+    }
+    dayText = dayText.replace(/[^\d]/g,'');
+    var day = parseInt(dayText, 10);
+    if(!day) return null;
+    var panel = td.closest('.month-panel');
+    if(!panel) return null;
+    var ym = panel.getAttribute('data-month');
+    if(!ym) return null;
+    var parts = ym.split('-');
+    var year = parseInt(parts[0],10), month = parseInt(parts[1],10);
+    var dt = new Date(year, month-1, day);
+    var dow = DOW_KO[dt.getDay()];
+    return {
+      year: year, month: month, day: day, dow: dow,
+      dateLabel: month + '월 ' + day + '일(' + dow + ')',
+      panel: panel
+    };
+  }
+
+  function findDetailRowByDateAndName(panel, dateLabel, name){
+    var rows = panel.querySelectorAll('.detail-section tbody tr');
+    var nName = normalizePillText(name);
+    var nDate = normalizePillText(dateLabel);
+    for(var i=0;i<rows.length;i++){
+      var tr = rows[i];
+      var d = normalizePillText(tr.children[0] ? tr.children[0].textContent : '');
+      var n = normalizePillText(tr.children[2] ? tr.children[2].textContent : '');
+      /* 날짜는 "M월 D일" 부분만으로도 매칭 (요일 표기 차이 허용) */
+      var dCore = (d.match(/\d+월\s*\d+일/)||[''])[0];
+      var nDateCore = (nDate.match(/\d+월\s*\d+일/)||[''])[0];
+      if(dCore && dCore === nDateCore && n === nName) return tr;
+    }
+    return null;
+  }
+
+  function findDetailRowByOldName(panel, dateLabel, oldName){
+    /* 같은 날짜의 이전 이름과 일치하는 행 찾기 (이름 변경 시 사용) */
+    var rows = panel.querySelectorAll('.detail-section tbody tr');
+    var nOld = normalizePillText(oldName);
+    var nDate = normalizePillText(dateLabel);
+    var nDateCore = (nDate.match(/\d+월\s*\d+일/)||[''])[0];
+    for(var i=0;i<rows.length;i++){
+      var tr = rows[i];
+      var d = normalizePillText(tr.children[0] ? tr.children[0].textContent : '');
+      var n = normalizePillText(tr.children[2] ? tr.children[2].textContent : '');
+      var dCore = (d.match(/\d+월\s*\d+일/)||[''])[0];
+      if(dCore === nDateCore && n === nOld) return tr;
+    }
+    return null;
+  }
+
+  /* 이름이 '낙우회'로 끝나지 않으면 자동으로 '낙우회' 접미사 추가 */
+  function withNakwooSuffix(name){
+    var t = (name||'').trim();
+    if(!t) return t;
+    if(/낙우회\s*$/.test(t)) return t;
+    return t + '낙우회';
+  }
+
+  /* 셀에서 텍스트 읽을 때 자식 버튼 텍스트는 제외 */
+  function readCellText(td){
+    if(!td) return '';
+    var out = '';
+    for(var i=0;i<td.childNodes.length;i++){
+      var n = td.childNodes[i];
+      if(n.nodeType === 3) out += n.nodeValue;
+      else if(n.nodeType === 1){
+        if(n.classList && n.classList.contains('suffix-strip-btn')) continue;
+        out += n.textContent || '';
+      }
+    }
+    return out;
+  }
+
+  function createDetailRow(panel, info, name){
+    var tbody = panel.querySelector('.detail-section tbody');
+    if(!tbody) return null;
+    var displayName = withNakwooSuffix(name);
+    var tr = document.createElement('tr');
+    tr.style.position = 'relative';
+    tr.innerHTML =
+      '<td>'+info.dateLabel+'</td>' +
+      '<td>12시</td>' +
+      '<td>'+displayName+'</td>' +
+      '<td>낙우회</td>' +
+      '<td></td>' +
+      '<td></td>';
+    tbody.appendChild(tr);
+    /* 편집모드라면 셀들을 편집 가능하게 + 삭제버튼 + 검색버튼 부착 */
+    if(document.body.classList.contains('edit-mode')){
+      tr.querySelectorAll('td').forEach(function(td){
+        td.setAttribute('contenteditable','true');
+        td.setAttribute('data-editable','true');
+      });
+      if(typeof attachDetailRowDeleteBtn === 'function') attachDetailRowDeleteBtn(tr);
+      ensureRowSearchBtn(tr);
+      refreshSuffixBtns();
+    }
+    return tr;
+  }
+
+  /* '낙우회' 접미사 제거 버튼 관리 */
+  function refreshSuffixBtns(){
+    if(!document.body.classList.contains('edit-mode')) return;
+    document.querySelectorAll('.detail-section tbody tr').forEach(function(tr){
+      var nameCell = tr.children[2];
+      if(!nameCell) return;
+      /* 기존 버튼 제거 후 재계산 */
+      var old = nameCell.querySelector('.suffix-strip-btn');
+      if(old) old.remove();
+      var text = readCellText(nameCell).replace(/\s+/g,' ').trim();
+      if(text && text !== '낙우회' && /낙우회\s*$/.test(text)){
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'suffix-strip-btn';
+        btn.setAttribute('contenteditable','false');
+        btn.title = "뒤의 '낙우회'를 떼어냅니다";
+        btn.textContent = '× 낙우회';
+        btn.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); });
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          var current = readCellText(nameCell).replace(/\s+/g,' ').trim();
+          var stripped = current.replace(/\s*낙우회\s*$/, '').trim();
+          /* 셀 내용 교체 (버튼은 다시 그릴 거니까 그냥 텍스트만) */
+          /* 자식 노드 비우기 */
+          while(nameCell.firstChild) nameCell.removeChild(nameCell.firstChild);
+          nameCell.appendChild(document.createTextNode(stripped));
+          refreshSuffixBtns();
+        });
+        nameCell.appendChild(btn);
+      }
+    });
+  }
+  function removeAllSuffixBtns(){
+    document.querySelectorAll('.suffix-strip-btn').forEach(function(b){ b.remove(); });
+  }
+
+  /* 알약 동기화 핵심 함수 — 항상 호출하면 안전: 텍스트가 있고 매칭 행이 없으면 새로 추가 */
+  function syncPillToDetail(el){
+    if(!el || !el.classList) return;
+    if(!(el.classList.contains('event1') || el.classList.contains('event2'))) return;
+    if(!document.body.classList.contains('edit-mode')) return;
+    var newText = normalizePillText(el.textContent);
+    if(!newText) return;
+    var td = el.closest && el.closest('td');
+    var info = getDateInfoFromCalCell(td);
+    if(!info) return;
+    /* 같은 날짜에 동일 이름 행이 있으면 스킵 */
+    if(findDetailRowByDateAndName(info.panel, info.dateLabel, newText)) return;
+    /* 이전 이름이 있고 이름이 바뀐 경우 → 옛 행 업데이트, 아니면 새 행 추가 */
+    var prev = normalizePillText(el.dataset.prev || '');
+    var updated = false;
+    if(prev && prev !== newText){
+      var rows = info.panel.querySelectorAll('.detail-section tbody tr');
+      for(var i=0;i<rows.length;i++){
+        var tr = rows[i];
+        var d = normalizePillText(tr.children[0] ? tr.children[0].textContent : '');
+        var n = normalizePillText(tr.children[2] ? tr.children[2].textContent : '');
+        var dCore = (d.match(/\d+월\s*\d+일/)||[''])[0].replace(/\s+/g,'');
+        var infoCore = (info.dateLabel.match(/\d+월\s*\d+일/)||[''])[0].replace(/\s+/g,'');
+        if(dCore === infoCore && n.indexOf(prev) !== -1){
+          tr.children[2].textContent = newText;
+          updated = true; break;
+        }
+      }
+    }
+    if(!updated){
+      createDetailRow(info.panel, info, newText);
+    }
+    var table = info.panel.querySelector('.detail-section table');
+    if(table) setTimeout(function(){ autoSortTable(table); }, 30);
+    /* 사용자에게 확실히 보이는 토스트 */
+    var t = document.createElement('div');
+    t.className = 'sort-toast';
+    t.style.bottom = '180px';
+    t.textContent = (updated ? '✎ 행 이름 변경: ' : '＋ 상세 행 추가: ') + newText + ' (' + info.dateLabel + ')';
+    document.body.appendChild(t);
+    setTimeout(function(){ t.classList.add('show'); }, 10);
+    setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 300); }, 1800);
+    el.dataset.prev = newText;
+  }
+
+  /* focusin: 이전 값 기억 */
+  document.addEventListener('focusin', function(e){
+    if(!document.body.classList.contains('edit-mode')) return;
+    var el = e.target;
+    if(el && el.classList && (el.classList.contains('event1') || el.classList.contains('event2'))){
+      el.dataset.prev = normalizePillText(el.textContent);
+    }
+  });
+
+  /* 트리거 1: focusout (blur) */
+  document.addEventListener('focusout', function(e){
+    var el = e.target;
+    if(el && el.classList && (el.classList.contains('event1') || el.classList.contains('event2'))){
+      setTimeout(function(){ syncPillToDetail(el); }, 30);
+    }
+  }, true);
+
+  /* 트리거 2: Enter 키 — IME 조합 종료 후 안전하게 */
+  document.addEventListener('keydown', function(e){
+    if(!document.body.classList.contains('edit-mode')) return;
+    if(e.key !== 'Enter') return;
+    if(e.isComposing || e.keyCode === 229) return;
+    var el = e.target;
+    if(el && el.classList && (el.classList.contains('event1') || el.classList.contains('event2'))){
+      setTimeout(function(){ syncPillToDetail(el); }, 30);
+    }
+  });
+
+  /* 트리거 3: 입력 후 1.5초 동안 더 안 치면 자동 동기화 (안전망) */
+  var _pillInputTimer = null;
+  document.addEventListener('input', function(e){
+    if(!document.body.classList.contains('edit-mode')) return;
+    var el = e.target;
+    if(!el || !el.classList) return;
+    if(!(el.classList.contains('event1') || el.classList.contains('event2'))) return;
+    clearTimeout(_pillInputTimer);
+    _pillInputTimer = setTimeout(function(){ syncPillToDetail(el); }, 1500);
+  });
 })();
 
 })();
