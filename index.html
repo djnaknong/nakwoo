@@ -304,7 +304,10 @@ body.edit-mode [data-editable="true"]:focus,body.edit-mode [data-editable-link="
 body.edit-mode a[href^="tmap://"]{pointer-events:none;}
 body.edit-mode [data-editable-link="true"]{pointer-events:auto !important;}
 body.edit-mode .month-panel.active .detail-section tbody tr{position:relative;}
-body.edit-mode .detail-row-delete-btn{position:absolute;left:-26px;top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;border:none;background:#e63946;color:#fff;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2);z-index:10;}
+/* 삭제 버튼은 첫번째 셀 안에 배치 — overflow-x:auto 영역에 잘리지 않도록 */
+body.edit-mode .month-panel.active .detail-section tbody td:first-child{position:relative;padding-left:34px;}
+body.edit-mode .detail-row-delete-btn{position:absolute;left:5px;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;border:none;background:#e63946;color:#fff;font-size:14px;line-height:1;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.25);z-index:10;padding:0;}
+body.edit-mode .detail-row-delete-btn:hover{background:#c92a37;transform:translateY(-50%) scale(1.12);}
 body.edit-mode .detail-add-row-wrap{display:block !important;text-align:center;margin:10px 0;}
 #detail-add-row-wrap,.detail-add-row-wrap{display:none !important;}
 #detail-add-row-btn,.detail-add-row-btn{background:#1a1a2e;color:#fff;border:none;border-radius:99px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;}
@@ -4257,18 +4260,26 @@ function ensureAddRowBtn(){
 }
 function attachDetailRowDeleteBtn(tr){
   if(tr.querySelector('.detail-row-delete-btn')) return;
+  var firstTd = tr.querySelector('td');
+  if(!firstTd) return;
   var btn = document.createElement('button');
   btn.className = 'detail-row-delete-btn';
   btn.textContent = '×';
   btn.type = 'button';
   btn.title = '이 행 삭제';
+  btn.setAttribute('contenteditable','false');
+  btn.addEventListener('mousedown', function(e){ e.preventDefault(); e.stopPropagation(); });
   btn.addEventListener('click', function(e){
     e.stopPropagation();
     if(!editMode) return;
-    if(confirm('이 상세 일정 행을 삭제할까요?')) tr.remove();
+    var label = '';
+    var cells = tr.querySelectorAll('td');
+    if(cells[0]) label += (cells[0].textContent||'').replace(/×/g,'').trim();
+    if(cells[2]) label += ' ' + (cells[2].textContent||'').trim();
+    label = label.trim();
+    if(confirm('이 상세 일정 행을 삭제할까요?' + (label ? '\n\n['+label+']' : ''))) tr.remove();
   });
-  tr.style.position='relative';
-  tr.appendChild(btn);
+  firstTd.appendChild(btn);
 }
 function refreshDetailDeleteBtns(){
   var panel = document.querySelector('.month-panel.active');
@@ -4556,6 +4567,7 @@ ghUploadBtn.addEventListener('click', async function(){
       el.removeAttribute('contenteditable'); el.removeAttribute('data-editable'); el.removeAttribute('data-editable-link');
     });
     doc.querySelectorAll('.detail-row-delete-btn, .detail-add-row-wrap, #detail-add-row-wrap, #detail-add-row-btn, .suffix-strip-btn, .row-search-btn, .edit-helper, .sort-toast').forEach(function(b){b.remove();});
+    doc.querySelectorAll('[data-prev]').forEach(function(el){ el.removeAttribute('data-prev'); });
     var mGL = doc.getElementById('meGroupList'); if(mGL) mGL.innerHTML='';
     var mMB = doc.getElementById('meMemberBody'); if(mMB) mMB.innerHTML='';
     var mEA = doc.getElementById('meEditorActive'); if(mEA) mEA.style.display='none';
@@ -5150,18 +5162,23 @@ markHasMember();
     };
   }
 
+  /* '낙우회' 접미사를 떼고 비교용 기준 이름으로 정규화 */
+  function stripNakwoo(s){ return normalizePillText(s).replace(/낙우회\s*$/,'').trim(); }
+
   function findDetailRowByDateAndName(panel, dateLabel, name){
     var rows = panel.querySelectorAll('.detail-section tbody tr');
-    var nName = normalizePillText(name);
+    /* 달력 알약(접미사 없음)과 상세행(접미사 있음)을 동일하게 보도록 접미사 제거 후 비교 */
+    var baseName = stripNakwoo(name);
     var nDate = normalizePillText(dateLabel);
+    var nDateCore = (nDate.match(/\d+월\s*\d+일/)||[''])[0];
     for(var i=0;i<rows.length;i++){
       var tr = rows[i];
-      var d = normalizePillText(tr.children[0] ? tr.children[0].textContent : '');
-      var n = normalizePillText(tr.children[2] ? tr.children[2].textContent : '');
+      /* readCellText로 주입 버튼('× 낙우회' 등) 제외하고 읽어야 비교가 맞음 */
+      var d = normalizePillText(readCellText(tr.children[0]));
+      var n = stripNakwoo(readCellText(tr.children[2]));
       /* 날짜는 "M월 D일" 부분만으로도 매칭 (요일 표기 차이 허용) */
       var dCore = (d.match(/\d+월\s*\d+일/)||[''])[0];
-      var nDateCore = (nDate.match(/\d+월\s*\d+일/)||[''])[0];
-      if(dCore && dCore === nDateCore && n === nName) return tr;
+      if(dCore && dCore === nDateCore && n === baseName) return tr;
     }
     return null;
   }
@@ -5190,7 +5207,7 @@ markHasMember();
     return t + '낙우회';
   }
 
-  /* 셀에서 텍스트 읽을 때 자식 버튼 텍스트는 제외 */
+  /* 셀에서 텍스트 읽을 때 주입된 버튼(접미사제거/삭제/검색) 텍스트는 제외 */
   function readCellText(td){
     if(!td) return '';
     var out = '';
@@ -5198,7 +5215,9 @@ markHasMember();
       var n = td.childNodes[i];
       if(n.nodeType === 3) out += n.nodeValue;
       else if(n.nodeType === 1){
-        if(n.classList && n.classList.contains('suffix-strip-btn')) continue;
+        if(n.classList && (n.classList.contains('suffix-strip-btn') ||
+                           n.classList.contains('detail-row-delete-btn') ||
+                           n.classList.contains('row-search-btn'))) continue;
         out += n.textContent || '';
       }
     }
@@ -5268,31 +5287,73 @@ markHasMember();
     document.querySelectorAll('.suffix-strip-btn').forEach(function(b){ b.remove(); });
   }
 
-  /* 알약 동기화 핵심 함수 — 항상 호출하면 안전: 텍스트가 있고 매칭 행이 없으면 새로 추가 */
+  /* 토스트 헬퍼 */
+  function pillToast(msg){
+    var t = document.createElement('div');
+    t.className = 'sort-toast';
+    t.style.bottom = '180px';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(function(){ t.classList.add('show'); }, 10);
+    setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 300); }, 1800);
+  }
+
+  /* 같은 날짜+이름(접미사 무시)인 상세행 전부 제거 → 개수 반환 (중복 정리 겸용) */
+  function removeDetailRowsByDateAndName(panel, dateLabel, name){
+    var removed = 0, row;
+    while((row = findDetailRowByDateAndName(panel, dateLabel, name))){
+      row.remove(); removed++;
+      if(removed > 50) break; /* 안전장치 */
+    }
+    return removed;
+  }
+
+  /* 알약 동기화 핵심 함수 — 텍스트가 있으면 추가/변경, 비면 해당 상세행 삭제 */
   function syncPillToDetail(el){
     if(!el || !el.classList) return;
     if(!(el.classList.contains('event1') || el.classList.contains('event2'))) return;
     if(!document.body.classList.contains('edit-mode')) return;
-    var newText = normalizePillText(el.textContent);
-    if(!newText) return;
     var td = el.closest && el.closest('td');
     var info = getDateInfoFromCalCell(td);
     if(!info) return;
-    /* 같은 날짜에 동일 이름 행이 있으면 스킵 */
-    if(findDetailRowByDateAndName(info.panel, info.dateLabel, newText)) return;
-    /* 이전 이름이 있고 이름이 바뀐 경우 → 옛 행 업데이트, 아니면 새 행 추가 */
+    var newText = normalizePillText(el.textContent);
     var prev = normalizePillText(el.dataset.prev || '');
+
+    /* ── 이름을 비운 경우: 상세행 삭제 + 색상 원복 ── */
+    if(!newText){
+      if(prev){
+        var n = removeDetailRowsByDateAndName(info.panel, info.dateLabel, prev);
+        if(n > 0){
+          var dtbl = info.panel.querySelector('.detail-section table');
+          if(dtbl) setTimeout(function(){ autoSortTable(dtbl); }, 30);
+          pillToast('🗑 상세 행 삭제: ' + prev + ' (' + info.dateLabel + ')');
+        }
+      }
+      el.classList.remove('has-member');   /* 색상 원복 */
+      el.dataset.prev = '';
+      if(typeof markHasMember === 'function') markHasMember();
+      return;
+    }
+
+    /* 같은 날짜에 동일 이름 행이 이미 있으면 스킵 (중복 방지) */
+    if(findDetailRowByDateAndName(info.panel, info.dateLabel, newText)){
+      el.dataset.prev = newText;
+      if(typeof markHasMember === 'function') markHasMember();
+      return;
+    }
+
+    /* 이전 이름이 있고 이름이 바뀐 경우 → 옛 행 업데이트, 아니면 새 행 추가 */
     var updated = false;
     if(prev && prev !== newText){
       var rows = info.panel.querySelectorAll('.detail-section tbody tr');
+      var infoCore = (info.dateLabel.match(/\d+월\s*\d+일/)||[''])[0].replace(/\s+/g,'');
       for(var i=0;i<rows.length;i++){
         var tr = rows[i];
-        var d = normalizePillText(tr.children[0] ? tr.children[0].textContent : '');
-        var n = normalizePillText(tr.children[2] ? tr.children[2].textContent : '');
+        var d = normalizePillText(readCellText(tr.children[0]));
+        var nm = stripNakwoo(readCellText(tr.children[2]));
         var dCore = (d.match(/\d+월\s*\d+일/)||[''])[0].replace(/\s+/g,'');
-        var infoCore = (info.dateLabel.match(/\d+월\s*\d+일/)||[''])[0].replace(/\s+/g,'');
-        if(dCore === infoCore && n.indexOf(prev) !== -1){
-          tr.children[2].textContent = newText;
+        if(dCore === infoCore && nm.indexOf(stripNakwoo(prev)) !== -1){
+          tr.children[2].textContent = withNakwooSuffix(newText);
           updated = true; break;
         }
       }
@@ -5302,14 +5363,9 @@ markHasMember();
     }
     var table = info.panel.querySelector('.detail-section table');
     if(table) setTimeout(function(){ autoSortTable(table); }, 30);
-    /* 사용자에게 확실히 보이는 토스트 */
-    var t = document.createElement('div');
-    t.className = 'sort-toast';
-    t.style.bottom = '180px';
-    t.textContent = (updated ? '✎ 행 이름 변경: ' : '＋ 상세 행 추가: ') + newText + ' (' + info.dateLabel + ')';
-    document.body.appendChild(t);
-    setTimeout(function(){ t.classList.add('show'); }, 10);
-    setTimeout(function(){ t.classList.remove('show'); setTimeout(function(){ t.remove(); }, 300); }, 1800);
+    if(typeof refreshSuffixBtns === 'function') refreshSuffixBtns();
+    if(typeof markHasMember === 'function') markHasMember();
+    pillToast((updated ? '✎ 행 이름 변경: ' : '＋ 상세 행 추가: ') + newText + ' (' + info.dateLabel + ')');
     el.dataset.prev = newText;
   }
 
